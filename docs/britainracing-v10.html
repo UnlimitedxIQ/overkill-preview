@@ -1,0 +1,2076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Britain Racing LLC. — Premium race car parts. Don't Compromise. Customize." />
+  <title>Britain Racing LLC. — Don't Compromise. Customize.</title>
+
+  <!-- Google Fonts: Oswald 700, Barlow Condensed 600/700, Inter 400/500 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Lenis smooth scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+
+  <style id="overkill-styles">
+
+/* ═══════════════════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
+}
+
+body {
+  background: #0A0604;
+  color: #FFFFFF;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  margin: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(156, 74, 7, 0.4);
+  color: #FFFFFF;
+}
+
+img   { max-width: 100%; display: block; }
+a     { text-decoration: none; color: inherit; }
+button { border: none; background: none; font-family: inherit; }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCROLLBAR
+═══════════════════════════════════════════════════════════ */
+::-webkit-scrollbar            { width: 8px; }
+::-webkit-scrollbar-track      { background: #0A0604; }
+::-webkit-scrollbar-thumb      { background: #9C4A07; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover{ background: #B85A0F; }
+
+/* ═══════════════════════════════════════════════════════════
+   PRELOADER
+═══════════════════════════════════════════════════════════ */
+.preloader {
+  position: fixed;
+  inset: 0;
+  background: #0A0604;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tach-svg {
+  filter: drop-shadow(0 0 28px rgba(156, 74, 7, 0.55));
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FILM GRAIN
+═══════════════════════════════════════════════════════════ */
+.film-grain {
+  position: fixed;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  z-index: 9996;
+  pointer-events: none;
+  opacity: 0.035;
+  filter: url(#grain);
+  animation: grain 8s steps(10) infinite;
+}
+
+@keyframes grain {
+  0%,  100% { transform: translate(0,     0);    }
+  10%        { transform: translate(-5%,  -10%); }
+  20%        { transform: translate(-15%,  5%);  }
+  30%        { transform: translate( 7%,  -25%); }
+  40%        { transform: translate(-5%,   25%); }
+  50%        { transform: translate(-15%,  10%); }
+  60%        { transform: translate( 15%,   0);  }
+  70%        { transform: translate(  0,   15%); }
+  80%        { transform: translate(  3%,  35%); }
+  90%        { transform: translate(-10%,  10%); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCROLL PROGRESS
+═══════════════════════════════════════════════════════════ */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, #9C4A07, #FFE1B8);
+  z-index: 9995;
+  pointer-events: none;
+  border-radius: 0 2px 2px 0;
+  will-change: width;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CUSTOM CURSOR  (desktop only)
+═══════════════════════════════════════════════════════════ */
+@media (min-width: 1024px) {
+  body,
+  body a,
+  body button,
+  body [role="button"] { cursor: none; }
+}
+
+.cursor-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #9C4A07;
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 9998;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.cursor-ring {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(156, 74, 7, 0.5);
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 9997;
+  pointer-events: none;
+  will-change: transform;
+}
+
+@media (max-width: 1023px) {
+  .cursor-dot,
+  .cursor-ring { display: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SKIP LINK
+═══════════════════════════════════════════════════════════ */
+.skip-link {
+  position: absolute;
+  top: -100%; left: 16px;
+  z-index: 10000;
+  padding: 8px 16px;
+  background: #9C4A07;
+  color: #0A0604;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: top 0.2s ease;
+}
+.skip-link:focus { top: 16px; }
+
+/* ═══════════════════════════════════════════════════════════
+   HEADER / NAV
+═══════════════════════════════════════════════════════════ */
+.site-header {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(10, 6, 4, 0.85);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid rgba(156, 74, 7, 0.12);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 40px;
+  max-width: 1600px;
+  margin: 0 auto;
+  transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-logo {
+  max-height: 50px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* Nav links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-link {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 225, 184, 0.75);
+  padding: 8px 16px;
+  position: relative;
+  transition: color 0.3s ease;
+  display: inline-block;
+}
+
+.nav-link:hover { color: #FFFFFF; }
+
+.nav-link.is-active { color: #FFFFFF; }
+
+.nav-link.is-active::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 16px; right: 16px;
+  height: 2px;
+  background: #9C4A07;
+  border-radius: 1px;
+}
+
+/* Nav actions (icons + hamburger) */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  color: rgba(255, 225, 184, 0.75);
+  border-radius: 8px;
+  transition: color 0.3s ease, background 0.3s ease;
+}
+
+.nav-icon-btn:hover {
+  color: #FFFFFF;
+  background: rgba(156, 74, 7, 0.1);
+}
+
+.nav-icon-btn:focus-visible {
+  outline: 2px solid #9C4A07;
+  outline-offset: 2px;
+}
+
+/* Hamburger */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+.nav-hamburger:hover   { background: rgba(156, 74, 7, 0.1); }
+.nav-hamburger:focus-visible { outline: 2px solid #9C4A07; outline-offset: 2px; }
+
+.nav-hamburger span {
+  display: block;
+  width: 22px; height: 2px;
+  background: rgba(255, 225, 184, 0.75);
+  border-radius: 2px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 990px) {
+  .nav-links     { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-inner     { padding: 14px 24px; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE MENU DRAWER
+═══════════════════════════════════════════════════════════ */
+.mobile-menu {
+  position: fixed;
+  top: 0; right: 0;
+  width: min(320px, 90vw);
+  height: 100%;
+  background: #1A1210;
+  z-index: 2000;
+  transform: translateX(110%);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 80px 32px 48px;
+  border-left: 1px solid rgba(156, 74, 7, 0.15);
+  overflow-y: auto;
+}
+
+.mobile-menu.is-open { transform: translateX(0); }
+
+.mobile-menu-close {
+  position: absolute;
+  top: 18px; right: 18px;
+  color: rgba(255, 225, 184, 0.7);
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.3s ease, background 0.3s ease;
+}
+.mobile-menu-close:hover {
+  color: #FFFFFF;
+  background: rgba(156, 74, 7, 0.1);
+}
+.mobile-menu-close:focus-visible { outline: 2px solid #9C4A07; outline-offset: 2px; }
+
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-nav-link {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255, 225, 184, 0.75);
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(156, 74, 7, 0.1);
+  display: block;
+  transition: color 0.3s ease, padding-left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-nav-link:hover {
+  color: #9C4A07;
+  padding-left: 10px;
+}
+.mobile-nav-link:focus-visible { outline: 2px solid #9C4A07; outline-offset: 2px; }
+
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 1999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.mobile-overlay.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HERO SECTION
+═══════════════════════════════════════════════════════════ */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(1.1);
+  will-change: transform;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 6, 4, 0.30) 0%,
+    rgba(10, 6, 4, 0.60) 50%,
+    rgba(10, 6, 4, 0.95) 100%
+  );
+  z-index: 1;
+}
+
+.hero-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(10, 6, 4, 0.7) 100%);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 900px;
+  padding: 80px 24px 0;
+}
+
+.hero-heading-wrap {
+  perspective: 400px;
+}
+
+.hero-line {
+  display: block;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.05;
+}
+
+.hero-line-1 {
+  font-size: clamp(36px, 6vw, 72px);
+  letter-spacing: 4px;
+  color: #FFFFFF;
+}
+
+.hero-line-2 {
+  font-size: clamp(48px, 8vw, 96px);
+  letter-spacing: 6px;
+  color: #9C4A07;
+}
+
+/* Split chars (injected by JS) */
+.split-char {
+  display: inline-block;
+  transform-origin: 50% 100%;
+  will-change: transform, opacity;
+}
+
+.hero-rule {
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #9C4A07, transparent);
+  margin: 32px auto;
+  max-width: 400px;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.hero-cta {
+  display: inline-block;
+  padding: 16px 48px;
+  background: transparent;
+  border: 2px solid #9C4A07;
+  border-radius: 40px;
+  color: #FFFFFF;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  will-change: transform;
+  transition:
+    background     0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    color          0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow     0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color   0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-cta:hover {
+  background: #9C4A07;
+  color: #0A0604;
+  box-shadow: 0 8px 30px rgba(156, 74, 7, 0.35);
+}
+
+.hero-cta:focus-visible {
+  outline: 2px solid #FFE1B8;
+  outline-offset: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   COLLECTIONS SECTION
+═══════════════════════════════════════════════════════════ */
+.collections-section {
+  padding: 120px 0;
+}
+
+.collections-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.collections-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.section-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: #FFFFFF;
+  line-height: 1.1;
+}
+
+/* Split words (injected by JS) */
+.split-word {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.section-title-rule {
+  width: 60px;
+  height: 3px;
+  background: #9C4A07;
+  margin: 16px auto 0;
+  border-radius: 2px;
+}
+
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+@media (max-width: 1024px) {
+  .collections-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .collections-section   { padding: 80px 0; }
+  .collections-inner     { padding: 0 24px; }
+  .collections-grid      { grid-template-columns: 1fr; }
+}
+
+/* ── Collection card ── */
+.collection-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #1A1210;
+  cursor: pointer;
+  aspect-ratio: 4 / 3;
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  will-change: transform;
+  transition:
+    transform    0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow   0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s ease;
+}
+
+.collection-card:hover {
+  transform: scale(1.03) translateY(-6px);
+  box-shadow: 0 16px 48px rgba(156, 74, 7, 0.22);
+  border-color: rgba(156, 74, 7, 0.3);
+}
+
+.collection-card:focus-visible {
+  outline: 2px solid #9C4A07;
+  outline-offset: 4px;
+  box-shadow: 0 0 0 4px rgba(156, 74, 7, 0.2);
+}
+
+.card-img-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.collection-card:hover .card-img { transform: scale(1.08); }
+
+.card-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 24px;
+  background: linear-gradient(transparent, rgba(10, 6, 4, 0.9));
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  z-index: 2;
+}
+
+.card-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+.card-arrow {
+  color: #9C4A07;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.collection-card:hover .card-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   NEWSLETTER SECTION
+═══════════════════════════════════════════════════════════ */
+.newsletter-section {
+  padding: 100px 40px;
+  background: linear-gradient(180deg, #0A0604 0%, #1A1210 100%);
+  text-align: center;
+}
+
+.newsletter-inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.newsletter-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: #FFFFFF;
+  margin-bottom: 16px;
+  line-height: 1.1;
+}
+
+.newsletter-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: rgba(255, 225, 184, 0.7);
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.newsletter-form {
+  display: flex;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.newsletter-input {
+  flex: 1;
+  padding: 14px 24px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(156, 74, 7, 0.3);
+  border-right: none;
+  border-radius: 40px 0 0 40px;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.newsletter-input::placeholder { color: rgba(255, 225, 184, 0.4); }
+
+.newsletter-input:focus {
+  border-color: #9C4A07;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.newsletter-btn {
+  padding: 14px 32px;
+  background: #9C4A07;
+  border: none;
+  border-radius: 0 40px 40px 0;
+  color: #0A0604;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  will-change: transform;
+  transition: background 0.3s ease;
+}
+
+.newsletter-btn:hover { background: #B85A0F; }
+
+.newsletter-btn:focus-visible {
+  outline: 2px solid #FFE1B8;
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .newsletter-section { padding: 80px 24px; }
+  .newsletter-form    { flex-direction: column; gap: 12px; }
+  .newsletter-input   {
+    border-right: 1px solid rgba(156, 74, 7, 0.3);
+    border-radius: 40px;
+  }
+  .newsletter-btn { border-radius: 40px; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════════════ */
+.site-footer {
+  background: #0A0604;
+  border-top: 1px solid rgba(156, 74, 7, 0.15);
+  padding: 60px 40px 32px;
+}
+
+.footer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.footer-logo {
+  max-height: 40px;
+  width: auto;
+  opacity: 0.8;
+  display: block;
+  object-fit: contain;
+}
+
+.footer-logo-link:focus-visible { outline: 2px solid #9C4A07; outline-offset: 4px; border-radius: 4px; }
+
+.footer-brand-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  color: rgba(255, 225, 184, 0.5);
+  letter-spacing: 1px;
+  margin-top: 12px;
+}
+
+.footer-links-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: rgba(255, 225, 184, 0.6);
+  line-height: 2.2;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover       { color: #FFFFFF; }
+.footer-link:focus-visible { outline: 2px solid #9C4A07; outline-offset: 2px; border-radius: 2px; }
+
+.footer-social-col {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.footer-social-link {
+  color: rgba(255, 225, 184, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-social-link:hover {
+  color: #9C4A07;
+  transform: translateY(-2px);
+}
+
+.footer-social-link:focus-visible {
+  outline: 2px solid #9C4A07;
+  outline-offset: 4px;
+  border-radius: 50%;
+}
+
+.footer-bottom {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(156, 74, 7, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: rgba(255, 225, 184, 0.35);
+}
+
+.footer-powered {
+  color: rgba(255, 225, 184, 0.35);
+  transition: color 0.3s ease;
+}
+
+.footer-powered:hover { color: rgba(255, 225, 184, 0.6); }
+
+@media (max-width: 640px) {
+  .site-footer  { padding: 48px 24px 28px; }
+  .footer-top   { flex-direction: column; gap: 28px; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CART NOTIFICATION AREA
+═══════════════════════════════════════════════════════════ */
+.cart-notification-product {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  z-index: 500;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PREFERS REDUCED MOTION
+═══════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:       0.01ms !important;
+    animation-iteration-count: 1     !important;
+    transition-duration:      0.01ms !important;
+    scroll-behavior:          auto   !important;
+  }
+
+  .film-grain             { display: none; }
+  .cursor-dot,
+  .cursor-ring            { display: none; }
+  .hero-line-1,
+  .hero-line-2            { opacity: 1 !important; transform: none !important; }
+  .hero-rule              { transform: none !important; }
+  .hero-cta               { opacity: 1 !important; transform: none !important; }
+  .collection-card        { opacity: 1 !important; transform: none !important; }
+  .newsletter-section     { opacity: 1 !important; transform: none !important; }
+}
+
+  
+/* ── Post-processor overrides ────────────────────────────── */
+h1, h2, h3, .hero-heading, .section-heading, .collection-card-title,
+[class*="heading"], [class*="title"] {
+  font-family: 'Bebas Neue', Oswald, Impact, sans-serif !important;
+  font-style: normal !important;
+  letter-spacing: 0.05em;
+}
+
+.hero-heading, .hero h1, .hero h2, .hero-content h1, .hero-content h2,
+[class*="hero"] h1, [class*="hero"] h2 {
+  font-size: clamp(28px, 5vw, 72px) !important;
+  line-height: 1.1 !important;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+}
+
+header, nav, [class*="header"], [class*="nav-bar"] {
+  background: rgba(13, 13, 13, 0.85) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+}
+header a, nav a, [class*="header"] a, [class*="nav-bar"] a {
+  color: #f0f0f0 !important;
+}
+header svg, nav svg, [class*="header"] svg {
+  color: #f0f0f0 !important;
+  fill: #f0f0f0 !important;
+}
+
+[class*="collection"] img, [class*="card"] img, [class*="grid"] img {
+  transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+}
+[class*="collection"]:hover img, [class*="card"]:hover img {
+  transform: scale(1.05) !important;
+}
+[class*="collection"] a, [class*="card"] a {
+  overflow: hidden;
+  display: block;
+}
+
+[class*="collection"], [class*="card"], [class*="grid"] > *, article {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+/* Visual QA Pass 1 */
+/* ── NAV: dark + subtle amber underline instead of solid amber bg ── */
+nav, header, .site-header, nav.navbar, [class*='nav-'], [class*='header-'] {
+  background: #0A0604 !important;
+  border-bottom: 2px solid #9C4A07 !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* Keep nav links readable on dark bg */
+nav a, header a, [class*='nav-'] a {
+  color: #FFFFFF !important;
+}
+nav a:hover, header a:hover, [class*='nav-'] a:hover {
+  color: #9C4A07 !important;
+}
+
+/* ── HERO H1: raise minimum floor to 48px, push vw harder ── */
+hero h1, .hero h1, [class*='hero'] h1,
+section:first-of-type h1, .banner h1 {
+  font-size: clamp(48px, 7vw, 96px) !important;
+  line-height: 1.0 !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* ── SECTION H2: minimum 36px, never collapse ── */
+main h2, section h2, [class*='section'] h2,
+[class*='collection'] h2, [class*='featured'] h2 {
+  font-size: clamp(36px, 5vw, 72px) !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* ── CARD TITLES: raise minimum to 22px, keep vw responsive ── */
+[class*='card'] h2, [class*='card'] h3,
+[class*='product'] h2, [class*='product'] h3,
+[class*='item'] h2, [class*='item'] h3 {
+  font-size: clamp(22px, 2.5vw, 36px) !important;
+  line-height: 1.1 !important;
+}
+
+/* ── BODY TEXT: lock to 17px minimum, full white opacity ── */
+body, p, li, span:not([class*='label']):not([class*='badge']) {
+  font-size: clamp(16px, 1.2vw, 18px) !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+  line-height: 1.65 !important;
+}
+
+/* ── PRODUCT / COLLECTION IMAGES: absolutely no dimming ── */
+img, [class*='card'] img, [class*='product'] img,
+[class*='collection'] img, [class*='item'] img {
+  filter: none !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Visual QA Pass 2 */
+/* ── HERO: Enforce 48px+ floor and aggressive max ── */
+hero h1,
+[class*='hero'] h1,
+.hero-heading,
+section:first-of-type h1 {
+  font-size: clamp(56px, 7vw, 96px) !important;
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  line-height: 0.95 !important;
+  font-weight: 700 !important;
+  color: #FFFFFF !important;
+}
+
+/* ── SECTION TITLES: 40px+ floor ── */
+section h2,
+[class*='section'] h2,
+[class*='collection'] h2,
+[class*='featured'] h2 {
+  font-size: clamp(40px, 5.5vw, 72px) !important;
+  font-family: 'Barlow Condensed', sans-serif !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  font-weight: 700 !important;
+  color: #FFFFFF !important;
+}
+
+/* ── NAV: Use dark base, reserve accent for hover/active ── */
+nav,
+header,
+[role='navigation'] {
+  background: #0A0604 !important;
+  border-bottom: 2px solid #9C4A07 !important;
+}
+
+nav a:hover,
+nav a.active,
+header a:hover {
+  color: #9C4A07 !important;
+}
+
+/* ── CARD TITLES: Bolder floor ── */
+[class*='card'] h2,
+[class*='card'] h3,
+[class*='product'] h2,
+[class*='product'] h3 {
+  font-size: clamp(20px, 3vw, 32px) !important;
+  font-family: 'Barlow Condensed', sans-serif !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  font-weight: 600 !important;
+  color: #FFFFFF !important;
+}
+
+/* ── BODY TEXT: Ensure readable opacity and size ── */
+body,
+p,
+[class*='description'],
+[class*='body-text'] {
+  font-size: 16px !important;
+  line-height: 1.65 !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* ── BACKGROUND: Lock base color ── */
+body,
+main,
+[class*='page-wrapper'],
+[class*='container'] {
+  background-color: #0A0604 !important;
+}
+
+/* ── ACCENT BUTTONS: Redline CTA ── */
+button,
+a[class*='btn'],
+a[class*='button'],
+[class*='cta'] {
+  background: #9C4A07 !important;
+  color: #FFFFFF !important;
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  border: none !important;
+  padding: 12px 28px !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+}
+
+button:hover,
+a[class*='btn']:hover,
+a[class*='button']:hover {
+  background: #b85a0a !important;
+  filter: brightness(1.1) !important;
+}
+
+/* ── IMAGES: Force full brightness ── */
+img,
+[class*='card'] img,
+[class*='product'] img,
+[class*='hero'] img {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+/* Visual QA Pass 3 */
+/* ─── REDLINE: Push everything to the limit ─── */
+
+/* Hero heading — massive, tight, aggressive */
+h1,
+[class*='hero'] h1,
+[class*='hero'] h2 {
+  font-size: clamp(64px, 9vw, 120px) !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: -0.03em !important;
+  line-height: 0.88 !important;
+  font-family: 'Oswald', sans-serif !important;
+}
+
+/* Section headings — bold, prominent, 40px floor */
+h2,
+[class*='section'] h2,
+[class*='collection'] h2,
+[class*='title'] h2 {
+  font-size: clamp(40px, 6vw, 80px) !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: -0.01em !important;
+  line-height: 0.95 !important;
+  font-family: 'Barlow Condensed', sans-serif !important;
+}
+
+/* Card / product titles — legible minimum */
+h3,
+[class*='card'] h3,
+[class*='product'] h3,
+[class*='card-title'],
+[class*='product-title'] {
+  font-size: clamp(18px, 2vw, 28px) !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.02em !important;
+  font-family: 'Barlow Condensed', sans-serif !important;
+}
+
+/* Body text — readable on dark bg, never below 15px */
+body,
+p,
+[class*='description'],
+[class*='body-text'] {
+  font-size: 16px !important;
+  line-height: 1.65 !important;
+  color: rgba(255,255,255,0.88) !important;
+}
+
+/* Nav — keep accent bg but guarantee white text is readable */
+nav,
+[class*='navbar'],
+[class*='nav-bar'],
+header nav {
+  background: #9C4A07 !important;
+}
+nav a,
+nav button,
+nav [class*='link'],
+header nav a {
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  font-size: 13px !important;
+  opacity: 1 !important;
+}
+
+/* Product / collection images — ALWAYS full brightness */
+img,
+[class*='card'] img,
+[class*='product'] img,
+[class*='collection'] img {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+/* Section spacing — breathing room, not cramped */
+section,
+[class*='section'] {
+  padding-top: 80px !important;
+  padding-bottom: 80px !important;
+}
+
+/* Accent CTA buttons — high-contrast, bold */
+button,
+[class*='btn'],
+a[class*='button'],
+[class*='cta'] {
+  background: #9C4A07 !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  font-size: 13px !important;
+  border: none !important;
+  padding: 14px 32px !important;
+}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="overkill-preloader" style="position:fixed;inset:0;z-index:99999;background:#0A0604;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px;">
+  <div class="preloader-brand" style="font-family:'Bebas Neue',Oswald,sans-serif;font-size:clamp(32px,5vw,64px);letter-spacing:0.15em;color:#fff;text-transform:uppercase;">Britain Racing</div>
+  <div class="preloader-bar" style="width:280px;height:2px;background:rgba(255,255,255,0.15);overflow:hidden;border-radius:2px;">
+    <div class="preloader-fill" style="width:0%;height:100%;background:#9C4A07;transition:width 0.1s linear;"></div>
+  </div>
+  <div class="preloader-count" style="font-family:Oswald,sans-serif;font-size:13px;letter-spacing:0.2em;color:rgba(255,255,255,0.5);">0%</div>
+</div>
+
+<!-- ─── Preloader (tachometer) ─────────────────────────── -->
+<div class="preloader" id="preloader" aria-hidden="true" role="presentation">
+  <svg class="tach-svg" viewBox="0 0 200 200" width="200" height="200"
+       xmlns="http://www.w3.org/2000/svg">
+    <!-- Outer bezel -->
+    <circle cx="100" cy="100" r="94"
+      fill="none" stroke="#140D09" stroke-width="8"/>
+    <!-- Inner track ring -->
+    <circle cx="100" cy="100" r="85"
+      fill="none" stroke="#1A1210" stroke-width="4"/>
+    <!-- Tick marks injected by JS -->
+    <g id="tach-ticks"></g>
+    <!-- Needle group – GSAP rotates this around center -->
+    <g id="tach-needle">
+      <line x1="100" y1="26" x2="100" y2="97"
+        stroke="#9C4A07" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <!-- Center cap -->
+    <circle cx="100" cy="100" r="10"
+      fill="#0A0604" stroke="#9C4A07" stroke-width="1.5"/>
+    <!-- BR brand mark -->
+    <text x="100" y="137"
+      text-anchor="middle"
+      font-family="Oswald, sans-serif"
+      font-size="22"
+      font-weight="700"
+      fill="#9C4A07"
+      opacity="0.6">BR</text>
+  </svg>
+</div>
+
+<!-- ─── Film grain SVG filter (invisible) ─────────────── -->
+<svg style="position:fixed;top:0;left:0;width:0;height:0;overflow:hidden;"
+     aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="grain" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise"
+        baseFrequency="0.65"
+        numOctaves="3"
+        stitchTiles="stitch"
+        result="noiseOut"/>
+      <feColorMatrix in="noiseOut" type="saturate" values="0"/>
+    </filter>
+  </defs>
+</svg>
+
+<!-- ─── Film grain overlay ────────────────────────────── -->
+<div class="film-grain" aria-hidden="true"></div>
+
+<!-- ─── Scroll progress bar ───────────────────────────── -->
+<div class="scroll-progress" aria-hidden="true"></div>
+
+<!-- ─── Custom cursor elements (desktop) ─────────────── -->
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="cursor-dot"  aria-hidden="true"></div>
+
+<!-- ─── Skip link ────────────────────────────────────── -->
+<a href="#MainContent" class="skip-link">Skip to content</a>
+
+<!-- ══════════════════════════════════════════════════════
+     HEADER / NAVIGATION
+══════════════════════════════════════════════════════ -->
+<header class="site-header" id="site-header">
+  <div class="nav-inner" id="nav-inner">
+
+    <a href="https://britainracing.com/" class="nav-logo-link"
+       aria-label="Britain Racing LLC. – Home">
+      <img
+        src="https://britainracing.com/cdn/shop/files/BritainRacing_-_Large_0bbd4388-4a07-4574-8f9e-9fddcae6e659.jpg?v=1743437605&width=300"
+        alt="Britain Racing LLC."
+        class="nav-logo"
+        width="220" height="50"
+      />
+    </a>
+
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="https://britainracing.com/"             class="nav-link is-active">Home</a>
+      <a href="https://britainracing.com/collections"  class="nav-link">Catalog</a>
+      <a href="https://britainracing.com/pages/contact"class="nav-link">Contact</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="https://britainracing.com/customer_authentication/redirect?locale=en&region_country=US"
+         class="nav-icon-btn" aria-label="Log in">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </a>
+      <a href="https://britainracing.com/cart"
+         class="nav-icon-btn" aria-label="Cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="9" cy="21" r="1"/>
+          <circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+      </a>
+      <button class="nav-hamburger" id="nav-hamburger"
+              aria-label="Open navigation menu"
+              aria-expanded="false"
+              aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<!-- ─── Mobile menu drawer ────────────────────────────── -->
+<div class="mobile-menu" id="mobile-menu"
+     role="dialog"
+     aria-modal="true"
+     aria-label="Navigation menu"
+     aria-hidden="true">
+  <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Close menu">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <line x1="18" y1="6"  x2="6"  y2="18"/>
+      <line x1="6"  y1="6"  x2="18" y2="18"/>
+    </svg>
+  </button>
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="https://britainracing.com/"             class="mobile-nav-link">Home</a>
+    <a href="https://britainracing.com/collections"  class="mobile-nav-link">Catalog</a>
+    <a href="https://britainracing.com/pages/contact"class="mobile-nav-link">Contact</a>
+    <a href="https://britainracing.com/cart"         class="mobile-nav-link">Cart</a>
+  </nav>
+</div>
+<div class="mobile-overlay" id="mobile-overlay" aria-hidden="true"></div>
+
+<!-- ══════════════════════════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════════════════════════ -->
+<main id="MainContent" class="content-for-layout focus-none" tabindex="-1">
+
+  <!-- ── HERO ─────────────────────────────────────────── -->
+  <section class="hero-section" aria-label="Hero banner">
+
+    <div class="hero-bg"
+      style="background-image:url('https://britainracing.com/cdn/shop/files/received_1560715844870613.jpg?v=1766099602&width=3840');"
+      role="img" aria-label="Britain Racing race car on track">
+    </div>
+    <div class="hero-overlay"  aria-hidden="true"></div>
+    <div class="hero-vignette" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <div class="hero-heading-wrap">
+        <!-- chars split by JS -->
+        <div class="hero-line hero-line-1">DON'T COMPROMISE...</div>
+        <div class="hero-line hero-line-2">CUSTOMIZE</div>
+      </div>
+      <div class="hero-rule" aria-hidden="true"></div>
+      <a href="https://britainracing.com/collections/all"
+         class="hero-cta"
+         data-cursor="text:SHOP">SHOP NOW</a>
+    </div>
+
+  </section>
+
+  <!-- ── COLLECTIONS ──────────────────────────────────── -->
+  <section class="collections-section" id="collections"
+           aria-labelledby="collections-heading">
+    <div class="collections-inner">
+
+      <header class="collections-header">
+        <!-- words split by JS -->
+        <h2 class="section-title" id="collections-heading">SHOP COLLECTIONS</h2>
+        <div class="section-title-rule" aria-hidden="true"></div>
+      </header>
+
+      <div class="collections-grid" role="list">
+
+        <a href="https://britainracing.com/collections/luckydog-trophies"
+           class="collection-card" role="listitem"
+           aria-label="Shop LuckyDog Racing Trophies">
+          <div class="card-img-wrap">
+            <img
+              src="https://britainracing.com/cdn/shop/collections/20250330_114148_e771bfe8-70e2-435b-a413-f0929311c10b.jpg?v=1766089427"
+              alt="LuckyDog Racing Trophies"
+              class="card-img" loading="lazy"/>
+          </div>
+          <div class="card-overlay">
+            <span class="card-name">LuckyDog Racing Trophies</span>
+            <span class="card-arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="https://britainracing.com/collections/brake-ducts"
+           class="collection-card" role="listitem"
+           aria-label="Shop Brake Ducts">
+          <div class="card-img-wrap">
+            <img
+              src="https://britainracing.com/cdn/shop/files/20251220_210652.jpg?v=1766351519"
+              alt="Brake Ducts"
+              class="card-img" loading="lazy"/>
+          </div>
+          <div class="card-overlay">
+            <span class="card-name">Brake Ducts</span>
+            <span class="card-arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="https://britainracing.com/collections/frontpage"
+           class="collection-card" role="listitem"
+           aria-label="Shop Fueling Products">
+          <div class="card-img-wrap">
+            <img
+              src="https://britainracing.com/cdn/shop/collections/20220822_213152.jpg?v=1745990244"
+              alt="Fueling Products"
+              class="card-img" loading="lazy"/>
+          </div>
+          <div class="card-overlay">
+            <span class="card-name">Fueling Products</span>
+            <span class="card-arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="https://britainracing.com/collections/carbon-fiber-parts"
+           class="collection-card" role="listitem"
+           aria-label="Shop Carbon Fiber Parts">
+          <div class="card-img-wrap">
+            <img
+              src="https://britainracing.com/cdn/shop/collections/486552782_1256153009503247_2987420766831371503_n.jpg?v=1745990264"
+              alt="Carbon Fiber Parts"
+              class="card-img" loading="lazy"/>
+          </div>
+          <div class="card-overlay">
+            <span class="card-name">Carbon Fiber Parts</span>
+            <span class="card-arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="https://britainracing.com/collections/hood-vents"
+           class="collection-card" role="listitem"
+           aria-label="Shop Hood Vents">
+          <div class="card-img-wrap">
+            <img
+              src="https://britainracing.com/cdn/shop/collections/191613587_10219163884914540_5061107731261156786_n_135f0956-9cc8-454e-a180-5b9c95a6d659.jpg?v=1745990208"
+              alt="Hood Vents"
+              class="card-img" loading="lazy"/>
+          </div>
+          <div class="card-overlay">
+            <span class="card-name">Hood Vents</span>
+            <span class="card-arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="https://britainracing.com/collections/exhaust-flanges"
+           class="collection-card" role="listitem"
+           aria-label="Shop Exhaust Flanges">
+          <div class="card-img-wrap">
+            <img
+              src="https://britainracing.com/cdn/shop/collections/20210107_213129_4f7fb588-c941-4214-991a-d1c81097493f.jpg?v=1745990887"
+              alt="Exhaust Flanges"
+              class="card-img" loading="lazy"/>
+          </div>
+          <div class="card-overlay">
+            <span class="card-name">Exhaust Flanges</span>
+            <span class="card-arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="https://britainracing.com/collections/wing-uprights"
+           class="collection-card" role="listitem"
+           aria-label="Shop Wing Uprights">
+          <div class="card-img-wrap">
+            <img
+              src="https://britainracing.com/cdn/shop/collections/122660246_10217819728151461_4579971352753520728_n.jpg?v=1745993135"
+              alt="Wing Uprights"
+              class="card-img" loading="lazy"/>
+          </div>
+          <div class="card-overlay">
+            <span class="card-name">Wing Uprights</span>
+            <span class="card-arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+      </div><!-- /.collections-grid -->
+    </div><!-- /.collections-inner -->
+  </section>
+
+</main><!-- /#MainContent -->
+
+<!-- ══════════════════════════════════════════════════════
+     NEWSLETTER
+══════════════════════════════════════════════════════ -->
+<section class="newsletter-section" aria-labelledby="newsletter-heading">
+  <div class="newsletter-inner">
+    <h2 class="newsletter-title" id="newsletter-heading">LET'S KEEP IN TOUCH</h2>
+    <p class="newsletter-sub">Sign up for updates on new parts and race-day deals</p>
+    <form class="newsletter-form" onsubmit="return false;" aria-label="Newsletter signup">
+      <label for="nl-email" class="sr-only">Your email address</label>
+      <input type="email" id="nl-email" class="newsletter-input"
+             placeholder="Your email address"
+             autocomplete="email"/>
+      <button type="submit" class="newsletter-btn">SUBSCRIBE</button>
+    </form>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════ -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+
+    <div class="footer-top">
+
+      <!-- Brand col -->
+      <div class="footer-brand-col">
+        <a href="https://britainracing.com/"
+           class="footer-logo-link" aria-label="Britain Racing LLC. – Home">
+          <img
+            src="https://britainracing.com/cdn/shop/files/BritainRacing_-_Large_0bbd4388-4a07-4574-8f9e-9fddcae6e659.jpg?v=1743437605&width=300"
+            alt="Britain Racing LLC."
+            class="footer-logo"
+            width="180" height="40"
+          />
+        </a>
+        <p class="footer-brand-name">Britain Racing LLC.</p>
+      </div>
+
+      <!-- Links col -->
+      <nav class="footer-links-col" aria-label="Footer navigation">
+        <a href="https://britainracing.com/"                          class="footer-link">Home</a>
+        <a href="https://britainracing.com/collections"               class="footer-link">Catalog</a>
+        <a href="https://britainracing.com/pages/contact"             class="footer-link">Contact</a>
+        <a href="https://britainracing.com/policies/privacy-policy"   class="footer-link">Privacy Policy</a>
+      </nav>
+
+      <!-- Social col -->
+      <div class="footer-social-col">
+        <a href="http://instagram.com/shopify"
+           class="footer-social-link"
+           aria-label="Follow us on Instagram"
+           target="_blank" rel="noopener noreferrer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </a>
+        <a href="https://tiktok.com/@shopify"
+           class="footer-social-link"
+           aria-label="Follow us on TikTok"
+           target="_blank" rel="noopener noreferrer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.23 8.23 0 0 0 4.86 1.57V6.79a4.85 4.85 0 0 1-1.09-.1z"/>
+          </svg>
+        </a>
+      </div>
+
+    </div><!-- /.footer-top -->
+
+    <div class="footer-bottom">
+      <span>© 2026 Britain Racing LLC.</span>
+      <a href="https://www.shopify.com/?utm_campaign=poweredby&utm_medium=shopify&utm_source=onlinestore"
+         class="footer-powered"
+         target="_blank" rel="noopener noreferrer">Powered by Shopify</a>
+    </div>
+
+  </div><!-- /.footer-inner -->
+</footer>
+
+<!-- Cart notification region -->
+<div id="cart-notification-product" class="cart-notification-product"
+     role="status" aria-live="polite" aria-atomic="true"></div>
+
+<script id="overkill-scripts">
+// ── Preloader ──────────────────────────────────────────────
+(function() {
+  var progress = 0;
+  var fill = document.querySelector('.preloader-fill');
+  var count = document.querySelector('.preloader-count');
+  var interval = setInterval(function() {
+    progress += Math.random() * 12 + 3;
+    if (progress >= 100) { progress = 100; clearInterval(interval); }
+    if (fill) fill.style.width = progress + '%';
+    if (count) count.textContent = Math.floor(progress) + '%';
+    if (progress >= 100) {
+      setTimeout(function() {
+        var preloader = document.getElementById('overkill-preloader');
+        if (preloader && window.gsap) {
+          gsap.to(preloader, { yPercent: -100, duration: 0.8, ease: 'power4.inOut',
+            onComplete: function() { preloader.style.display = 'none'; }
+          });
+        } else if (preloader) {
+          preloader.style.transition = 'opacity 0.5s';
+          preloader.style.opacity = '0';
+          setTimeout(function() { preloader.style.display = 'none'; }, 500);
+        }
+      }, 200);
+    }
+  }, 60);
+})();
+
+(function () {
+  'use strict';
+
+  /* ══════════════════════════════════════════════════════
+     REGISTER GSAP PLUGINS
+  ══════════════════════════════════════════════════════ */
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ══════════════════════════════════════════════════════
+     STEP 1 – PRELOADER / TACHOMETER
+  ══════════════════════════════════════════════════════ */
+  (function initPreloader() {
+    var ticksGroup = document.getElementById('tach-ticks');
+    var needle     = document.getElementById('tach-needle');
+    var preloader  = document.getElementById('preloader');
+
+    /* Safety fallback: if preloader DOM is missing, skip to main */
+    if (!ticksGroup || !needle || !preloader) {
+      initMainAnimations();
+      return;
+    }
+
+    /* ── Build 12 tick marks around the dial arc ──────────
+       SVG angle convention: 0° = 3 o'clock, 90° = 6 o'clock
+       Dial sweep: 150° → 30° clockwise (240° of arc)
+       Corresponds to CSS rotate(-120°) → rotate(+120°)       */
+    var CX       = 100,  CY      = 100;
+    var OUTER_R  = 82,   INNER_R = 70;
+    var NUM      = 12;
+    var START    = 150;  /* SVG degrees */
+    var SWEEP    = 240;
+
+    for (var i = 0; i < NUM; i++) {
+      var angleDeg = START + (SWEEP / (NUM - 1)) * i;
+      var rad      = angleDeg * Math.PI / 180;
+      var isMajor  = (i % 3 === 0);
+      var r0       = isMajor ? INNER_R - 5 : INNER_R;
+
+      var x1 = (CX + r0      * Math.cos(rad)).toFixed(2);
+      var y1 = (CY + r0      * Math.sin(rad)).toFixed(2);
+      var x2 = (CX + OUTER_R * Math.cos(rad)).toFixed(2);
+      var y2 = (CY + OUTER_R * Math.sin(rad)).toFixed(2);
+
+      var ln = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      ln.setAttribute('x1', x1);
+      ln.setAttribute('y1', y1);
+      ln.setAttribute('x2', x2);
+      ln.setAttribute('y2', y2);
+      ln.setAttribute('stroke', '#2A2018');
+      ln.setAttribute('stroke-width', isMajor ? '3' : '2');
+      ln.setAttribute('stroke-linecap', 'round');
+
+      /* Last 3 ticks are in the redline zone */
+      if (i >= NUM - 3) { ln.classList.add('tick-redline'); }
+
+      ticksGroup.appendChild(ln);
+    }
+
+    /* ── GSAP timeline: needle sweep → redline flash → fade ── */
+    gsap.set(needle, { rotate: -120, svgOrigin: '100 100' });
+
+    var tl = gsap.timeline();
+
+    /* Needle sweeps -120° → +120° in 1.2 s */
+    tl.to(needle, {
+      rotate:    120,
+      svgOrigin: '100 100',
+      duration:  1.2,
+      ease:      'power2.inOut'
+    });
+
+    /* At t = 1.2 s: last 3 ticks flash to redline orange-red */
+    tl.to('.tick-redline', {
+      stroke:   '#FF4422',
+      stagger:  0.08,
+      duration: 0.15,
+      ease:     'power2.out'
+    }, 1.2);
+
+    /* At t = 1.4 s: fade out preloader */
+    tl.to(preloader, {
+      opacity:  0,
+      duration: 0.4,
+      ease:     'power2.in',
+      onComplete: function () {
+        preloader.remove();
+        initMainAnimations();
+      }
+    }, 1.4);
+  }());
+
+  /* ══════════════════════════════════════════════════════
+     MAIN ANIMATIONS  (called after preloader resolves)
+  ══════════════════════════════════════════════════════ */
+  function initMainAnimations() {
+
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ── STEP 2: Lenis smooth scroll ──────────────────── */
+    var lenis = new Lenis({
+      duration:      1.0,
+      easing:        function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      orientation:   'vertical',
+      smoothWheel:   true,
+      wheelMultiplier: 1.0
+    });
+
+    /* rAF loop */
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    /* Connect to GSAP ScrollTrigger */
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+
+    /* ── STEP 3: Nav shrink on scroll > 80px ─────────── */
+    ScrollTrigger.create({
+      start: 80,
+      onEnter: function () {
+        gsap.to('#nav-inner', {
+          padding: '10px 40px',
+          duration: 0.4,
+          ease: 'power2.out'
+        });
+      },
+      onLeaveBack: function () {
+        gsap.to('#nav-inner', {
+          padding: '16px 40px',
+          duration: 0.4,
+          ease: 'power2.out'
+        });
+      }
+    });
+
+    /* ── STEP 4: Hero – parallax bg ───────────────────── */
+    if (!prefersReduced) {
+      gsap.to('.hero-bg', {
+        y: '22%',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero-section',
+          start:   'top top',
+          end:     'bottom top',
+          scrub:   true
+        }
+      });
+    }
+
+    /* ── STEP 11 helper: split element text into chars ─ */
+    function splitChars(el) {
+      var text  = el.textContent;
+      var frag  = document.createDocumentFragment();
+      var chars = [];
+      for (var c = 0; c < text.length; c++) {
+        var sp = document.createElement('span');
+        sp.className   = 'split-char';
+        sp.textContent = (text[c] === ' ') ? '\u00A0' : text[c];
+        frag.appendChild(sp);
+        chars.push(sp);
+      }
+      el.innerHTML = '';
+      el.appendChild(frag);
+      return chars;
+    }
+
+    /* ── STEP 11 helper: split element text into words ─ */
+    function splitWords(el) {
+      var parts = el.textContent.trim().split(/\s+/);
+      el.innerHTML = parts.map(function (w) {
+        return '<span class="split-word">' + w + '</span>';
+      }).join(' ');
+      return el.querySelectorAll('.split-word');
+    }
+
+    /* ── STEP 4 (cont): Hero split-text animation ─────── */
+    var line1 = document.querySelector('.hero-line-1');
+    var line2 = document.querySelector('.hero-line-2');
+
+    if (!prefersReduced && line1 && line2) {
+      var chars1 = splitChars(line1);
+      var chars2 = splitChars(line2);
+
+      /* Initial: rotated back, invisible */
+      gsap.set([chars1, chars2], {
+        opacity:         0,
+        rotateX:         90,
+        y:               40,
+        transformOrigin: '50% 100%'
+      });
+
+      /* Line 1: cascade in */
+      gsap.to(chars1, {
+        opacity:  1,
+        rotateX:  0,
+        y:        0,
+        stagger:  0.03,
+        duration: 0.8,
+        ease:     'back.out(1.7)',
+        delay:    0.15
+      });
+
+      /* Line 2: offset start */
+      gsap.to(chars2, {
+        opacity:  1,
+        rotateX:  0,
+        y:        0,
+        stagger:  0.03,
+        duration: 0.8,
+        ease:     'back.out(1.7)',
+        delay:    0.4
+      });
+
+      /* Amber rule: scale from center */
+      gsap.from('.hero-rule', {
+        scaleX:   0,
+        duration: 1.0,
+        ease:     'power3.out',
+        delay:    0.95
+      });
+
+      /* CTA fade + rise */
+      gsap.from('.hero-cta', {
+        opacity:  0,
+        y:        20,
+        duration: 0.6,
+        ease:     'power2.out',
+        delay:    1.25
+      });
+    }
+
+    /* ── STEP 5: Collections – section title word reveal ─ */
+    if (!prefersReduced) {
+      var titleEl = document.querySelector('.section-title');
+      if (titleEl) {
+        var titleWords = splitWords(titleEl);
+        gsap.from(titleWords, {
+          scrollTrigger: {
+            trigger:       '.collections-header',
+            start:         'top 80%',
+            toggleActions: 'play none none none'
+          },
+          opacity:  0,
+          y:        30,
+          stagger:  0.08,
+          duration: 0.6,
+          ease:     'power3.out'
+        });
+      }
+
+      /* Newsletter title word reveal */
+      var nlTitleEl = document.querySelector('.newsletter-title');
+      if (nlTitleEl) {
+        var nlWords = splitWords(nlTitleEl);
+        gsap.from(nlWords, {
+          scrollTrigger: {
+            trigger:       '.newsletter-section',
+            start:         'top 80%',
+            toggleActions: 'play none none none'
+          },
+          opacity:  0,
+          y:        30,
+          stagger:  0.08,
+          duration: 0.6,
+          ease:     'power3.out'
+        });
+      }
+    }
+
+    /* ── STEP 5: Collections card scroll reveal ─────────
+       Cards start at opacity:0.4 (partially visible) NOT 0  */
+    gsap.set('.collection-card', { opacity: 0.4, y: 60 });
+
+    gsap.to('.collection-card', {
+      scrollTrigger: {
+        trigger:       '.collections-grid',
+        start:         'top 80%',
+        end:           'top 30%',
+        toggleActions: 'play none none none'
+      },
+      opacity:  1,
+      y:        0,
+      stagger:  0.12,
+      duration: 0.8,
+      ease:     'power3.out'
+    });
+
+    /* ── STEP 6: Newsletter reveal ──────────────────────── */
+    gsap.set('.newsletter-section', { opacity: 0.4, y: 40 });
+
+    gsap.to('.newsletter-section', {
+      scrollTrigger: {
+        trigger:       '.newsletter-section',
+        start:         'top 80%',
+        toggleActions: 'play none none none'
+      },
+      opacity:  1,
+      y:        0,
+      duration: 0.8,
+      ease:     'power2.out'
+    });
+
+    /* ── STEP 10: Scroll progress bar ──────────────────── */
+    gsap.to('.scroll-progress', {
+      scrollTrigger: {
+        trigger: 'body',
+        start:   'top top',
+        end:     'bottom bottom',
+        scrub:   0.3
+      },
+      width: '100%'
+    });
+
+    /* ── STEP 8: Custom cursor (desktop only) ─────────── */
+    var isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+
+    if (isDesktop && !prefersReduced) {
+      var dot  = document.querySelector('.cursor-dot');
+      var ring = document.querySelector('.cursor-ring');
+
+      if (dot && ring) {
+        var xDot  = gsap.quickTo(dot,  'x', { duration: 0.15, ease: 'power2.out' });
+        var yDot  = gsap.quickTo(dot,  'y', { duration: 0.15, ease: 'power2.out' });
+        var xRing = gsap.quickTo(ring, 'x', { duration: 0.35, ease: 'power2.out' });
+        var yRing = gsap.quickTo(ring, 'y', { duration: 0.35, ease: 'power2.out' });
+
+        document.addEventListener('mousemove', function (e) {
+          xDot(e.clientX - 4);
+          yDot(e.clientY - 4);
+          xRing(e.clientX - 18);
+          yRing(e.clientY - 18);
+        });
+
+        /* Expand ring on interactive elements */
+        var interactives = document.querySelectorAll('a, button, [role="button"]');
+        interactives.forEach(function (el) {
+          el.addEventListener('mouseenter', function () {
+            gsap.to(ring, { scale: 1.6, borderColor: 'rgba(156,74,7,0.8)', duration: 0.3 });
+            gsap.to(dot,  { scale: 0.5,                                      duration: 0.3 });
+          });
+          el.addEventListener('mouseleave', function () {
+            gsap.to(ring, { scale: 1,   borderColor: 'rgba(156,74,7,0.5)',  duration: 0.3 });
+            gsap.to(dot,  { scale: 1,                                        duration: 0.3 });
+          });
+        });
+      }
+    }
+
+    /* ── Magnetic buttons ─────────────────────────────── */
+    if (isDesktop && !prefersReduced) {
+      var magnets = document.querySelectorAll('.hero-cta, .newsletter-btn');
+
+      magnets.forEach(function (btn) {
+        btn.addEventListener('mousemove', function (e) {
+          var r  = btn.getBoundingClientRect();
+          var dx = e.clientX - r.left - r.width  / 2;
+          var dy = e.clientY - r.top  - r.height / 2;
+          gsap.to(btn, {
+            x:         dx * 0.3,
+            y:         dy * 0.3,
+            scale:     1.03,
+            boxShadow: '0 12px 40px rgba(156,74,7,0.42)',
+            duration:  0.4,
+            ease:      'power2.out'
+          });
+        });
+
+        btn.addEventListener('mouseleave', function () {
+          gsap.to(btn, {
+            x:         0,
+            y:         0,
+            scale:     1,
+            boxShadow: '0 0 0 rgba(156,74,7,0)',
+            duration:  0.7,
+            ease:      'expo.out'
+          });
+        });
+      });
+    }
+
+    /* ── STEP 3 (cont): Mobile menu ───────────────────── */
+    var hamburger    = document.getElementById('nav-hamburger');
+    var mobileMenu   = document.getElementById('mobile-menu');
+    var mobileOver   = document.getElementById('mobile-overlay');
+    var mobileClose  = document.getElementById('mobile-menu-close');
+
+    function openMenu() {
+      mobileMenu.classList.add('is-open');
+      mobileOver.classList.add('is-open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      mobileMenu.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      /* Animate hamburger → X */
+      var spans = hamburger.querySelectorAll('span');
+      gsap.to(spans[0], { y: 7,  rotate: 45,  duration: 0.3, ease: 'power2.inOut' });
+      gsap.to(spans[1], { opacity: 0,          duration: 0.2 });
+      gsap.to(spans[2], { y: -7, rotate: -45, duration: 0.3, ease: 'power2.inOut' });
+    }
+
+    function closeMenu() {
+      mobileMenu.classList.remove('is-open');
+      mobileOver.classList.remove('is-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      /* Restore hamburger */
+      var spans = hamburger.querySelectorAll('span');
+      gsap.to(spans[0], { y: 0, rotate: 0, duration: 0.3, ease: 'power2.inOut' });
+      gsap.to(spans[1], { opacity: 1,       duration: 0.2, delay: 0.1 });
+      gsap.to(spans[2], { y: 0, rotate: 0, duration: 0.3, ease: 'power2.inOut' });
+    }
+
+    if (hamburger)   hamburger.addEventListener('click',   openMenu);
+    if (mobileClose) mobileClose.addEventListener('click', closeMenu);
+    if (mobileOver)  mobileOver.addEventListener('click',  closeMenu);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) {
+        closeMenu();
+        if (hamburger) hamburger.focus();
+      }
+    });
+
+    /* Close on mobile link click */
+    document.querySelectorAll('.mobile-nav-link').forEach(function (lnk) {
+      lnk.addEventListener('click', closeMenu);
+    });
+
+  } /* end initMainAnimations */
+
+}());
+</script>
+
+</body>
+</html>
