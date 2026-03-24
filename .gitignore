@@ -39,3 +39,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Temp test files
+tmp_*
+*.part
+.playwright-mcp/
+.specs/
+britain-racing-*.png
+
+# Large video assets (use LFS or CDN)
+public/*.mp4
+public/*.part

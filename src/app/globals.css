@@ -1,26 +1,359 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ok-gold: #C9A84C;
+  --ok-gold-light: #E8C97A;
+  --ok-magenta: #ff2d7b;
+  --ok-bg: #050505;
+  --ok-bg-card: #0a0a0f;
+  --ok-text: #f0f0f0;
+  --ok-muted: #666;
+  --ok-border: rgba(201, 168, 76, 0.15);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html { color-scheme: dark; }
+body { background: var(--ok-bg); color: var(--ok-text); }
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+::-webkit-scrollbar-track {
+  background: var(--ok-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(201, 168, 76, 0.25);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(201, 168, 76, 0.45);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201, 168, 76, 0.25) var(--ok-bg);
+}
+::selection { background: rgba(201, 168, 76, 0.3); }
+
+/* Preview scrollbar (red theme) */
+.preview-scroll::-webkit-scrollbar { width: 4px; }
+.preview-scroll::-webkit-scrollbar-track { background: transparent; }
+.preview-scroll::-webkit-scrollbar-thumb { background: rgba(238, 63, 44, 0.35); border-radius: 2px; }
+.preview-scroll::-webkit-scrollbar-thumb:hover { background: rgba(238, 63, 44, 0.6); }
+.preview-scroll { scrollbar-width: thin; scrollbar-color: rgba(238, 63, 44, 0.35) transparent; }
+
+/* Feature grid */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+/* URL input glow */
+.url-input-glow {
+  box-shadow: 0 0 0 1px var(--ok-border),
+              0 0 40px -10px rgba(201, 168, 76, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.url-input-glow:focus-within {
+  box-shadow: 0 0 0 1px var(--ok-gold),
+              0 0 60px -10px rgba(201, 168, 76, 0.4);
+}
+
+/* Checklist styles */
+.feature-check {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--ok-border);
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.feature-check:checked {
+  background: var(--ok-gold);
+  border-color: var(--ok-gold);
+}
+
+.feature-check:checked::after {
+  content: '✓';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #050505;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ─── Shared animations ─── */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-particle {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 0.6; transform: scale(1.2); }
+}
+
+/* ─── Aura editorial animations ─── */
+
+@keyframes aura-rule-expand {
+  0% { width: 0; opacity: 0; }
+  20% { opacity: 1; }
+  100% { width: 70%; opacity: 1; }
+}
+
+.aura-rule-glow {
+  filter: drop-shadow(0 0 6px rgba(201, 168, 76, 0.3));
+}
+
+@keyframes aura-fade-in {
+  0% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.aura-fade-in {
+  opacity: 0;
+  animation: aura-fade-in 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes aura-scroll-breathe {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.35; }
+}
+
+.aura-scroll-pulse {
+  animation: aura-scroll-breathe 3.5s ease-in-out infinite;
+}
+
+/* ─── Nexus creative agency animations ─── */
+
+@keyframes nexus-headline-reveal {
+  0% { opacity: 0; transform: translateY(30px) skewY(2deg); filter: blur(8px); }
+  100% { opacity: 1; transform: translateY(0) skewY(0deg); filter: blur(0px); }
+}
+
+.nexus-headline-reveal {
+  opacity: 0;
+  animation: nexus-headline-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes nexus-fade-in {
+  0% { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.nexus-fade-in {
+  opacity: 0;
+  animation: nexus-fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes nexus-card-reveal {
+  0% { opacity: 0; transform: translateX(40px) scale(0.95); filter: blur(4px); }
+  100% { opacity: 1; transform: translateX(0) scale(1); filter: blur(0px); }
+}
+
+.nexus-card-reveal {
+  animation: nexus-card-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes nexus-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes nexus-line-expand {
+  0% { width: 0; opacity: 0; }
+  100% { width: 2rem; opacity: 1; }
+}
+
+.nexus-line-expand {
+  width: 0;
+  animation: nexus-line-expand 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s forwards;
+}
+
+@keyframes nexus-marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-25%); }
+}
+
+.nexus-marquee {
+  animation: nexus-marquee-scroll 30s linear infinite;
+}
+
+/* ─── Drift nightlife animations ─── */
+
+@keyframes drift-headline-reveal {
+  0% { opacity: 0; transform: translateY(30px) skewY(2deg); filter: blur(8px); }
+  100% { opacity: 1; transform: translateY(0) skewY(0deg); filter: blur(0px); }
+}
+
+.drift-headline-reveal {
+  opacity: 0;
+  animation: drift-headline-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes drift-fade-in {
+  0% { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.drift-fade-in {
+  opacity: 0;
+  animation: drift-fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes drift-bar-pulse {
+  0% { height: 20%; }
+  100% { height: 100%; }
+}
+
+@keyframes drift-marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-25%); }
+}
+
+.drift-marquee {
+  animation: drift-marquee-scroll 25s linear infinite;
+}
+
+/* ─── Showcase section animations ─── */
+
+@keyframes typewriter-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.typewriter-cursor {
+  animation: typewriter-blink 0.8s step-end infinite;
+}
+
+/* Preloader gold loading bar */
+@keyframes preloader-bar {
+  0%   { width: 0; }
+  70%  { width: 85%; }
+  100% { width: 100%; }
+}
+
+/* Smooth fade-in utility */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Smooth fade-out utility */
+@keyframes fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* ─── Showcase site buttons — premium hover effects ─── */
+
+.site-btn {
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease;
+}
+
+.site-btn:hover {
+  transform: scale(1.08) translateY(-2px);
+  filter: brightness(1.15);
+  box-shadow:
+    0 0 40px var(--btn-glow, rgba(255,255,255,0.2)),
+    0 8px 25px rgba(0,0,0,0.4) !important;
+}
+
+.site-btn-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 70%
+  );
+  animation: btn-shine 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes btn-shine {
+  0%   { left: -100%; }
+  40%  { left: 150%; }
+  100% { left: 150%; }
+}
+
+.site-btn-link {
+  cursor: pointer;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.site-btn-link:hover {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ─── Feature configurator demo animations ─── */
+
+@keyframes ring-pulse {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.4), 0 0 8px rgba(201, 168, 76, 0.2); }
+  50% { box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.6), 0 0 20px rgba(201, 168, 76, 0.3); }
+}
+
+@keyframes char-reveal {
+  0% { opacity: 0; transform: translateY(12px) rotateX(-40deg); filter: blur(4px); }
+  100% { opacity: 1; transform: translateY(0) rotateX(0deg); filter: blur(0); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes loader-fill {
+  0% { width: 0%; }
+  70% { width: 85%; }
+  100% { width: 100%; }
+}
+
+/* ─── Japanese checkout — falling leaves ─── */
+@keyframes leaf-fall {
+  0% {
+    opacity: 0;
+    transform: translateY(0) translateX(0) rotate(0deg);
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  10% {
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(50vh) translateX(var(--drift, 30px)) rotate(180deg);
+  }
+  90% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(105vh) translateX(calc(var(--drift, 30px) * -0.5)) rotate(360deg);
+  }
 }
