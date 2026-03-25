@@ -1,57 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Britain Racing LLC. — Precision Engineered Motorsport Parts</title>
-  <meta name="description" content="Britain Racing supplies precision-engineered motorsport parts to drivers who demand more from their machines. Built to survive race day.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Britain Racing LLC. — Track-Forged Performance Parts</title>
+  <meta name="description" content="Britain Racing equips drivers who reject factory limitations. Precision-engineered motorsport parts, track-tested, no exceptions.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&family=Oswald:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 <style id="overkill-styles">
-/* ═══════════════════════════════════════════════════════════════
-   BRAND TOKENS
-═══════════════════════════════════════════════════════════════ */
-:root {
-  --ok-base: #0d0d0d;
-  --ok-surface: #111111;
-  --ok-deep: #0a0a0a;
-  --ok-warm: #0f0a07;
-  --ok-accent: #C85A08;
-  --ok-accent-bright: #FF7A1A;
-  --ok-accent-warm: #FFE1B8;
-  --ok-accent-dark: #3D0400;
-  --ok-muted: #3B3838;
-  --ok-text: rgba(255,255,255,0.75);
-  --ok-text-dim: rgba(255,255,255,0.45);
-  --ok-text-dimmer: rgba(255,255,255,0.25);
-  --ok-border: rgba(200,90,8,0.12);
-  --ok-border-subtle: rgba(255,255,255,0.06);
-  --ok-glow: 0 12px 40px rgba(200,90,8,0.35);
-}
+/* ══════════════════════════════════════════════════
+   BASE RESET & CUSTOM PROPERTIES
+══════════════════════════════════════════════════ */
 
-/* ═══════════════════════════════════════════════════════════════
-   RESET & BASE
-═══════════════════════════════════════════════════════════════ */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html {
-  scroll-behavior: auto;
-  font-size: 16px;
+:root {
+  --bg:       #0d0d0d;
+  --bg2:      #111111;
+  --accent:   #e8600a;
+  --accent2:  #ff8c00;
+  --maroon:   #3d0400;
+  --text:     #f0f0f0;
+  --muted:    rgba(255,255,255,0.6);
+  --border:   rgba(232,96,10,0.15);
+  --border2:  rgba(255,255,255,0.06);
+  --accent-rgb: 232, 96, 10;
 }
 
+html { scroll-behavior: auto; }
+
 body {
-  background: var(--ok-base);
-  color: var(--ok-text);
+  background: var(--bg);
+  color: var(--text);
   font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -67,2464 +59,2289 @@ a {
   color: inherit;
 }
 
-ul { list-style: none; }
+ul, ol { list-style: none; }
 
-::selection {
-  background: var(--ok-accent);
-  color: #ffffff;
-}
+/* ══════════════════════════════════════════════════
+   SCROLLBAR & SELECTION
+══════════════════════════════════════════════════ */
 
-::-webkit-scrollbar { width: 6px; background: var(--ok-base); }
-::-webkit-scrollbar-thumb { background: var(--ok-accent); border-radius: 0; }
-::-webkit-scrollbar-track { background: rgba(200,90,8,0.06); }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: rgba(232,96,10,0.06); }
+::-webkit-scrollbar-thumb { background: #e8600a; border-radius: 0; }
+::selection { background: #e8600a; color: #fff; }
 
-:focus-visible {
-  outline: 2px solid var(--ok-accent);
-  outline-offset: 4px;
-  border-radius: 1px;
-}
-:focus:not(:focus-visible) { outline: none; }
-
-/* ═══════════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════════
    SKIP LINK
-═══════════════════════════════════════════════════════════════ */
+══════════════════════════════════════════════════ */
+
 .ok-skip-link {
-  position: absolute;
-  top: -120px;
-  left: 24px;
-  z-index: 999999;
-  background: var(--ok-accent);
-  color: #fff;
-  padding: 10px 20px;
+  position: fixed;
+  top: -100%;
+  left: 20px;
+  z-index: 99999;
+  background: var(--accent);
+  color: #0d0d0d;
   font-family: 'Inter', sans-serif;
   font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  transition: top 0.2s ease;
+  font-weight: 600;
+  padding: 10px 20px;
+  letter-spacing: 0.08em;
+  transition: top 0.2s;
 }
-.ok-skip-link:focus { top: 16px; }
+.ok-skip-link:focus {
+  top: 10px;
+}
 
-/* ═══════════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════════
+   FILM GRAIN
+══════════════════════════════════════════════════ */
+
+#ok-film-grain {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  animation: grainShift 0.5s steps(1) infinite;
+}
+
+@keyframes grainShift {
+  0%,100% { transform: translate(0,0); }
+  10%     { transform: translate(-2%,-3%); }
+  20%     { transform: translate(3%,2%); }
+  30%     { transform: translate(-1%,4%); }
+  40%     { transform: translate(4%,-1%); }
+  50%     { transform: translate(-3%,3%); }
+  60%     { transform: translate(2%,-4%); }
+  70%     { transform: translate(-4%,1%); }
+  80%     { transform: translate(1%,3%); }
+  90%     { transform: translate(3%,-2%); }
+}
+
+/* ══════════════════════════════════════════════════
    SCROLL PROGRESS BAR
-═══════════════════════════════════════════════════════════════ */
+══════════════════════════════════════════════════ */
+
 #ok-scroll-progress {
   position: fixed;
   top: 0;
   left: 0;
   height: 2px;
   width: 0%;
-  background: linear-gradient(90deg, var(--ok-accent) 0%, var(--ok-accent-bright) 55%, var(--ok-accent-warm) 100%);
   z-index: 10000;
+  background: linear-gradient(90deg, #3d0400 0%, #e8600a 55%, #ff8c00 100%);
   pointer-events: none;
   will-change: width;
-  transition: none;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   PRELOADER
-═══════════════════════════════════════════════════════════════ */
-#overkill-preloader {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  background: var(--ok-base);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 28px;
-  clip-path: inset(0 0 0% 0);
-}
-
-.preloader__wordmark {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 52px;
-  letter-spacing: 0.18em;
-  color: #ffffff;
-  text-transform: uppercase;
-  line-height: 1;
-}
-
-.preloader__sublabel {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  letter-spacing: 0.4em;
-  color: rgba(255,255,255,0.35);
-  text-transform: uppercase;
-  margin-top: -14px;
-}
-
-.preloader__bar-container {
-  width: 240px;
-  height: 2px;
-  background: rgba(255,255,255,0.08);
-  position: relative;
-  overflow: hidden;
-}
-
-.preloader__bar-fill {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 2px;
-  width: 0%;
-  background: linear-gradient(90deg, var(--ok-accent), var(--ok-accent-bright));
-  will-change: width;
-}
-
-.preloader__count {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 13px;
-  letter-spacing: 0.25em;
-  color: var(--ok-accent);
-  margin-top: 10px;
-}
-
-/* ═══════════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════════
    GLASS NAV
-═══════════════════════════════════════════════════════════════ */
-#ok-nav {
+══════════════════════════════════════════════════ */
+
+.ok-nav {
   position: fixed;
-  top: 0;
+  top: 2px;
   left: 0;
   width: 100%;
   z-index: 1000;
-  background: rgba(13,13,13,0.82);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--ok-border);
+  background: rgba(13,13,13,0.80);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(232,96,10,0.15);
   padding: 20px 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: padding 300ms ease, background 300ms ease;
-  will-change: padding, background;
+  transition: padding 300ms cubic-bezier(0.4,0,0.2,1),
+              background 300ms ease,
+              border-color 300ms ease;
 }
 
-.nav__logo-wrap {
-  display: flex;
-  align-items: center;
+.ok-nav__logo-wrap {
+  display: block;
   flex-shrink: 0;
+  line-height: 0;
 }
 
-.nav__logo {
-  height: 36px;
+.ok-nav__logo {
+  height: 34px;
   width: auto;
   object-fit: contain;
-  opacity: 0.82;
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
   transition: opacity 300ms ease;
-  filter: brightness(1.15) contrast(1.05);
 }
 
-.nav__logo-wrap:hover .nav__logo { opacity: 1; }
+.ok-nav__logo-wrap:hover .ok-nav__logo { opacity: 1; }
+.ok-nav__logo-wrap:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
-.nav__links-desktop {
+.ok-nav__links {
   display: flex;
   align-items: center;
-  gap: 44px;
+  gap: 40px;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
 }
 
-.nav__link {
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
+.ok-nav__link {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.68);
+  color: rgba(255,255,255,0.65);
   position: relative;
   padding: 4px 0;
   transition: color 200ms ease;
-  white-space: nowrap;
 }
 
-.nav__link:hover { color: #ffffff; }
-
-.nav__link::after {
+.ok-nav__link::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: -3px;
   left: 0;
   width: 100%;
   height: 2px;
-  background: var(--ok-accent);
+  background: var(--accent);
   transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 200ms ease;
+  transform-origin: left center;
+  transition: transform 200ms cubic-bezier(0.4,0,0.2,1);
 }
 
-.nav__link:hover::after { transform: scaleX(1); }
+.ok-nav__link:hover {
+  color: var(--accent);
+}
 
-.nav__right-cluster {
+.ok-nav__link:hover::after {
+  transform: scaleX(1);
+}
+
+.ok-nav__link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 1px;
+}
+
+.ok-nav__actions {
   display: flex;
   align-items: center;
   gap: 20px;
-  flex-shrink: 0;
 }
 
-.nav__cart-btn {
-  position: relative;
+.ok-nav__cart {
+  color: rgba(255,255,255,0.7);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  color: rgba(255,255,255,0.75);
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
   transition: color 200ms ease, transform 200ms ease;
+  min-width: 44px;
+  min-height: 44px;
 }
 
-.nav__cart-btn:hover { color: var(--ok-accent-bright); transform: scale(1.12); }
-.nav__cart-btn:active { transform: scale(0.94); }
+.ok-nav__cart:hover  { color: var(--accent); transform: scale(1.1); }
+.ok-nav__cart:active { transform: scale(0.92); }
+.ok-nav__cart:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
-.nav__cart-badge {
-  position: absolute;
-  top: -6px;
-  right: -8px;
-  background: var(--ok-accent);
-  color: #ffffff;
-  font-family: 'Inter', sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-}
-
-.nav__hamburger {
+.ok-nav__hamburger {
   display: none;
   flex-direction: column;
   gap: 5px;
-  width: 28px;
-  cursor: pointer;
-  padding: 4px 0;
   background: none;
   border: none;
+  cursor: pointer;
+  padding: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
 }
 
-.nav__hamburger span {
+.ok-nav__hamburger span {
   display: block;
-  width: 24px;
+  width: 22px;
   height: 2px;
-  background: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.8);
   transition: transform 300ms ease, opacity 300ms ease;
+  transform-origin: center;
 }
 
-.nav__hamburger.is-open span:nth-child(1) { transform: rotate(45deg) translateY(7px); }
-.nav__hamburger.is-open span:nth-child(2) { opacity: 0; }
-.nav__hamburger.is-open span:nth-child(3) { transform: rotate(-45deg) translateY(-7px); }
+.ok-nav__hamburger:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
-/* Mobile Drawer */
-.nav__drawer {
+.ok-nav__hamburger.is-open span:nth-child(1) { transform: rotate(45deg) translateY(7px); }
+.ok-nav__hamburger.is-open span:nth-child(2) { opacity: 0; }
+.ok-nav__hamburger.is-open span:nth-child(3) { transform: rotate(-45deg) translateY(-7px); }
+
+/* ══════════════════════════════════════════════════
+   MOBILE DRAWER
+══════════════════════════════════════════════════ */
+
+.ok-drawer-backdrop {
   position: fixed;
-  top: 0;
+  inset: 0;
+  background: rgba(13,13,13,0.70);
+  z-index: 1999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms ease;
+}
+
+.ok-drawer-backdrop.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.ok-mobile-drawer {
+  position: fixed;
   right: 0;
-  width: min(380px, 100vw);
+  top: 0;
   height: 100vh;
+  width: min(380px, 85vw);
   background: rgba(13,13,13,0.98);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   z-index: 2000;
   transform: translateX(100%);
   transition: transform 400ms cubic-bezier(0.16,1,0.3,1);
-  padding: 80px 48px 48px;
-  border-left: 1px solid rgba(200,90,8,0.1);
+  border-left: 1px solid rgba(232,96,10,0.15);
+  padding: 80px 0 40px;
+}
+
+.ok-mobile-drawer.is-open {
+  transform: translateX(0);
+}
+
+.ok-drawer__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  padding: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 200ms ease;
+}
+
+.ok-drawer__close:hover { color: var(--accent); }
+.ok-drawer__close:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+.ok-drawer__nav {
   display: flex;
   flex-direction: column;
 }
 
-.nav__drawer.is-open { transform: translateX(0); }
-
-.nav__drawer-close {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  background: none;
-  border: none;
-  color: rgba(255,255,255,0.5);
-  font-size: 24px;
-  cursor: pointer;
-  transition: color 200ms ease;
-  line-height: 1;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav__drawer-close:hover { color: var(--ok-accent); }
-
-.nav__drawer-link {
+.ok-drawer__link {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 48px;
-  letter-spacing: 0.05em;
-  color: #ffffff;
+  font-size: 28px;
+  letter-spacing: 0.10em;
+  color: rgba(255,255,255,0.80);
   display: block;
-  margin-bottom: 20px;
-  transition: color 200ms ease;
-  line-height: 1.1;
+  padding: 20px 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: color 200ms ease, background 200ms ease;
 }
 
-.nav__drawer-link:hover { color: var(--ok-accent); }
-
-.nav__drawer-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(13,13,13,0.65);
-  z-index: 1999;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 300ms ease;
+.ok-drawer__link:hover {
+  color: var(--accent);
+  background: rgba(232,96,10,0.05);
 }
 
-.nav__drawer-backdrop.is-active {
-  opacity: 1;
-  pointer-events: all;
+.ok-drawer__link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   HERO SECTION
-═══════════════════════════════════════════════════════════════ */
-.hero {
+/* ══════════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════════ */
+
+.ok-hero {
   position: relative;
   min-height: 100vh;
   overflow: hidden;
+  background: var(--bg);
   display: flex;
   align-items: flex-end;
-  padding: 0 0 90px 80px;
-  clip-path: polygon(0 0, 100% 0, 100% 90%, 92% 100%, 0 100%);
+  padding: 0 48px 100px;
+  clip-path: polygon(0 0, 100% 0, 100% 94%, 0 100%);
 }
 
-.hero__image {
+.ok-hero__bg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 115%;
   object-fit: cover;
-  object-position: center 30%;
+  object-position: center 40%;
   z-index: 0;
   will-change: transform;
-  transform-origin: center center;
+  filter: brightness(0.55) contrast(1.15) saturate(1.2);
 }
 
-.hero__gradient-overlay {
+.ok-hero__overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(165deg,
-    rgba(13,13,13,0.08) 0%,
-    rgba(13,13,13,0.25) 35%,
-    rgba(13,13,13,0.78) 70%,
-    rgba(13,13,13,0.94) 100%
+  background: linear-gradient(
+    135deg,
+    rgba(13,13,13,0.25) 0%,
+    rgba(13,13,13,0.00) 35%,
+    rgba(13,13,13,0.88) 100%
   );
-  pointer-events: none;
 }
 
-.hero__orange-accent {
+.ok-hero__accent-line {
   position: absolute;
-  left: 56px;
+  left: 48px;
   top: 50%;
   transform: translateY(-50%);
   width: 2px;
   height: 100px;
-  background: linear-gradient(180deg, transparent 0%, var(--ok-accent) 40%, var(--ok-accent) 60%, transparent 100%);
+  background: linear-gradient(180deg, transparent 0%, var(--accent) 100%);
   z-index: 2;
-  opacity: 0.9;
-  will-change: transform;
 }
 
-.hero__content {
+.ok-hero__content {
   position: relative;
   z-index: 2;
-  max-width: 720px;
-  will-change: transform;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 900px;
 }
 
-.hero__pre-label {
+.ok-hero__eyebrow {
   font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  letter-spacing: 0.38em;
+  font-size: 11px;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--ok-accent);
-  font-weight: 700;
+  color: var(--accent);
+  font-weight: 600;
   margin-bottom: 18px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 
-.hero__pre-label::before {
+.ok-hero__eyebrow::before {
   content: '';
-  width: 28px;
+  width: 24px;
   height: 1px;
-  background: var(--ok-accent);
-  display: inline-block;
+  background: var(--accent);
   flex-shrink: 0;
 }
 
-.hero__heading {
+.ok-hero__heading {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(56px, 9vw, 128px);
-  font-weight: 400;
-  letter-spacing: 0.04em;
+  font-size: clamp(56px, 9vw, 130px);
+  font-weight: 700;
   color: #f0f0f0;
   text-transform: uppercase;
-  line-height: 0.92;
-  margin-bottom: 28px;
-  perspective: 1200px;
+  letter-spacing: 0.04em;
+  line-height: 0.9;
   text-wrap: balance;
-  overflow-wrap: normal;
   word-break: keep-all;
+  overflow-wrap: normal;
+  margin: 0 0 28px 0;
+  perspective: 600px;
+  overflow: visible;
 }
 
-.hero__char {
+/* Split-text char spans — initial state (GSAP overrides these) */
+.ok-char {
   display: inline-block;
-  will-change: transform;
+  will-change: transform, opacity;
 }
 
-.hero__sub {
+.ok-space {
+  display: inline;
+  white-space: pre;
+}
+
+.ok-hero__sub {
   font-family: 'Inter', sans-serif;
-  font-size: 15px;
-  line-height: 1.75;
-  color: rgba(255,255,255,0.62);
-  max-width: 400px;
-  margin-bottom: 40px;
-  letter-spacing: 0.015em;
+  font-size: clamp(14px, 1.1vw, 17px);
+  color: rgba(255,255,255,0.6);
   font-weight: 400;
+  line-height: 1.7;
+  max-width: 460px;
+  margin-bottom: 44px;
+  letter-spacing: 0.02em;
 }
 
-.hero__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  background: var(--ok-accent);
-  color: #ffffff;
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 18px 48px;
-  clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
-  position: relative;
-  will-change: transform;
+/* Angular clip-path CTA */
+.ok-hero__cta {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.18em;
+  color: #0d0d0d;
+  background: var(--accent);
+  padding: 18px 56px;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  border: none;
+  cursor: pointer;
+  display: inline-block;
   transition: background 200ms ease;
 }
 
-.hero__cta:hover { background: var(--ok-accent-bright); }
-.hero__cta:focus-visible { outline: 2px solid var(--ok-accent-bright); outline-offset: 6px; }
+.ok-hero__cta:hover  { background: var(--accent2); }
+.ok-hero__cta:active { transform: scale(0.96) !important; }
+.ok-hero__cta:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
-.hero__cta-label { pointer-events: none; }
-
-.hero__cta-arrow {
-  font-size: 18px;
-  transition: transform 200ms ease;
-  pointer-events: none;
-}
-
-.hero__cta:hover .hero__cta-arrow { transform: translateX(5px); }
-
-.hero__scroll {
+.ok-hero__scroll-indicator {
   position: absolute;
-  bottom: 36px;
+  bottom: calc(6% + 16px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  pointer-events: none;
+  gap: 8px;
 }
 
-.hero__scroll-label {
+.ok-hero__scroll-indicator span {
   font-family: 'Inter', sans-serif;
   font-size: 9px;
-  letter-spacing: 0.35em;
+  letter-spacing: 0.25em;
   color: rgba(255,255,255,0.35);
   text-transform: uppercase;
 }
 
-.hero__scroll-chevron {
-  width: 14px;
-  height: 14px;
-  border-right: 2px solid rgba(200,90,8,0.6);
-  border-bottom: 2px solid rgba(200,90,8,0.6);
-  transform: rotate(45deg);
-  will-change: transform;
-}
+/* ══════════════════════════════════════════════════
+   MARQUEE TICKER
+══════════════════════════════════════════════════ */
 
-/* ═══════════════════════════════════════════════════════════════
-   RACE STRIPE DIVIDER
-═══════════════════════════════════════════════════════════════ */
-.race-stripe {
-  position: relative;
+.ok-ticker {
   width: 100%;
-  height: 72px;
-  background: linear-gradient(90deg, var(--ok-accent) 0%, var(--ok-accent-bright) 60%, var(--ok-accent) 100%);
-  clip-path: polygon(0 0, 100% 35%, 100% 100%, 0 65%);
-  margin-top: -36px;
-  margin-bottom: -36px;
-  z-index: 5;
+  background: var(--accent);
+  overflow: hidden;
+  padding: 13px 0;
+  position: relative;
+  z-index: 10;
+  margin-top: -2px;
+  cursor: default;
+}
+
+.ok-ticker__inner {
+  display: flex;
+  white-space: nowrap;
+  width: max-content;
+}
+
+.ok-ticker__set {
   display: flex;
   align-items: center;
-  justify-content: center;
-  overflow: hidden;
 }
 
-.race-stripe__grain {
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(90deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 1px, transparent 1px, transparent 12px);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.race-stripe__text {
-  font-family: 'Inter', sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.45em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.55);
-  position: relative;
-  z-index: 1;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   COLLECTION SHOWCASE
-═══════════════════════════════════════════════════════════════ */
-.collection-showcase {
-  background: var(--ok-surface);
-  padding: 110px 80px 130px;
-  position: relative;
-  overflow: hidden;
-}
-
-.collection-showcase__bg-texture {
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, transparent 1px, transparent 40px);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.collection-showcase__header {
-  position: relative;
-  z-index: 1;
-  margin-bottom: 56px;
-}
-
-.section-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.38em;
-  color: var(--ok-accent);
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin-bottom: 16px;
-}
-
-.section-label::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: rgba(200,90,8,0.25);
-}
-
-.title-mask { overflow: hidden; }
-
-.section-title-inner {
-  display: block;
+.ok-ticker__item {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(44px, 5.5vw, 88px);
-  letter-spacing: 0.04em;
-  color: #f0f0f0;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  color: #0d0d0d;
   text-transform: uppercase;
-  line-height: 1;
+  padding: 0 28px;
 }
 
-/* Grid Row 1 — Asymmetric */
-.collection-grid--row1 {
-  position: relative;
-  z-index: 1;
+.ok-ticker__sep {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  color: rgba(13,13,13,0.40);
+  padding: 0 4px;
+}
+
+/* ══════════════════════════════════════════════════
+   COLLECTIONS FEATURE SPLIT
+══════════════════════════════════════════════════ */
+
+.ok-split {
   display: grid;
-  grid-template-columns: 45% 30% 25%;
-  grid-template-rows: 260px 260px;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-/* Grid Row 2 — Equal */
-.collection-grid--row2 {
+  grid-template-columns: 58fr 42fr;
+  min-height: 85vh;
   position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  background: var(--bg);
+  gap: 2px;
 }
 
-/* Category Cards — Base */
-.category-card {
+.ok-split__panel {
   position: relative;
   overflow: hidden;
-  border-radius: 2px;
   cursor: pointer;
-  display: block;
-  border: 1px solid rgba(255,255,255,0.05);
-  text-decoration: none;
-  transform-style: preserve-3d;
-  will-change: transform;
 }
 
-/* Grid placements for row 1 */
-.category-card--feature  { grid-column: 1 / 2; grid-row: 1 / 3; }
-.category-card--col2-top { grid-column: 2 / 3; grid-row: 1 / 2; }
-.category-card--col2-bot { grid-column: 2 / 3; grid-row: 2 / 3; }
-.category-card--carbon   { grid-column: 3 / 4; grid-row: 1 / 3; min-height: 536px; }
+.ok-split__left {
+  min-height: 85vh;
+}
 
-/* Row 2 card heights */
-.collection-grid--row2 .category-card { min-height: 280px; }
+.ok-split__right {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
 
-.category-card__img {
+.ok-split__right-top,
+.ok-split__right-bottom {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  flex: 1;
+  min-height: 42vh;
+}
+
+.ok-split__right-bottom {
+  border-top: 2px solid var(--accent);
+}
+
+.ok-split__cover {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: block;
+}
+
+.ok-split__cover:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.ok-split__img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 700ms cubic-bezier(0.25,0.46,0.45,0.94);
-  will-change: transform;
-  display: block;
-  position: absolute;
-  inset: 0;
 }
 
-.category-card:hover .category-card__img { transform: scale(1.06); }
+.ok-split__panel:hover .ok-split__img {
+  transform: scale(1.05);
+}
 
-.category-card__overlay {
+.ok-split__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 30%, rgba(13,13,13,0.9) 100%);
   z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(13,13,13,0.10) 0%,
+    rgba(13,13,13,0.00) 30%,
+    rgba(13,13,13,0.85) 100%
+  );
   transition: background 400ms ease;
 }
 
-.category-card:hover .category-card__overlay {
-  background: linear-gradient(180deg, rgba(13,13,13,0.05) 0%, rgba(13,13,13,0.95) 100%);
+.ok-split__panel:hover .ok-split__overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(13,13,13,0.10) 0%,
+    rgba(13,13,13,0.00) 25%,
+    rgba(13,13,13,0.92) 100%
+  );
 }
 
-.category-card__info {
+.ok-split__content {
   position: absolute;
   bottom: 0;
   left: 0;
-  right: 0;
-  padding: 28px;
+  padding: 44px;
   z-index: 2;
 }
 
-.category-card__title {
-  display: block;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 22px;
-  color: #ffffff;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  transition: transform 300ms ease;
-  line-height: 1.1;
+.ok-split__content--sm {
+  padding: 28px;
 }
 
-.category-card--feature .category-card__title { font-size: 30px; }
-
-.category-card:hover .category-card__title { transform: translateY(-4px); }
-
-.category-card__meta {
-  display: block;
+.ok-split__eyebrow {
   font-family: 'Inter', sans-serif;
   font-size: 10px;
-  letter-spacing: 0.2em;
-  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.22em;
+  color: var(--accent);
   text-transform: uppercase;
-  margin-top: 6px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 12px;
 }
 
-.category-card__arrow-btn {
+.ok-split__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(32px, 4vw, 60px);
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 0.9;
+}
+
+.ok-split__title--sm {
+  font-size: clamp(24px, 2.8vw, 42px);
+}
+
+.ok-split__arrow {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: gap 300ms ease;
+}
+
+.ok-split__arrow--sm {
+  font-size: 12px;
+  margin-top: 10px;
+  gap: 6px;
+}
+
+.ok-split__panel:hover .ok-split__arrow {
+  gap: 14px;
+}
+
+/* ══════════════════════════════════════════════════
+   SECTION LABEL
+══════════════════════════════════════════════════ */
+
+.ok-section-label {
+  padding: 80px 48px 32px;
+  background: var(--bg);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ok-section-label__left {
+  flex-shrink: 0;
+}
+
+.ok-section-label__bar {
+  width: 48px;
+  height: 3px;
+  background: var(--accent);
+  margin-bottom: 18px;
+  display: block;
+  transform-origin: left center;
+}
+
+.ok-section-label__heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(36px, 5vw, 72px);
+  color: #f0f0f0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 0.9;
+  overflow: hidden;
+}
+
+.ok-section-label__desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: rgba(255,255,255,0.40);
+  line-height: 1.75;
+  max-width: 280px;
+  text-align: right;
+  letter-spacing: 0.02em;
+}
+
+/* ══════════════════════════════════════════════════
+   COLLECTIONS MOSAIC GRID
+   grid gap uses bg #e8600a as the orange lines between tiles
+══════════════════════════════════════════════════ */
+
+.ok-mosaic {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 320px 280px;
+  gap: 2px;
+  background: var(--accent);
+  position: relative;
+  margin-bottom: 2px;
+}
+
+.ok-mosaic__tile {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--bg);
+}
+
+.ok-mosaic__carbon  { grid-column: 1; grid-row: 1 / 3; }
+.ok-mosaic__hood    { grid-column: 2; grid-row: 1; }
+.ok-mosaic__exhaust { grid-column: 3; grid-row: 1; }
+.ok-mosaic__wing    { grid-column: 2 / 4; grid-row: 2; }
+
+.ok-mosaic__cover {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: block;
+}
+
+.ok-mosaic__cover:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.ok-mosaic__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 600ms cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+.ok-mosaic__img--wing {
+  object-position: center 30%;
+}
+
+.ok-mosaic__tile:hover .ok-mosaic__img {
+  transform: scale(1.06);
+}
+
+.ok-mosaic__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(13,13,13,0.50) 0%,
+    rgba(13,13,13,0.00) 35%,
+    rgba(13,13,13,0.72) 100%
+  );
+  transition: background 400ms ease;
+}
+
+.ok-mosaic__tile:hover .ok-mosaic__overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(13,13,13,0.55) 0%,
+    rgba(13,13,13,0.10) 35%,
+    rgba(13,13,13,0.82) 100%
+  );
+}
+
+.ok-mosaic__badge {
   position: absolute;
   top: 20px;
-  right: 20px;
-  width: 38px;
-  height: 38px;
-  border: 1px solid rgba(255,255,255,0.3);
+  left: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.20em;
+  color: var(--accent);
+  text-transform: uppercase;
+  background: rgba(13,13,13,0.85);
+  padding: 6px 12px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.ok-mosaic__content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 28px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.ok-mosaic__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(32px, 3.5vw, 56px);
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 0.9;
+}
+
+.ok-mosaic__title--sm {
+  font-size: clamp(22px, 2.5vw, 36px);
+}
+
+.ok-mosaic__arrow {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  margin-top: 12px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: rgba(255,255,255,0.7);
-  transition: background 200ms ease, border-color 200ms ease, color 200ms ease;
-  z-index: 2;
-  font-size: 16px;
+  gap: 6px;
+  transition: gap 300ms ease;
 }
 
-.category-card:hover .category-card__arrow-btn {
-  background: var(--ok-accent);
-  border-color: var(--ok-accent);
-  color: #ffffff;
+.ok-mosaic__arrow--sm {
+  font-size: 11px;
+  margin-top: 8px;
 }
 
-.category-card:hover {
-  box-shadow: 0 16px 48px rgba(200,90,8,0.2);
+.ok-mosaic__tile:hover .ok-mosaic__arrow {
+  gap: 12px;
 }
 
-.category-card:active { transform: scale(0.985); transition: transform 100ms ease; }
-
-/* ═══════════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════════
    BREATHING SECTION
-═══════════════════════════════════════════════════════════════ */
-.breathing-section {
+══════════════════════════════════════════════════ */
+
+.ok-breathing {
   min-height: 100vh;
-  background: var(--ok-warm);
-  position: relative;
+  background: var(--bg);
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 160px 80px;
-  clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%);
+  position: relative;
   overflow: hidden;
-  z-index: 2;
+  clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%);
+  margin: -2px 0;
+  z-index: 1;
 }
 
-.breathing-glow {
+.ok-breath__glow {
   position: absolute;
-  width: 800px;
-  height: 800px;
+  width: 700px;
+  height: 700px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(200,90,8,0.09) 0%, transparent 70%);
-  top: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(232,96,10,0.10) 0%,
+    transparent 65%
+  );
   left: 50%;
-  transform: translate(-50%,-50%);
-  z-index: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
   pointer-events: none;
-  will-change: transform, opacity;
+  z-index: 0;
 }
 
-.breathing-accent {
-  position: absolute;
-  width: 1px;
-  height: 180px;
-  background: linear-gradient(180deg, transparent, var(--ok-accent) 40%, var(--ok-accent) 60%, transparent);
-  opacity: 0.35;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.breathing-accent--left  { left: 12%; top: 18%; transform: rotate(20deg); }
-.breathing-accent--right { right: 12%; bottom: 18%; transform: rotate(-20deg); }
-
-.breathing-section__inner {
+.ok-breath__inner {
+  text-align: center;
   position: relative;
   z-index: 1;
-  max-width: 960px;
-}
-
-.breathing-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.4em;
-  color: var(--ok-accent);
-  text-transform: uppercase;
-  margin-bottom: 28px;
-}
-
-.mission-quote {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(44px, 6.5vw, 104px);
-  letter-spacing: 0.04em;
-  color: #f0f0f0;
-  text-transform: uppercase;
-  line-height: 1.05;
-  max-width: 960px;
-}
-
-/* word-mask spans injected by JS */
-.word-mask {
-  display: inline-block;
-  overflow: hidden;
-  margin-right: 0.3em;
-  vertical-align: bottom;
-}
-
-.word-inner { display: inline-block; }
-
-.breathing-rule {
-  width: 64px;
-  height: 2px;
-  background: linear-gradient(90deg, var(--ok-accent), var(--ok-accent-bright));
-  margin: 36px auto;
-}
-
-.breathing-sub {
-  font-family: 'Inter', sans-serif;
-  font-size: 15px;
-  line-height: 1.8;
-  color: rgba(255,255,255,0.5);
-  max-width: 480px;
-  margin: 0 auto 64px;
-  letter-spacing: 0.02em;
-}
-
-.stats-row {
-  display: flex;
-  gap: 80px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.stat-item {
+  padding: 160px 48px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.stat-number {
+.ok-breath__quote {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 80px;
-  color: var(--ok-accent);
-  letter-spacing: 0.02em;
-  line-height: 1;
-  display: flex;
-  align-items: baseline;
-  gap: 2px;
-}
-
-.stat-counter { display: inline-block; }
-
-.stat-suffix {
-  font-size: 48px;
-  color: rgba(200,90,8,0.7);
-}
-
-.stat-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  letter-spacing: 0.28em;
-  color: rgba(255,255,255,0.4);
-  text-transform: uppercase;
-  margin-top: 6px;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   FEATURE ROWS
-═══════════════════════════════════════════════════════════════ */
-.feature-rows {
-  background: var(--ok-base);
-  position: relative;
-  overflow: hidden;
-}
-
-.feature-row {
-  display: grid;
-  min-height: 65vh;
-}
-
-.feature-row--left  { grid-template-columns: 55% 45%; }
-.feature-row--right { grid-template-columns: 45% 55%; }
-
-.feature-row__image-wrap {
-  overflow: hidden;
-  position: relative;
-}
-
-.feature-row__image {
-  width: 100%;
-  height: 110%;
-  object-fit: cover;
-  will-change: transform;
-  display: block;
-}
-
-.feature-row__text-block {
-  padding: 80px 80px 80px 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: var(--ok-surface);
-}
-
-.feature-row__text-block--surface { background: var(--ok-surface); }
-
-.feature-row--right .feature-row__text-block {
-  order: 1;
-  padding: 80px 60px 80px 80px;
-  background: var(--ok-base);
-}
-
-.feature-row--right .feature-row__image-wrap { order: 2; }
-
-.feature-row__label {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.38em;
-  color: var(--ok-accent);
-  text-transform: uppercase;
-  margin-bottom: 16px;
-}
-
-.feature-row__heading-wrap {
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-
-.feature-row__heading {
-  display: block;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(38px, 4.5vw, 72px);
-  letter-spacing: 0.04em;
+  font-size: clamp(36px, 5.5vw, 80px);
   color: #f0f0f0;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  line-height: 1.0;
+  line-height: 1.05;
+  max-width: 880px;
+  text-align: center;
 }
 
-.feature-row__body {
+.ok-breath__line {
+  width: 64px;
+  height: 3px;
+  background: var(--accent);
+  margin: 36px auto 0;
+  display: block;
+  transform-origin: center;
+}
+
+.ok-breath__sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  text-align: center;
+  margin-top: 28px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════════════
+   SHOP ALL CTA BAND
+══════════════════════════════════════════════════ */
+
+.ok-cta-band {
+  padding: 160px 48px;
+  background: var(--bg2);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 80px;
+  position: relative;
+  clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 92%);
+  margin: -60px 0;
+  z-index: 2;
+}
+
+.ok-cta-band__bar {
+  width: 48px;
+  height: 3px;
+  background: var(--accent);
+  display: block;
+  margin-bottom: 18px;
+  transform-origin: left center;
+}
+
+.ok-cta-band__heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 6.5vw, 100px);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 0.88;
+  color: #f0f0f0;
+}
+
+.ok-cta-band__line {
+  display: block;
+}
+
+.ok-cta-band__accent {
+  color: var(--accent);
+}
+
+.ok-cta-band__desc {
   font-family: 'Inter', sans-serif;
   font-size: 15px;
-  line-height: 1.78;
-  color: rgba(255,255,255,0.58);
-  max-width: 380px;
-  margin-bottom: 36px;
-  font-weight: 400;
+  color: rgba(255,255,255,0.50);
+  line-height: 1.75;
+  max-width: 400px;
+  margin-bottom: 40px;
   letter-spacing: 0.01em;
 }
 
-.feature-row__cta {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
+.ok-cta-band__btn {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 15px;
   letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ok-accent);
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  position: relative;
-  padding-bottom: 4px;
-  transition: gap 200ms ease, color 200ms ease;
-  width: fit-content;
+  color: #0d0d0d;
+  background: var(--accent);
+  padding: 18px 52px;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  transition: background 200ms ease;
 }
 
-.feature-row__cta::after {
+.ok-cta-band__btn:hover  { background: var(--accent2); }
+.ok-cta-band__btn:active { transform: scale(0.96) !important; }
+.ok-cta-band__btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+/* ══════════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════════ */
+
+.ok-footer {
+  background: var(--bg);
+  border-top: 1px solid rgba(232,96,10,0.20);
+  padding: 80px 48px 48px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.ok-footer__accent-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 180px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  pointer-events: none;
+}
+
+.ok-footer__inner {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.ok-footer__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+
+.ok-footer__logo-link {
+  display: block;
+  line-height: 0;
+}
+
+.ok-footer__logo {
+  height: 38px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.65;
+  transition: opacity 300ms ease;
+}
+
+.ok-footer__logo-link:hover .ok-footer__logo { opacity: 1; }
+.ok-footer__logo-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+.ok-footer__newsletter-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  color: #f0f0f0;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.ok-footer__form-row {
+  display: flex;
+  align-items: stretch;
+}
+
+.ok-footer__email {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(232,96,10,0.25);
+  border-right: none;
+  padding: 13px 20px;
+  color: #fff;
+  width: 280px;
+  outline: none;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+  -webkit-appearance: none;
+}
+
+.ok-footer__email::placeholder { color: rgba(255,255,255,0.30); }
+
+.ok-footer__email:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(232,96,10,0.18);
+}
+
+.ok-footer__subscribe {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  color: #0d0d0d;
+  background: var(--accent);
+  border: none;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: background 200ms ease;
+  white-space: nowrap;
+}
+
+.ok-footer__subscribe:hover { background: var(--accent2); }
+.ok-footer__subscribe:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+.ok-footer__mid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.ok-footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+}
+
+.ok-footer__nav-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.10em;
+  color: rgba(255,255,255,0.45);
+  text-transform: uppercase;
+  position: relative;
+  padding: 2px 0;
+  transition: color 200ms ease;
+}
+
+.ok-footer__nav-link::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 1px;
-  background: var(--ok-accent);
+  background: var(--accent);
   transform: scaleX(0);
-  transform-origin: left;
+  transform-origin: left center;
   transition: transform 200ms ease;
 }
 
-.feature-row__cta:hover::after { transform: scaleX(1); }
-.feature-row__cta:hover { gap: 16px; color: var(--ok-accent-bright); }
-.feature-row__cta:active { opacity: 0.7; }
+.ok-footer__nav-link:hover { color: var(--accent); }
+.ok-footer__nav-link:hover::after { transform: scaleX(1); }
+.ok-footer__nav-link:active { color: var(--accent2); }
+.ok-footer__nav-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
-.feature-row__cta-arrow {
-  font-size: 16px;
-  transition: transform 200ms ease;
-}
-
-.feature-row__cta:hover .feature-row__cta-arrow { transform: translateX(6px); }
-
-.feature-row__separator {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(200,90,8,0.2), transparent);
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   FOOTER
-═══════════════════════════════════════════════════════════════ */
-.footer {
-  background: var(--ok-deep);
-  padding: 80px 80px 0;
-  position: relative;
-  overflow: hidden;
-  clip-path: polygon(0 6%, 100% 0, 100% 100%, 0 100%);
-  border-top: 1px solid rgba(200,90,8,0.1);
-}
-
-.footer__bg-texture {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 80% 50%, rgba(200,90,8,0.04) 0%, transparent 60%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.footer__content {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  padding-bottom: 64px;
-}
-
-.footer__logo-link {
-  display: inline-block;
-  margin-bottom: 24px;
-}
-
-.footer__logo {
-  height: 32px;
-  width: auto;
-  opacity: 0.65;
-  filter: brightness(1.1);
-  transition: opacity 200ms ease;
-}
-
-.footer__logo-link:hover .footer__logo { opacity: 1; }
-
-.footer__tagline {
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  line-height: 1.72;
-  color: rgba(255,255,255,0.38);
-  max-width: 260px;
-  margin-bottom: 40px;
-  letter-spacing: 0.01em;
-}
-
-.footer__nav {
+.ok-footer__social {
   display: flex;
-  flex-direction: column;
-  gap: 14px;
+  gap: 20px;
 }
 
-.footer__nav-link {
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+.ok-footer__social-icon {
   color: rgba(255,255,255,0.45);
-  transition: color 200ms ease, padding-left 200ms ease;
-  display: inline-block;
-}
-
-.footer__nav-link:hover { color: var(--ok-accent); padding-left: 8px; }
-.footer__nav-link:active { color: rgba(200,90,8,0.65); }
-
-.footer__social-heading {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 36px;
-  letter-spacing: 0.06em;
-  color: #f0f0f0;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-  font-weight: 400;
-}
-
-.footer__social-sub {
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  color: rgba(255,255,255,0.38);
-  margin-bottom: 28px;
-  letter-spacing: 0.02em;
-}
-
-.footer__social-row { display: flex; gap: 12px; }
-
-.footer__social-icon {
-  width: 44px;
-  height: 44px;
-  border: 1px solid rgba(255,255,255,0.12);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255,255,255,0.45);
-  transition: border-color 200ms ease, color 200ms ease, background 200ms ease;
-  will-change: transform;
-  flex-shrink: 0;
+  min-width: 44px;
+  min-height: 44px;
+  transition: color 200ms ease;
 }
 
-.footer__social-icon:hover {
-  border-color: var(--ok-accent);
-  color: var(--ok-accent);
-  background: rgba(200,90,8,0.08);
-}
+.ok-footer__social-icon:hover  { color: var(--accent); }
+.ok-footer__social-icon:active { transform: scale(0.9); }
+.ok-footer__social-icon:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
-.footer__social-icon:active { transform: scale(0.93); transition: transform 100ms ease; }
-
-.footer__divider {
-  width: 100%;
-  height: 1px;
-  background: rgba(255,255,255,0.06);
-  margin: 0 0 28px;
-  position: relative;
-  z-index: 1;
-}
-
-.footer__bottom {
+.ok-footer__bottom {
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border2);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 0 32px;
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  color: rgba(255,255,255,0.22);
-  letter-spacing: 0.04em;
-  position: relative;
-  z-index: 1;
   flex-wrap: wrap;
   gap: 12px;
 }
 
-.footer__privacy-link {
-  color: rgba(255,255,255,0.3);
-  transition: color 200ms ease;
-}
-
-.footer__privacy-link:hover { color: var(--ok-accent); }
-
-.footer__shopify-link {
-  color: rgba(255,255,255,0.2);
-  transition: color 200ms ease;
-}
-
-.footer__shopify-link:hover { color: rgba(255,255,255,0.45); }
-
-.footer__accent-strip {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 60%;
-  height: 2px;
-  background: linear-gradient(90deg, var(--ok-accent) 0%, var(--ok-accent-bright) 50%, transparent 100%);
-  opacity: 0.55;
-  pointer-events: none;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   FILM GRAIN
-═══════════════════════════════════════════════════════════════ */
-#ok-film-grain {
-  position: fixed;
-  inset: 0;
-  z-index: 9998;
-  pointer-events: none;
-  opacity: 0.045;
-  width: 100%;
-  height: 100%;
-  animation: ok-grain-shift 0.5s steps(1) infinite;
-  mix-blend-mode: overlay;
-}
-
-@keyframes ok-grain-shift {
-  0%,  100% { transform: translate(0,     0);    }
-  10%       { transform: translate(-2%,  -3%);   }
-  20%       { transform: translate(3%,    1%);   }
-  30%       { transform: translate(-1%,   3%);   }
-  40%       { transform: translate(2%,   -2%);   }
-  50%       { transform: translate(-3%,   2%);   }
-  60%       { transform: translate(1%,   -1%);   }
-  70%       { transform: translate(3%,    2%);   }
-  80%       { transform: translate(-2%,   3%);   }
-  90%       { transform: translate(1%,   -2%);   }
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   CUSTOM CURSOR
-═══════════════════════════════════════════════════════════════ */
-.ok-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 40px;
-  height: 40px;
-  border: 1.5px solid rgba(255,255,255,0.85);
-  border-radius: 50%;
-  z-index: 10001;
-  pointer-events: none;
-  mix-blend-mode: difference;
-  will-change: transform;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition:
-    width 300ms cubic-bezier(0.16,1,0.3,1),
-    height 300ms cubic-bezier(0.16,1,0.3,1),
-    border-color 300ms ease;
-}
-
-.ok-cursor-dot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 6px;
-  height: 6px;
-  background: var(--ok-accent);
-  border-radius: 50%;
-  z-index: 10002;
-  pointer-events: none;
-  will-change: transform;
-}
-
-.ok-cursor-label {
+.ok-footer__copy {
   font-family: 'Inter', sans-serif;
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: #ffffff;
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity 200ms ease;
-  pointer-events: none;
-  position: absolute;
 }
 
-body.custom-cursor-active,
-body.custom-cursor-active * {
-  cursor: none !important;
+.ok-footer__shopify-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: rgba(255,255,255,0.18);
+  letter-spacing: 0.04em;
+  transition: color 200ms ease;
 }
 
-@media (pointer: coarse) {
-  .ok-cursor, .ok-cursor-dot { display: none !important; }
-}
+.ok-footer__shopify-link:hover { color: rgba(255,255,255,0.45); }
+.ok-footer__shopify-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
-/* ═══════════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════════
    RESPONSIVE — TABLET (≤ 990px)
-═══════════════════════════════════════════════════════════════ */
+══════════════════════════════════════════════════ */
+
 @media (max-width: 990px) {
-  .nav__links-desktop { display: none; }
-  .nav__hamburger { display: flex; }
-  #ok-nav { padding: 16px 24px; }
+  .ok-nav { padding: 16px 24px; }
+  .ok-nav__links { display: none; }
+  .ok-nav__hamburger { display: flex; }
 
-  .hero {
-    padding: 0 0 90px 32px;
-    clip-path: polygon(0 0, 100% 0, 100% 93%, 88% 100%, 0 100%);
+  .ok-hero {
+    padding: 0 24px 80px;
   }
-  .hero__orange-accent { left: 16px; }
-  .hero__sub { max-width: 340px; }
+  .ok-hero__accent-line { display: none; }
 
-  .collection-showcase { padding: 90px 32px 100px; }
+  .ok-split {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .ok-split__left  { min-height: 65vw; }
+  .ok-split__right-top,
+  .ok-split__right-bottom { min-height: 50vw; }
 
-  .collection-grid--row1 {
+  .ok-section-label {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 60px 24px 24px;
+    gap: 20px;
+  }
+  .ok-section-label__desc { text-align: left; max-width: 100%; }
+
+  .ok-mosaic {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    gap: 12px;
+    grid-template-rows: 260px 200px 200px;
   }
-  .category-card--feature  { grid-column: 1 / 3; grid-row: 1; min-height: 300px; }
-  .category-card--col2-top { grid-column: 1 / 2; grid-row: 2; min-height: 220px; }
-  .category-card--col2-bot { grid-column: 2 / 3; grid-row: 2; min-height: 220px; }
-  .category-card--carbon   { grid-column: 1 / 3; grid-row: 3; min-height: 280px; }
+  .ok-mosaic__carbon  { grid-column: 1 / 3; grid-row: 1; }
+  .ok-mosaic__hood    { grid-column: 1;     grid-row: 2; }
+  .ok-mosaic__exhaust { grid-column: 2;     grid-row: 2; }
+  .ok-mosaic__wing    { grid-column: 1 / 3; grid-row: 3; }
 
-  .collection-grid--row2 { grid-template-columns: 1fr 1fr; }
-  .collection-grid--row2 .category-card:last-child { grid-column: 1 / 3; }
-  .collection-grid--row2 .category-card { min-height: 240px; }
-
-  .breathing-section {
-    padding: 140px 32px;
-    clip-path: polygon(0 3%, 100% 0, 100% 97%, 0 100%);
-  }
-  .stats-row { gap: 48px; }
-
-  .feature-row--left,
-  .feature-row--right { grid-template-columns: 1fr; }
-
-  .feature-row--right .feature-row__text-block,
-  .feature-row--left  .feature-row__text-block {
-    order: 2;
-    padding: 64px 32px;
-    background: var(--ok-surface);
+  .ok-cta-band {
+    grid-template-columns: 1fr;
+    padding: 120px 24px;
+    clip-path: polygon(0 4%, 100% 0, 100% 100%, 0 96%);
+    margin: -40px 0;
+    gap: 40px;
   }
 
-  .feature-row--right .feature-row__image-wrap,
-  .feature-row--left  .feature-row__image-wrap { order: 1; min-height: 320px; }
+  .ok-breathing .ok-breath__inner { padding: 120px 24px; }
 
-  .footer { padding: 80px 32px 0; clip-path: polygon(0 3%, 100% 0, 100% 100%, 0 100%); }
-  .footer__content { grid-template-columns: 1fr; gap: 48px; }
-  .footer__bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .ok-footer { padding: 60px 24px 40px; }
+  .ok-footer__top { flex-direction: column; }
+  .ok-footer__email { width: 240px; }
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════════
    RESPONSIVE — MOBILE (≤ 600px)
-═══════════════════════════════════════════════════════════════ */
+══════════════════════════════════════════════════ */
+
 @media (max-width: 600px) {
-  .hero { padding: 0 0 90px 20px; }
-  .hero__sub { max-width: 280px; font-size: 14px; }
-  .hero__cta { padding: 16px 32px; }
+  .ok-nav { padding: 14px 20px; }
 
-  .collection-showcase { padding: 80px 20px 90px; }
-  .collection-grid--row1 { grid-template-columns: 1fr; }
-  .category-card--feature  { grid-column: 1; grid-row: auto; min-height: 260px; }
-  .category-card--col2-top { grid-column: 1; grid-row: auto; min-height: 220px; }
-  .category-card--col2-bot { grid-column: 1; grid-row: auto; min-height: 220px; }
-  .category-card--carbon   { grid-column: 1; grid-row: auto; min-height: 260px; }
+  .ok-hero { padding: 0 20px 70px; }
 
-  .collection-grid--row2 { grid-template-columns: 1fr; }
-  .collection-grid--row2 .category-card { grid-column: 1; min-height: 220px; }
-  .collection-grid--row2 .category-card:last-child { grid-column: 1; }
+  .ok-split__left  { min-height: 80vw; }
+  .ok-split__right-top,
+  .ok-split__right-bottom { min-height: 60vw; }
 
-  .breathing-section { padding: 120px 20px; }
-  .stats-row { gap: 32px; }
-  .stat-number { font-size: 60px; }
+  .ok-section-label { padding: 50px 20px 20px; }
 
-  .footer { padding: 80px 20px 0; }
-  .preloader__wordmark { font-size: 38px; letter-spacing: 0.12em; }
+  .ok-mosaic {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 220px);
+  }
+  .ok-mosaic__carbon  { grid-column: 1; grid-row: 1; }
+  .ok-mosaic__hood    { grid-column: 1; grid-row: 2; }
+  .ok-mosaic__exhaust { grid-column: 1; grid-row: 3; }
+  .ok-mosaic__wing    { grid-column: 1; grid-row: 4; }
+
+  .ok-breath__quote { font-size: clamp(30px, 8vw, 56px); }
+  .ok-breath__inner { padding: 100px 20px; }
+
+  .ok-cta-band { padding: 100px 20px; }
+
+  .ok-footer { padding: 50px 20px 32px; }
+  .ok-footer__form-row { flex-direction: column; gap: 0; }
+  .ok-footer__email {
+    width: 100%;
+    border-right: 1px solid rgba(232,96,10,0.25);
+    border-bottom: none;
+  }
+  .ok-footer__subscribe { padding: 14px 24px; }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   REDUCED MOTION
-═══════════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════
+   REDUCED MOTION — GLOBAL OVERRIDE
+══════════════════════════════════════════════════ */
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .ok-cursor, .ok-cursor-dot { display: none !important; }
+  /* Ensure all animated elements are visible */
+  .ok-char           { opacity: 1 !important; transform: none !important; }
+  .ok-hero__eyebrow,
+  .ok-hero__sub,
+  .ok-hero__cta      { opacity: 1 !important; transform: none !important; }
+  .ok-split__panel,
+  .ok-mosaic__tile   { clip-path: none !important; opacity: 1 !important; }
+  .ok-cta-band__left,
+  .ok-cta-band__right,
+  .ok-footer__inner  { opacity: 1 !important; transform: none !important; }
+  .ok-breath__quote,
+  .ok-breath__line,
+  .ok-breath__sub    { opacity: 1 !important; transform: none !important; }
+  .ok-section-label__heading,
+  .ok-section-label__bar { opacity: 1 !important; transform: none !important; }
   #ok-film-grain { animation: none !important; }
-  .hero__image, .hero__content { transform: none !important; }
-  .breathing-glow { animation: none !important; }
 }
 </style>
 </head>
 <body>
 
-  <a class="ok-skip-link" href="#main-content">Skip to content</a>
-
-  <div id="ok-scroll-progress"></div>
-
-  <div id="overkill-preloader">
-    <div class="preloader__wordmark">BRITAIN RACING</div>
-    <div class="preloader__sublabel">Precision Engineered &middot; Track Proven</div>
-    <div class="preloader__bar-container">
-      <div class="preloader__bar-fill"></div>
-    </div>
-    <div class="preloader__count">0%</div>
-  </div>
-
-  <nav id="ok-nav" role="navigation" aria-label="Main navigation">
-    <a href="https://britainracing.com/" class="nav__logo-wrap" data-cursor="HOME" aria-label="Britain Racing — Home">
-      <img
-        class="nav__logo"
-        src="https://britainracing.com/cdn/shop/files/BritainRacing_-_Large_0bbd4388-4a07-4574-8f9e-9fddcae6e659.jpg?v=1743437605&width=300"
-        alt="Britain Racing LLC."
-        width="160"
-        height="40"
-      />
-    </a>
-    <ul class="nav__links-desktop" role="list">
-      <li><a href="https://britainracing.com/" class="nav__link" data-cursor="VIEW">Home</a></li>
-      <li><a href="https://britainracing.com/collections" class="nav__link" data-cursor="VIEW">Catalog</a></li>
-      <li><a href="https://britainracing.com/pages/contact" class="nav__link" data-cursor="VIEW">Contact</a></li>
-    </ul>
-    <div class="nav__right-cluster">
-      <a href="https://britainracing.com/cart" class="nav__cart-btn" aria-label="Cart" data-cursor="CART">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-          <line x1="3" y1="6" x2="21" y2="6"/>
-          <path d="M16 10a4 4 0 01-8 0"/>
-        </svg>
-        <span class="nav__cart-badge" aria-hidden="true">0</span>
-      </a>
-      <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </nav>
-
-  <div class="nav__drawer" id="nav-drawer" aria-hidden="true" role="dialog" aria-label="Navigation menu">
-    <button class="nav__drawer-close" aria-label="Close menu">&times;</button>
-    <nav aria-label="Mobile navigation">
-      <a href="https://britainracing.com/" class="nav__drawer-link">Home</a>
-      <a href="https://britainracing.com/collections" class="nav__drawer-link">Catalog</a>
-      <a href="https://britainracing.com/pages/contact" class="nav__drawer-link">Contact</a>
-    </nav>
-  </div>
-  <div class="nav__drawer-backdrop" id="nav-backdrop" aria-hidden="true"></div>
-
-  <main id="main-content">
-
-    <!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
-    <section class="hero" aria-labelledby="hero-heading">
-      <img
-        class="hero__image"
-        src="https://britainracing.com/cdn/shop/files/received_1560715844870613.jpg?v=1766099602&width=3840"
-        alt=""
-        role="presentation"
-        fetchpriority="high"
-      />
-      <div class="hero__gradient-overlay" aria-hidden="true"></div>
-      <div class="hero__orange-accent" aria-hidden="true"></div>
-
-      <div class="hero__content">
-        <p class="hero__pre-label" aria-hidden="true">Race Engineered Components</p>
-        <h1 class="hero__heading" id="hero-heading">DON&rsquo;T COMPROMISE... CUSTOMIZE</h1>
-        <p class="hero__sub">Britain Racing supplies precision-engineered motorsport parts to drivers who demand more from their machines. Built to survive race day and every lap before it.</p>
-        <a href="https://britainracing.com/collections/all" class="hero__cta" data-cursor="SHOP" aria-label="Shop all racing parts">
-          <span class="hero__cta-label">Shop Now</span>
-          <span class="hero__cta-arrow" aria-hidden="true">&rarr;</span>
-        </a>
-      </div>
-
-      <div class="hero__scroll" aria-hidden="true">
-        <span class="hero__scroll-label">Scroll</span>
-        <div class="hero__scroll-chevron"></div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════ RACE STRIPE ═══════════════════════════ -->
-    <div class="race-stripe" aria-hidden="true">
-      <div class="race-stripe__grain"></div>
-      <span class="race-stripe__text">PRECISION ENGINEERED &mdash; TRACK PROVEN</span>
-    </div>
-
-    <!-- ═══════════════════════ COLLECTION SHOWCASE ═══════════════════════ -->
-    <section class="collection-showcase" aria-labelledby="collection-title">
-      <div class="collection-showcase__bg-texture" aria-hidden="true"></div>
-
-      <header class="collection-showcase__header">
-        <p class="section-label" aria-hidden="true">SHOP BY CATEGORY</p>
-        <div class="title-mask" role="presentation">
-          <h2 class="section-title-inner" id="collection-title">Our Categories</h2>
-        </div>
-      </header>
-
-      <div class="collection-grid collection-grid--row1" role="list" aria-label="Product categories">
-
-        <a href="https://britainracing.com/collections/luckydog-trophies"
-           class="category-card category-card--feature"
-           data-cursor="EXPLORE"
-           role="listitem"
-           aria-label="LuckyDog Racing Trophies">
-          <img src="https://britainracing.com/cdn/shop/collections/20250330_114148_e771bfe8-70e2-435b-a413-f0929311c10b.jpg?v=1766089427" alt="LuckyDog Racing Trophies" class="category-card__img" />
-          <div class="category-card__overlay" aria-hidden="true"></div>
-          <div class="category-card__info">
-            <span class="category-card__title">LuckyDog Racing Trophies</span>
-            <span class="category-card__meta">Race Series Awards</span>
-          </div>
-          <div class="category-card__arrow-btn" aria-hidden="true">&rarr;</div>
-        </a>
-
-        <a href="https://britainracing.com/collections/brake-ducts"
-           class="category-card category-card--col2-top"
-           data-cursor="EXPLORE"
-           role="listitem"
-           aria-label="Brake Ducts">
-          <img src="https://britainracing.com/cdn/shop/files/20251220_210652.jpg?v=1766351519" alt="Brake Ducts" class="category-card__img" />
-          <div class="category-card__overlay" aria-hidden="true"></div>
-          <div class="category-card__info">
-            <span class="category-card__title">Brake Ducts</span>
-            <span class="category-card__meta">Cooling Systems</span>
-          </div>
-          <div class="category-card__arrow-btn" aria-hidden="true">&rarr;</div>
-        </a>
-
-        <a href="https://britainracing.com/collections/frontpage"
-           class="category-card category-card--col2-bot"
-           data-cursor="EXPLORE"
-           role="listitem"
-           aria-label="Fueling Products">
-          <img src="https://britainracing.com/cdn/shop/collections/20220822_213152.jpg?v=1745990244" alt="Fueling Products" class="category-card__img" />
-          <div class="category-card__overlay" aria-hidden="true"></div>
-          <div class="category-card__info">
-            <span class="category-card__title">Fueling Products</span>
-            <span class="category-card__meta">Race-Grade Fuel Systems</span>
-          </div>
-          <div class="category-card__arrow-btn" aria-hidden="true">&rarr;</div>
-        </a>
-
-        <a href="https://britainracing.com/collections/carbon-fiber-parts"
-           class="category-card category-card--carbon"
-           data-cursor="EXPLORE"
-           role="listitem"
-           aria-label="Carbon Fiber Parts">
-          <img src="https://britainracing.com/cdn/shop/collections/486552782_1256153009503247_2987420766831371503_n.jpg?v=1745990264" alt="Carbon Fiber Parts" class="category-card__img" />
-          <div class="category-card__overlay" aria-hidden="true"></div>
-          <div class="category-card__info">
-            <span class="category-card__title">Carbon Fiber Parts</span>
-            <span class="category-card__meta">Lightweight Composites</span>
-          </div>
-          <div class="category-card__arrow-btn" aria-hidden="true">&rarr;</div>
-        </a>
-
-      </div>
-
-      <div class="collection-grid collection-grid--row2" role="list" aria-label="More product categories">
-
-        <a href="https://britainracing.com/collections/hood-vents"
-           class="category-card"
-           data-cursor="EXPLORE"
-           role="listitem"
-           aria-label="Hood Vents">
-          <img src="https://britainracing.com/cdn/shop/collections/191613587_10219163884914540_5061107731261156786_n_135f0956-9cc8-454e-a180-5b9c95a6d659.jpg?v=1745990208" alt="Hood Vents" class="category-card__img" />
-          <div class="category-card__overlay" aria-hidden="true"></div>
-          <div class="category-card__info">
-            <span class="category-card__title">Hood Vents</span>
-            <span class="category-card__meta">Heat Extraction</span>
-          </div>
-          <div class="category-card__arrow-btn" aria-hidden="true">&rarr;</div>
-        </a>
-
-        <a href="https://britainracing.com/collections/exhaust-flanges"
-           class="category-card"
-           data-cursor="EXPLORE"
-           role="listitem"
-           aria-label="Exhaust Flanges">
-          <img src="https://britainracing.com/cdn/shop/collections/20210107_213129_4f7fb588-c941-4214-991a-d1c81097493f.jpg?v=1745990887" alt="Exhaust Flanges" class="category-card__img" />
-          <div class="category-card__overlay" aria-hidden="true"></div>
-          <div class="category-card__info">
-            <span class="category-card__title">Exhaust Flanges</span>
-            <span class="category-card__meta">Performance Exhaust</span>
-          </div>
-          <div class="category-card__arrow-btn" aria-hidden="true">&rarr;</div>
-        </a>
-
-        <a href="https://britainracing.com/collections/wing-uprights"
-           class="category-card"
-           data-cursor="EXPLORE"
-           role="listitem"
-           aria-label="Wing Uprights">
-          <img src="https://britainracing.com/cdn/shop/collections/122660246_10217819728151461_4579971352753520728_n.jpg?v=1745993135" alt="Wing Uprights" class="category-card__img" />
-          <div class="category-card__overlay" aria-hidden="true"></div>
-          <div class="category-card__info">
-            <span class="category-card__title">Wing Uprights</span>
-            <span class="category-card__meta">Aerodynamic Supports</span>
-          </div>
-          <div class="category-card__arrow-btn" aria-hidden="true">&rarr;</div>
-        </a>
-
-      </div>
-    </section>
-
-    <!-- ═══════════════════════ BREATHING SECTION ═══════════════════════ -->
-    <section class="breathing-section" aria-labelledby="philosophy-heading">
-      <div class="breathing-glow" aria-hidden="true"></div>
-      <div class="breathing-accent breathing-accent--left" aria-hidden="true"></div>
-      <div class="breathing-accent breathing-accent--right" aria-hidden="true"></div>
-
-      <div class="breathing-section__inner">
-        <p class="breathing-label" aria-hidden="true">Our Philosophy</p>
-        <h2 class="mission-quote" id="philosophy-heading">BUILT FOR THOSE WHO REFUSE TO SETTLE FOR STOCK</h2>
-        <div class="breathing-rule" aria-hidden="true"></div>
-        <p class="breathing-sub">Britain Racing supplies precision-engineered motorsport parts to drivers who demand more from their machines. Every component is chosen to survive race day.</p>
-        <div class="stats-row" aria-label="Key statistics">
-          <div class="stat-item">
-            <div class="stat-number" aria-label="7 Product Categories">
-              <span class="stat-counter" data-target="7">0</span>
-            </div>
-            <div class="stat-label">Product Categories</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" aria-label="100+ Racing Parts">
-              <span class="stat-counter" data-target="100">0</span><span class="stat-suffix">+</span>
-            </div>
-            <div class="stat-label">Racing Parts</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" aria-label="1 Goal: Win">
-              <span class="stat-counter" data-target="1">0</span>
-            </div>
-            <div class="stat-label">Goal &mdash; Win</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════ FEATURE ROWS ═══════════════════════════ -->
-    <section class="feature-rows">
-
-      <div class="feature-row feature-row--left">
-        <div class="feature-row__image-wrap">
-          <img
-            src="https://britainracing.com/cdn/shop/collections/486552782_1256153009503247_2987420766831371503_n.jpg?v=1745990264"
-            alt="Carbon Fiber Parts — lightweight race-grade composite components"
-            class="feature-row__image"
-            loading="lazy"
-          />
-        </div>
-        <div class="feature-row__text-block feature-row__text-block--surface">
-          <p class="feature-row__label">&mdash; Lightweight Performance</p>
-          <div class="feature-row__heading-wrap">
-            <h3 class="feature-row__heading">Carbon Fiber Parts</h3>
-          </div>
-          <p class="feature-row__body">Precision-laid carbon fiber components engineered for maximum strength at minimum weight. Each piece bolts directly into your race car with zero compromise on fit or finish.</p>
-          <a href="https://britainracing.com/collections/carbon-fiber-parts" class="feature-row__cta" data-cursor="VIEW" aria-label="Shop Carbon Fiber Parts">
-            Shop Carbon Fiber <span class="feature-row__cta-arrow" aria-hidden="true">&rarr;</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="feature-row__separator" aria-hidden="true"></div>
-
-      <div class="feature-row feature-row--right">
-        <div class="feature-row__text-block">
-          <p class="feature-row__label">&mdash; Aerodynamic Excellence</p>
-          <div class="feature-row__heading-wrap">
-            <h3 class="feature-row__heading">Wing Uprights</h3>
-          </div>
-          <p class="feature-row__body">Machined-from-billet wing uprights that hold your aerodynamic package exactly where it needs to be. Zero flex. Zero failure. Built for the rigors of endurance racing.</p>
-          <a href="https://britainracing.com/collections/wing-uprights" class="feature-row__cta" data-cursor="VIEW" aria-label="Shop Wing Uprights">
-            Shop Wing Uprights <span class="feature-row__cta-arrow" aria-hidden="true">&rarr;</span>
-          </a>
-        </div>
-        <div class="feature-row__image-wrap">
-          <img
-            src="https://britainracing.com/cdn/shop/collections/122660246_10217819728151461_4579971352753520728_n.jpg?v=1745993135"
-            alt="Wing Uprights — precision-machined aerodynamic support components"
-            class="feature-row__image"
-            loading="lazy"
-          />
-        </div>
-      </div>
-
-    </section>
-
-  </main>
-
-  <!-- ═══════════════════════════ FOOTER ════════════════════════════ -->
-  <footer class="footer" role="contentinfo">
-    <div class="footer__bg-texture" aria-hidden="true"></div>
-
-    <div class="footer__content">
-      <div class="footer__col-left">
-        <a href="https://britainracing.com/" class="footer__logo-link" data-cursor="HOME" aria-label="Britain Racing — Home">
-          <img
-            src="https://britainracing.com/cdn/shop/files/BritainRacing_-_Large_0bbd4388-4a07-4574-8f9e-9fddcae6e659.jpg?v=1743437605&width=300"
-            alt="Britain Racing LLC."
-            class="footer__logo"
-            width="140"
-            height="36"
-          />
-        </a>
-        <p class="footer__tagline">Precision-engineered motorsport parts for drivers who refuse stock solutions. Built for race day.</p>
-        <nav class="footer__nav" aria-label="Footer navigation">
-          <a href="https://britainracing.com/" class="footer__nav-link">Home</a>
-          <a href="https://britainracing.com/collections" class="footer__nav-link">Catalog</a>
-          <a href="https://britainracing.com/pages/contact" class="footer__nav-link">Contact</a>
-          <a href="https://britainracing.com/policies/privacy-policy" class="footer__nav-link">Privacy Policy</a>
-        </nav>
-      </div>
-
-      <div class="footer__col-right">
-        <h4 class="footer__social-heading">Keep In Touch</h4>
-        <p class="footer__social-sub">Follow for race day updates and new parts drops.</p>
-        <div class="footer__social-row" role="list" aria-label="Social media links">
-          <a href="http://instagram.com/shopify" class="footer__social-icon" aria-label="Follow on Instagram" data-cursor="FOLLOW" role="listitem">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-              <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
-              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-            </svg>
-          </a>
-          <a href="https://tiktok.com/@shopify" class="footer__social-icon" aria-label="Follow on TikTok" data-cursor="FOLLOW" role="listitem">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M9 12a4 4 0 104 4V4a5 5 0 005 5"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer__divider" aria-hidden="true"></div>
-
-    <div class="footer__bottom">
-      <span class="footer__copyright">&copy; 2026 Britain Racing LLC. All rights reserved.</span>
-      <a href="https://britainracing.com/policies/privacy-policy" class="footer__privacy-link">Privacy Policy</a>
-      <a href="https://www.shopify.com/?utm_campaign=poweredby&utm_medium=shopify&utm_source=onlinestore" class="footer__shopify-link" rel="noopener noreferrer">Powered by Shopify</a>
-    </div>
-
-    <div class="footer__accent-strip" aria-hidden="true"></div>
-  </footer>
-
-  <!-- Film Grain -->
-  <div id="ok-film-grain" aria-hidden="true">
-    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-      <filter id="ok-noise-filter">
-        <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+<!-- Film Grain Overlay -->
+<div id="ok-film-grain" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+    <defs>
+      <filter id="ok-grain-filter">
+        <feTurbulence id="ok-grain-turb" type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
         <feColorMatrix type="saturate" values="0"/>
       </filter>
-      <rect width="100%" height="100%" filter="url(#ok-noise-filter)"/>
+    </defs>
+    <rect width="100%" height="100%" filter="url(#ok-grain-filter)"/>
+  </svg>
+</div>
+
+<!-- Scroll Progress Bar -->
+<div id="ok-scroll-progress" aria-hidden="true"></div>
+
+<!-- Skip to content -->
+<a href="#ok-main" class="ok-skip-link">Skip to content</a>
+
+<!-- Glass Navigation -->
+<nav class="ok-nav" role="navigation" aria-label="Main navigation">
+  <a href="https://britainracing.com/" class="ok-nav__logo-wrap" aria-label="Britain Racing LLC. — Home">
+    <img
+      src="https://britainracing.com/cdn/shop/files/BritainRacing_-_Large_0bbd4388-4a07-4574-8f9e-9fddcae6e659.jpg?v=1743437605&width=300"
+      alt="Britain Racing LLC."
+      class="ok-nav__logo"
+      width="200"
+      height="34"
+    >
+  </a>
+
+  <ul class="ok-nav__links" role="list">
+    <li><a href="https://britainracing.com/" class="ok-nav__link">Home</a></li>
+    <li><a href="https://britainracing.com/collections" class="ok-nav__link">Catalog</a></li>
+    <li><a href="https://britainracing.com/pages/contact" class="ok-nav__link">Contact</a></li>
+  </ul>
+
+  <div class="ok-nav__actions">
+    <a href="https://britainracing.com/cart" class="ok-nav__cart" aria-label="View cart">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+      </svg>
+    </a>
+    <button class="ok-nav__hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="ok-mobile-drawer">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Drawer Backdrop -->
+<div class="ok-drawer-backdrop" id="ok-drawer-backdrop" aria-hidden="true"></div>
+
+<!-- Mobile Drawer -->
+<div class="ok-mobile-drawer" id="ok-mobile-drawer" role="dialog" aria-label="Mobile navigation" aria-modal="true">
+  <button class="ok-drawer__close" aria-label="Close navigation menu">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
     </svg>
+  </button>
+  <nav class="ok-drawer__nav" aria-label="Mobile navigation links">
+    <a href="https://britainracing.com/" class="ok-drawer__link">Home</a>
+    <a href="https://britainracing.com/collections" class="ok-drawer__link">Catalog</a>
+    <a href="https://britainracing.com/pages/contact" class="ok-drawer__link">Contact</a>
+    <a href="https://britainracing.com/cart" class="ok-drawer__link">Cart</a>
+  </nav>
+</div>
+
+<!-- Main Content -->
+<main id="ok-main">
+
+  <!-- Hero -->
+  <section class="ok-hero" id="ok-hero">
+    <img
+      src="https://britainracing.com/cdn/shop/files/received_1560715844870613.jpg?v=1766099602&width=3840"
+      alt=""
+      class="ok-hero__bg"
+      aria-hidden="true"
+      loading="eager"
+      fetchpriority="high"
+    >
+    <div class="ok-hero__overlay" aria-hidden="true"></div>
+    <div class="ok-hero__accent-line" aria-hidden="true"></div>
+
+    <div class="ok-hero__content">
+      <p class="ok-hero__eyebrow">Track-Forged Performance Parts</p>
+      <h1 class="ok-hero__heading hero__heading" aria-label="Don't Compromise... Customize">Don't Compromise... Customize</h1>
+      <p class="ok-hero__sub">Britain Racing equips drivers who reject factory limitations. Every part is a compromise eliminated — engineered for the committed, not the casual.</p>
+      <a
+        href="https://britainracing.com/collections/all"
+        class="ok-hero__cta ok-magnetic"
+        data-strength="12"
+        data-glow="rgba(232,96,10,0.45)"
+        data-bg="#e8600a"
+      >SHOP NOW</a>
+    </div>
+
+    <div class="ok-hero__scroll-indicator" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- Marquee Ticker -->
+  <div class="ok-ticker" aria-hidden="true">
+    <div class="ok-ticker__inner">
+      <div class="ok-ticker__set">
+        <span class="ok-ticker__item">DON'T COMPROMISE</span><span class="ok-ticker__sep">•</span>
+        <span class="ok-ticker__item">CUSTOMIZE</span><span class="ok-ticker__sep">•</span>
+        <span class="ok-ticker__item">BRITAIN RACING LLC</span><span class="ok-ticker__sep">•</span>
+        <span class="ok-ticker__item">TRACK-PROVEN PARTS</span><span class="ok-ticker__sep">•</span>
+        <span class="ok-ticker__item">BRAKE DUCTS</span><span class="ok-ticker__sep">•</span>
+        <span class="ok-ticker__item">CARBON FIBER</span><span class="ok-ticker__sep">•</span>
+        <span class="ok-ticker__item">EXHAUST FLANGES</span><span class="ok-ticker__sep">•</span>
+        <span class="ok-ticker__item">WING UPRIGHTS</span><span class="ok-ticker__sep">•</span>
+        <span class="ok-ticker__item">FUELING PRODUCTS</span><span class="ok-ticker__sep">•</span>
+      </div>
+      <div class="ok-ticker__set" aria-hidden="true">
+        <span class="ok-ticker__item">DON'T COMPROMISE</span><span class="ok-ticker__sep">•</span>
+        <span class="ok-ticker__item">CUSTOMIZE</span><span class="ok-ticker__sep">•</span>
+        <span class="ok-ticker__item">BRITAIN RACING LLC</span><span class="ok-ticker__sep">•</span>
+        <span class="ok-ticker__item">TRACK-PROVEN PARTS</span><span class="ok-ticker__sep">•</span>
+        <span class="ok-ticker__item">BRAKE DUCTS</span><span class="ok-ticker__sep">•</span>
+        <span class="ok-ticker__item">CARBON FIBER</span><span class="ok-ticker__sep">•</span>
+        <span class="ok-ticker__item">EXHAUST FLANGES</span><span class="ok-ticker__sep">•</span>
+        <span class="ok-ticker__item">WING UPRIGHTS</span><span class="ok-ticker__sep">•</span>
+        <span class="ok-ticker__item">FUELING PRODUCTS</span><span class="ok-ticker__sep">•</span>
+      </div>
+    </div>
   </div>
 
-  <!-- Custom Cursor -->
-  <div class="ok-cursor" aria-hidden="true">
-    <span class="ok-cursor-label"></span>
+  <!-- Collections Feature Split -->
+  <section class="ok-split" id="ok-split" aria-label="Featured collections">
+
+    <!-- Left — LuckyDog Racing Trophies -->
+    <div class="ok-split__panel ok-split__left">
+      <img
+        src="https://britainracing.com/cdn/shop/collections/20250330_114148_e771bfe8-70e2-435b-a413-f0929311c10b.jpg?v=1766089427"
+        alt="LuckyDog Racing Trophies"
+        class="ok-split__img"
+        loading="lazy"
+      >
+      <div class="ok-split__overlay" aria-hidden="true"></div>
+      <div class="ok-split__content">
+        <span class="ok-split__eyebrow">Featured Collection</span>
+        <h2 class="ok-split__title">LuckyDog Racing<br>Trophies</h2>
+        <div class="ok-split__arrow">
+          EXPLORE
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </div>
+      </div>
+      <a href="https://britainracing.com/collections/luckydog-trophies" class="ok-split__cover" aria-label="Shop LuckyDog Racing Trophies"></a>
+    </div>
+
+    <!-- Right Stack -->
+    <div class="ok-split__right">
+
+      <!-- Top — Brake Ducts -->
+      <div class="ok-split__panel ok-split__right-top">
+        <img
+          src="https://britainracing.com/cdn/shop/files/20251220_210652.jpg?v=1766351519"
+          alt="Brake Ducts"
+          class="ok-split__img"
+          loading="lazy"
+        >
+        <div class="ok-split__overlay" aria-hidden="true"></div>
+        <div class="ok-split__content ok-split__content--sm">
+          <span class="ok-split__eyebrow">Collection</span>
+          <h3 class="ok-split__title ok-split__title--sm">Brake Ducts</h3>
+          <div class="ok-split__arrow ok-split__arrow--sm">
+            EXPLORE
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </div>
+        </div>
+        <a href="https://britainracing.com/collections/brake-ducts" class="ok-split__cover" aria-label="Shop Brake Ducts"></a>
+      </div>
+
+      <!-- Bottom — Fueling Products -->
+      <div class="ok-split__panel ok-split__right-bottom">
+        <img
+          src="https://britainracing.com/cdn/shop/collections/20220822_213152.jpg?v=1745990244"
+          alt="Fueling Products"
+          class="ok-split__img"
+          loading="lazy"
+        >
+        <div class="ok-split__overlay" aria-hidden="true"></div>
+        <div class="ok-split__content ok-split__content--sm">
+          <span class="ok-split__eyebrow">Collection</span>
+          <h3 class="ok-split__title ok-split__title--sm">Fueling Products</h3>
+          <div class="ok-split__arrow ok-split__arrow--sm">
+            EXPLORE
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </div>
+        </div>
+        <a href="https://britainracing.com/collections/frontpage" class="ok-split__cover" aria-label="Shop Fueling Products"></a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section Label -->
+  <div class="ok-section-label" id="ok-section-label">
+    <div class="ok-section-label__left">
+      <span class="ok-section-label__bar" aria-hidden="true"></span>
+      <h2 class="ok-section-label__heading">Shop By Category</h2>
+    </div>
+    <p class="ok-section-label__desc">Precision parts engineered for competitive motorsport. Every component track-tested, no exceptions.</p>
   </div>
-  <div class="ok-cursor-dot" aria-hidden="true"></div>
+
+  <!-- Collections Mosaic Grid -->
+  <section class="ok-mosaic" id="ok-mosaic" aria-label="Shop by category">
+
+    <!-- Carbon Fiber — tall, spans rows 1+2 -->
+    <div class="ok-mosaic__tile ok-mosaic__carbon">
+      <span class="ok-mosaic__badge">Carbon Fiber</span>
+      <img
+        src="https://britainracing.com/cdn/shop/collections/486552782_1256153009503247_2987420766831371503_n.jpg?v=1745990264"
+        alt="Carbon Fiber Parts"
+        class="ok-mosaic__img"
+        loading="lazy"
+      >
+      <div class="ok-mosaic__overlay" aria-hidden="true"></div>
+      <div class="ok-mosaic__content">
+        <h3 class="ok-mosaic__title">Carbon Fiber Parts</h3>
+        <div class="ok-mosaic__arrow">
+          EXPLORE
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </div>
+      </div>
+      <a href="https://britainracing.com/collections/carbon-fiber-parts" class="ok-mosaic__cover" aria-label="Shop Carbon Fiber Parts"></a>
+    </div>
+
+    <!-- Hood Vents — top-center -->
+    <div class="ok-mosaic__tile ok-mosaic__hood">
+      <img
+        src="https://britainracing.com/cdn/shop/collections/191613587_10219163884914540_5061107731261156786_n_135f0956-9cc8-454e-a180-5b9c95a6d659.jpg?v=1745990208"
+        alt="Hood Vents"
+        class="ok-mosaic__img"
+        loading="lazy"
+      >
+      <div class="ok-mosaic__overlay" aria-hidden="true"></div>
+      <div class="ok-mosaic__content">
+        <h3 class="ok-mosaic__title ok-mosaic__title--sm">Hood Vents</h3>
+        <div class="ok-mosaic__arrow ok-mosaic__arrow--sm">
+          EXPLORE
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </div>
+      </div>
+      <a href="https://britainracing.com/collections/hood-vents" class="ok-mosaic__cover" aria-label="Shop Hood Vents"></a>
+    </div>
+
+    <!-- Exhaust Flanges — top-right -->
+    <div class="ok-mosaic__tile ok-mosaic__exhaust">
+      <img
+        src="https://britainracing.com/cdn/shop/collections/20210107_213129_4f7fb588-c941-4214-991a-d1c81097493f.jpg?v=1745990887"
+        alt="Exhaust Flanges"
+        class="ok-mosaic__img"
+        loading="lazy"
+      >
+      <div class="ok-mosaic__overlay" aria-hidden="true"></div>
+      <div class="ok-mosaic__content">
+        <h3 class="ok-mosaic__title ok-mosaic__title--sm">Exhaust Flanges</h3>
+        <div class="ok-mosaic__arrow ok-mosaic__arrow--sm">
+          EXPLORE
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </div>
+      </div>
+      <a href="https://britainracing.com/collections/exhaust-flanges" class="ok-mosaic__cover" aria-label="Shop Exhaust Flanges"></a>
+    </div>
+
+    <!-- Wing Uprights — bottom wide -->
+    <div class="ok-mosaic__tile ok-mosaic__wing">
+      <img
+        src="https://britainracing.com/cdn/shop/collections/122660246_10217819728151461_4579971352753520728_n.jpg?v=1745993135"
+        alt="Wing Uprights"
+        class="ok-mosaic__img ok-mosaic__img--wing"
+        loading="lazy"
+      >
+      <div class="ok-mosaic__overlay" aria-hidden="true"></div>
+      <div class="ok-mosaic__content">
+        <h3 class="ok-mosaic__title ok-mosaic__title--sm">Wing Uprights</h3>
+        <div class="ok-mosaic__arrow ok-mosaic__arrow--sm">
+          EXPLORE
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </div>
+      </div>
+      <a href="https://britainracing.com/collections/wing-uprights" class="ok-mosaic__cover" aria-label="Shop Wing Uprights"></a>
+    </div>
+
+  </section>
+
+  <!-- Breathing Section -->
+  <section class="ok-breathing" id="ok-breathing" aria-label="Brand statement">
+    <div class="ok-breath__glow" aria-hidden="true"></div>
+    <div class="ok-breath__inner">
+      <p class="ok-breath__quote">Track-Proven. Race-Ready.<br>No Compromises.</p>
+      <span class="ok-breath__line" aria-hidden="true"></span>
+      <p class="ok-breath__sub">Britain Racing LLC — Engineered for the Committed</p>
+    </div>
+  </section>
+
+  <!-- Shop All CTA Band -->
+  <section class="ok-cta-band" id="ok-cta-band">
+    <div class="ok-cta-band__left">
+      <span class="ok-cta-band__bar" aria-hidden="true"></span>
+      <h2 class="ok-cta-band__heading">
+        <span class="ok-cta-band__line">DON'T</span>
+        <span class="ok-cta-band__line">COMPROMISE.</span>
+        <span class="ok-cta-band__line ok-cta-band__accent">CUSTOMIZE.</span>
+      </h2>
+    </div>
+    <div class="ok-cta-band__right">
+      <p class="ok-cta-band__desc">Britain Racing stocks precision-engineered performance parts for drivers who demand more than factory spec. Explore our full catalog.</p>
+      <a
+        href="https://britainracing.com/collections/all"
+        class="ok-cta-band__btn ok-magnetic"
+        data-strength="12"
+        data-glow="rgba(232,96,10,0.45)"
+        data-bg="#e8600a"
+      >VIEW ALL PRODUCTS</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="ok-footer" id="ok-footer">
+  <div class="ok-footer__accent-line" aria-hidden="true"></div>
+  <div class="ok-footer__inner">
+
+    <div class="ok-footer__top">
+      <a href="https://britainracing.com/" class="ok-footer__logo-link" aria-label="Britain Racing LLC. — Home">
+        <img
+          src="https://britainracing.com/cdn/shop/files/BritainRacing_-_Large_0bbd4388-4a07-4574-8f9e-9fddcae6e659.jpg?v=1743437605&width=300"
+          alt="Britain Racing LLC."
+          class="ok-footer__logo"
+          width="200"
+          height="38"
+          loading="lazy"
+        >
+      </a>
+      <div class="ok-footer__newsletter">
+        <p class="ok-footer__newsletter-label">Let's Keep In Touch</p>
+        <div class="ok-footer__form-row">
+          <input
+            type="email"
+            class="ok-footer__email"
+            placeholder="Your email address"
+            aria-label="Email address for newsletter"
+            autocomplete="email"
+          >
+          <button class="ok-footer__subscribe ok-magnetic" data-strength="8" data-glow="rgba(232,96,10,0.35)" data-bg="#e8600a" aria-label="Subscribe to newsletter">SUBSCRIBE</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ok-footer__mid">
+      <nav class="ok-footer__nav" aria-label="Footer navigation">
+        <a href="https://britainracing.com/" class="ok-footer__nav-link">Britain Racing LLC.</a>
+        <a href="https://britainracing.com/collections" class="ok-footer__nav-link">Catalog</a>
+        <a href="https://britainracing.com/pages/contact" class="ok-footer__nav-link">Contact</a>
+        <a href="https://britainracing.com/policies/privacy-policy" class="ok-footer__nav-link">Privacy Policy</a>
+      </nav>
+      <div class="ok-footer__social" aria-label="Social media">
+        <a href="http://instagram.com/shopify" class="ok-footer__social-icon ok-magnetic" data-strength="8" data-glow="rgba(232,96,10,0.35)" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+        </a>
+        <a href="https://tiktok.com/@shopify" class="ok-footer__social-icon ok-magnetic" data-strength="8" data-glow="rgba(232,96,10,0.35)" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="ok-footer__bottom">
+      <p class="ok-footer__copy">© 2025 Britain Racing LLC. All rights reserved.</p>
+      <a
+        href="https://www.shopify.com/?utm_campaign=poweredby&utm_medium=shopify&utm_source=onlinestore"
+        class="ok-footer__shopify-link"
+        target="_blank"
+        rel="noopener noreferrer"
+      >Powered by Shopify</a>
+    </div>
+
+  </div>
+</footer>
+
+<noscript>
+  <style>
+    .ok-reveal { opacity: 1 !important; }
+    .ok-hero__eyebrow, .ok-hero__heading, .ok-hero__sub, .ok-hero__cta { opacity: 1 !important; transform: none !important; }
+    .ok-split__panel, .ok-mosaic__tile { clip-path: none !important; }
+  </style>
+</noscript>
 
 <script id="overkill-scripts">
 (function () {
   'use strict';
 
-  /* ────────────────────────────────────────────────────────────
-     0. SETUP
-  ──────────────────────────────────────────────────────────── */
-  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  /* ────────────────────────────────────────────────────────────
-     1. LENIS SMOOTH SCROLL
-  ──────────────────────────────────────────────────────────── */
-  var lenis = new Lenis({
-    lerp: 0.1,
-    duration: 1.2,
-    smoothWheel: true
-  });
-
-  lenis.on('scroll', ScrollTrigger.update);
-
-  gsap.ticker.add(function (time) {
-    lenis.raf(time * 1000);
-  });
-
-  gsap.ticker.lagSmoothing(0);
-
-  /* ────────────────────────────────────────────────────────────
-     2. PRELOADER
-  ──────────────────────────────────────────────────────────── */
-  var preloader = document.getElementById('overkill-preloader');
-  var barFill   = document.querySelector('.preloader__bar-fill');
-  var countEl   = document.querySelector('.preloader__count');
-
-  function fireHeroEnter() {
-    window.dispatchEvent(new Event('overkill:hero-enter'));
-  }
-
-  if (!preloader) {
-    fireHeroEnter();
-  } else if (reducedMotion) {
-    preloader.style.display = 'none';
-    fireHeroEnter();
+  /* ── Guard: wait for DOM readiness ── */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
   } else {
-    // Percentage counter — random increments, caps at 99 until bar completes
-    var pct = 0;
-    var countInterval = setInterval(function () {
-      pct += Math.floor(Math.random() * 5) + 1;
-      if (pct > 99) pct = 99;
-      if (countEl) countEl.textContent = pct + '%';
-    }, 55);
-
-    gsap.to(barFill, {
-      width: '100%',
-      duration: 1.8,
-      ease: 'power2.inOut',
-      onComplete: function () {
-        clearInterval(countInterval);
-        if (countEl) countEl.textContent = '100%';
-
-        setTimeout(function () {
-          gsap.to(preloader, {
-            clipPath: 'inset(0 0 100% 0)',
-            duration: 0.7,
-            ease: 'power4.inOut',
-            onComplete: function () {
-              preloader.style.display = 'none';
-              fireHeroEnter();
-            }
-          });
-        }, 220);
-      }
-    });
+    init();
   }
 
-  /* ────────────────────────────────────────────────────────────
-     3. HERO ENTRANCE (triggered after preloader exits)
-  ──────────────────────────────────────────────────────────── */
-  window.addEventListener('overkill:hero-enter', function () {
-    setTimeout(function () {
-      if (!reducedMotion) {
-        // Split H1 into per-character spans
-        splitHeroHeading();
+  function init() {
 
-        gsap.from('.hero__image', {
-          scale: 1.08,
-          duration: 2.0,
-          ease: 'power2.out'
-        });
+    /* ══════════════════════════════════════════════
+       1. GSAP PLUGIN REGISTRATION
+    ══════════════════════════════════════════════ */
+    gsap.registerPlugin(ScrollTrigger);
 
-        gsap.from('.hero__orange-accent', {
-          scaleY: 0,
-          transformOrigin: 'top center',
-          duration: 1.0,
-          ease: 'power3.out',
-          delay: 0.15
-        });
+    /* ══════════════════════════════════════════════
+       2. LENIS SMOOTH SCROLL + GSAP SYNC
+    ══════════════════════════════════════════════ */
+    var lenis = new Lenis({
+      lerp: 0.1,
+      duration: 1.2,
+      smoothWheel: true
+    });
 
-        gsap.from('.hero__pre-label', {
-          opacity: 0,
-          y: 20,
-          duration: 0.6,
-          ease: 'power3.out',
-          delay: 0.1
-        });
+    lenis.on('scroll', ScrollTrigger.update);
 
-        // Characters animate after preloader gap
-        // (handled inside splitHeroHeading)
+    gsap.ticker.add(function (time) {
+      lenis.raf(time * 1000);
+    });
 
-        gsap.from('.hero__sub', {
-          opacity: 0,
-          y: 30,
-          duration: 0.8,
-          ease: 'power3.out',
-          delay: 0.88
-        });
+    gsap.ticker.lagSmoothing(0);
 
-        gsap.from('.hero__cta', {
-          opacity: 0,
-          y: 24,
-          duration: 0.7,
-          ease: 'power3.out',
-          delay: 1.08
-        });
-
-        gsap.from('.hero__scroll', {
-          opacity: 0,
-          duration: 0.6,
-          delay: 1.45
-        });
+    /* ══════════════════════════════════════════════
+       3. SCROLL PROGRESS BAR (rAF loop)
+    ══════════════════════════════════════════════ */
+    (function () {
+      var el = document.getElementById('ok-scroll-progress');
+      if (!el) return;
+      function tick() {
+        var scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        var pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+        el.style.width = Math.min(Math.max(pct, 0), 100) + '%';
+        requestAnimationFrame(tick);
       }
-    }, 100);
-  });
+      requestAnimationFrame(tick);
+    })();
 
-  /* ────────────────────────────────────────────────────────────
-     4. SPLIT TEXT — Hero H1 (character-level)
-  ──────────────────────────────────────────────────────────── */
-  function splitHeroHeading() {
-    var heading = document.querySelector('.hero__heading');
-    if (!heading) return;
+    /* ══════════════════════════════════════════════
+       4. FILM GRAIN — animated SVG seed
+    ══════════════════════════════════════════════ */
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var turb = document.getElementById('ok-grain-turb');
+      if (!turb) return;
+      var seed = 0;
+      (function tick() {
+        turb.setAttribute('seed', String(++seed % 100));
+        requestAnimationFrame(tick);
+      })();
+    })();
 
-    var text = heading.textContent;
-    heading.innerHTML = '';
+    /* ══════════════════════════════════════════════
+       5. GLASS NAV — scroll-driven compression
+    ══════════════════════════════════════════════ */
+    (function () {
+      var nav = document.querySelector('.ok-nav');
+      if (!nav) return;
 
-    text.split('').forEach(function (char) {
-      var span = document.createElement('span');
-      span.className = 'hero__char';
-      span.style.cssText = 'display:inline-block;will-change:transform;';
-      span.textContent = char === ' ' ? '\u00A0' : char;
-      heading.appendChild(span);
-    });
-
-    gsap.from('.hero__char', {
-      opacity: 0,
-      y: 60,
-      rotateX: -90,
-      transformPerspective: 1200,
-      transformOrigin: '50% 50% -20px',
-      duration: 0.9,
-      stagger: 0.025,
-      ease: 'back.out(1.7)',
-      delay: 0.22
-    });
-  }
-
-  /* ────────────────────────────────────────────────────────────
-     5. HERO PARALLAX & SCROLL INDICATORS
-  ──────────────────────────────────────────────────────────── */
-  if (!reducedMotion) {
-    gsap.to('.hero__image', {
-      y: '-15vw',
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1.2
-      }
-    });
-
-    gsap.to('.hero__content', {
-      y: '-4vw',
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 0.6
-      }
-    });
-
-    // Scroll chevron bounce
-    gsap.to('.hero__scroll-chevron', {
-      y: 8,
-      repeat: -1,
-      yoyo: true,
-      duration: 0.9,
-      ease: 'power1.inOut'
-    });
-
-    // Fade scroll indicator on scroll-start
-    gsap.to('.hero__scroll', {
-      opacity: 0,
-      scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: '15% top',
-        scrub: 1
-      }
-    });
-  }
-
-  /* ────────────────────────────────────────────────────────────
-     6. GLASS NAV — SCROLL BEHAVIOR
-  ──────────────────────────────────────────────────────────── */
-  var isMobile = window.innerWidth <= 990;
-
-  ScrollTrigger.create({
-    start: 60,
-    onEnter: function () {
-      gsap.to('#ok-nav', {
-        padding: isMobile ? '10px 24px' : '10px 48px',
-        backgroundColor: 'rgba(13,13,13,0.97)',
-        duration: 0.3,
-        ease: 'power2.out',
-        overwrite: true
-      });
-    },
-    onLeaveBack: function () {
-      gsap.to('#ok-nav', {
-        padding: isMobile ? '16px 24px' : '20px 48px',
-        backgroundColor: 'rgba(13,13,13,0.82)',
-        duration: 0.3,
-        ease: 'power2.out',
-        overwrite: true
-      });
-    }
-  });
-
-  /* ────────────────────────────────────────────────────────────
-     7. MOBILE DRAWER
-  ──────────────────────────────────────────────────────────── */
-  var hamburger   = document.querySelector('.nav__hamburger');
-  var drawer      = document.getElementById('nav-drawer');
-  var backdrop    = document.getElementById('nav-backdrop');
-  var drawerClose = document.querySelector('.nav__drawer-close');
-
-  function openDrawer() {
-    if (!hamburger || !drawer || !backdrop) return;
-    hamburger.classList.add('is-open');
-    hamburger.setAttribute('aria-expanded', 'true');
-    drawer.classList.add('is-open');
-    drawer.setAttribute('aria-hidden', 'false');
-    backdrop.classList.add('is-active');
-    document.body.style.overflow = 'hidden';
-
-    if (!reducedMotion) {
-      gsap.from('.nav__drawer-link', {
-        x: 40,
-        opacity: 0,
-        duration: 0.4,
-        ease: 'power3.out',
-        stagger: 0.06
-      });
-    }
-  }
-
-  function closeDrawer() {
-    if (!hamburger || !drawer || !backdrop) return;
-    hamburger.classList.remove('is-open');
-    hamburger.setAttribute('aria-expanded', 'false');
-    drawer.classList.remove('is-open');
-    drawer.setAttribute('aria-hidden', 'true');
-    backdrop.classList.remove('is-active');
-    document.body.style.overflow = '';
-  }
-
-  if (hamburger)   hamburger.addEventListener('click', openDrawer);
-  if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
-  if (backdrop)    backdrop.addEventListener('click', closeDrawer);
-
-  // Close on Escape key
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && drawer && drawer.classList.contains('is-open')) {
-      closeDrawer();
-    }
-  });
-
-  /* ────────────────────────────────────────────────────────────
-     8. RACE STRIPE ANIMATION
-  ──────────────────────────────────────────────────────────── */
-  if (!reducedMotion) {
-    gsap.from('.race-stripe', {
-      scaleX: 0,
-      transformOrigin: 'left center',
-      duration: 0.9,
-      ease: 'power4.out',
-      scrollTrigger: {
-        trigger: '.race-stripe',
-        start: 'top 92%',
-        toggleActions: 'play none none none'
-      }
-    });
-
-    gsap.from('.race-stripe__text', {
-      opacity: 0,
-      letterSpacing: '0.8em',
-      duration: 0.6,
-      ease: 'power2.out',
-      delay: 0.45,
-      scrollTrigger: {
-        trigger: '.race-stripe',
-        start: 'top 92%',
-        toggleActions: 'play none none none'
-      }
-    });
-  }
-
-  /* ────────────────────────────────────────────────────────────
-     9. COLLECTION SHOWCASE ANIMATIONS
-  ──────────────────────────────────────────────────────────── */
-  if (!reducedMotion) {
-    // Section header reveal
-    gsap.from('.section-label', {
-      opacity: 0,
-      y: 20,
-      duration: 0.6,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '.collection-showcase',
-        start: 'top 78%'
-      }
-    });
-
-    gsap.from('.section-title-inner', {
-      y: '105%',
-      duration: 0.9,
-      ease: 'power4.out',
-      scrollTrigger: {
-        trigger: '.collection-showcase',
-        start: 'top 78%'
-      }
-    });
-
-    // Row 1 cards entrance
-    gsap.from('.collection-grid--row1 .category-card', {
-      y: 70,
-      opacity: 0,
-      duration: 0.85,
-      ease: 'power3.out',
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: '.collection-grid--row1',
-        start: 'top 72%'
-      }
-    });
-
-    // Row 2 cards entrance
-    gsap.from('.collection-grid--row2 .category-card', {
-      y: 70,
-      opacity: 0,
-      duration: 0.85,
-      ease: 'power3.out',
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: '.collection-grid--row2',
-        start: 'top 72%'
-      }
-    });
-
-    // Image clip-path reveal per card
-    document.querySelectorAll('.category-card__img').forEach(function (img) {
-      gsap.fromTo(img,
-        { clipPath: 'inset(0 100% 0 0)' },
-        {
-          clipPath: 'inset(0 0% 0 0)',
-          duration: 0.9,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: img,
-            start: 'top 88%'
-          }
-        }
-      );
-    });
-  }
-
-  /* ────────────────────────────────────────────────────────────
-     10. CATEGORY CARD PERSPECTIVE TILT
-  ──────────────────────────────────────────────────────────── */
-  document.querySelectorAll('.category-card').forEach(function (card) {
-    card.addEventListener('mousemove', function (e) {
-      if (reducedMotion) return;
-      var rect = card.getBoundingClientRect();
-      var dx = e.clientX - rect.left - rect.width  / 2;
-      var dy = e.clientY - rect.top  - rect.height / 2;
-      gsap.to(card, {
-        rotateX: dy * 0.03,
-        rotateY: dx * -0.03,
-        transformPerspective: 1000,
-        duration: 0.4,
-        ease: 'power2.out'
-      });
-    });
-
-    card.addEventListener('mouseleave', function () {
-      if (reducedMotion) return;
-      gsap.to(card, {
-        rotateX: 0,
-        rotateY: 0,
-        duration: 0.6,
-        ease: 'power2.out'
-      });
-    });
-  });
-
-  /* ────────────────────────────────────────────────────────────
-     11. BREATHING SECTION — WORD SPLIT + STATS COUNTERS
-  ──────────────────────────────────────────────────────────── */
-  var missionQuote = document.querySelector('.mission-quote');
-  if (missionQuote && !reducedMotion) {
-    var quoteWords = missionQuote.textContent.trim().split(/\s+/);
-    missionQuote.innerHTML = quoteWords.map(function (word) {
-      return '<span class="word-mask"><span class="word-inner">' + word + '</span></span>';
-    }).join(' ');
-
-    gsap.from('.mission-quote .word-inner', {
-      y: '110%',
-      duration: 0.8,
-      ease: 'power4.out',
-      stagger: 0.07,
-      scrollTrigger: {
-        trigger: '.breathing-section',
-        start: 'top 65%'
-      }
-    });
-  }
-
-  // Breathing glow pulse (runs even with reduced-motion off — it's very subtle)
-  if (!reducedMotion) {
-    gsap.to('.breathing-glow', {
-      scale: 1.15,
-      opacity: 0.12,
-      repeat: -1,
-      yoyo: true,
-      duration: 3.5,
-      ease: 'power1.inOut'
-    });
-  }
-
-  if (!reducedMotion) {
-    gsap.from('.breathing-label', {
-      opacity: 0,
-      y: 20,
-      duration: 0.7,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: '.breathing-section', start: 'top 65%' }
-    });
-
-    gsap.from(['.breathing-rule', '.breathing-sub'], {
-      opacity: 0,
-      y: 20,
-      duration: 0.8,
-      ease: 'power3.out',
-      stagger: 0.15,
-      scrollTrigger: { trigger: '.breathing-section', start: 'top 60%' }
-    });
-
-    gsap.from('.stats-row', {
-      opacity: 0,
-      y: 30,
-      duration: 0.8,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: '.stats-row', start: 'top 78%' }
-    });
-  }
-
-  // Stats counter animation
-  document.querySelectorAll('.stat-counter').forEach(function (counter) {
-    var target = parseInt(counter.getAttribute('data-target'), 10) || 0;
-    var obj = { val: 0 };
-
-    ScrollTrigger.create({
-      trigger: '.breathing-section',
-      start: 'top 60%',
-      once: true,
-      onEnter: function () {
-        gsap.to(obj, {
-          val: target,
-          duration: 2.2,
-          ease: 'power2.out',
-          onUpdate: function () {
-            counter.textContent = Math.round(obj.val);
-          },
-          onComplete: function () {
-            counter.textContent = target;
-          }
-        });
-      }
-    });
-  });
-
-  /* ────────────────────────────────────────────────────────────
-     12. FEATURE ROWS
-  ──────────────────────────────────────────────────────────── */
-  document.querySelectorAll('.feature-row').forEach(function (row) {
-    var imgWrap   = row.querySelector('.feature-row__image-wrap');
-    var img       = row.querySelector('.feature-row__image');
-    var textBlock = row.querySelector('.feature-row__text-block');
-    var isRight   = row.classList.contains('feature-row--right');
-
-    if (!reducedMotion && imgWrap) {
-      gsap.fromTo(imgWrap,
-        { clipPath: 'inset(0 100% 0 0)' },
-        {
-          clipPath: 'inset(0 0% 0 0)',
-          duration: 1.0,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: row, start: 'top 68%' }
-        }
-      );
-    }
-
-    if (img) {
-      // Blur-up on lazy load
-      if (!img.complete) {
-        gsap.set(img, { filter: 'blur(24px)', opacity: 0 });
-        img.addEventListener('load', function () {
-          gsap.to(img, { filter: 'blur(0px)', opacity: 1, duration: 0.5, ease: 'power2.out' });
-        });
-      }
-
-      if (!reducedMotion) {
-        gsap.to(img, {
-          y: '-8%',
-          ease: 'none',
-          scrollTrigger: {
-            trigger: row,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1.5
-          }
-        });
-      }
-    }
-
-    if (!reducedMotion && textBlock) {
-      gsap.from(textBlock, {
-        x: isRight ? 60 : -60,
-        opacity: 0,
-        duration: 0.85,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: row, start: 'top 65%' }
-      });
-
-      var rowChildren = textBlock.querySelectorAll(
-        '.feature-row__label, .feature-row__heading-wrap, .feature-row__body, .feature-row__cta'
-      );
-
-      if (rowChildren.length) {
-        gsap.from(rowChildren, {
-          y: 20,
-          opacity: 0,
-          duration: 0.6,
-          ease: 'power3.out',
-          stagger: 0.1,
-          scrollTrigger: { trigger: row, start: 'top 63%' }
-        });
-      }
-    }
-  });
-
-  /* ────────────────────────────────────────────────────────────
-     13. FOOTER ANIMATIONS
-  ──────────────────────────────────────────────────────────── */
-  if (!reducedMotion) {
-    gsap.from('.footer__content', {
-      y: 60,
-      opacity: 0,
-      duration: 1.1,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: 'footer', start: 'top 88%' }
-    });
-
-    gsap.from('.footer__social-icon', {
-      y: 20,
-      opacity: 0,
-      duration: 0.5,
-      stagger: 0.08,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: '.footer__social-row', start: 'top 90%' }
-    });
-  }
-
-  // Footer social icon magnetic
-  document.querySelectorAll('.footer__social-icon').forEach(function (icon) {
-    icon.addEventListener('mousemove', function (e) {
-      if (reducedMotion) return;
-      var rect = icon.getBoundingClientRect();
-      gsap.to(icon, {
-        x: (e.clientX - rect.left - rect.width  / 2) * 0.4,
-        y: (e.clientY - rect.top  - rect.height / 2) * 0.4,
-        duration: 0.3,
-        ease: 'power2.out'
-      });
-    });
-
-    icon.addEventListener('mouseleave', function () {
-      if (reducedMotion) return;
-      gsap.to(icon, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.3)' });
-    });
-  });
-
-  /* ────────────────────────────────────────────────────────────
-     14. NAV LINK MAGNETIC
-  ──────────────────────────────────────────────────────────── */
-  document.querySelectorAll('.nav__link').forEach(function (link) {
-    var xTo = gsap.quickTo(link, 'x', { duration: 0.5, ease: 'elastic.out(1, 0.3)' });
-    var yTo = gsap.quickTo(link, 'y', { duration: 0.5, ease: 'elastic.out(1, 0.3)' });
-
-    link.addEventListener('mousemove', function (e) {
-      if (reducedMotion) return;
-      var rect = link.getBoundingClientRect();
-      xTo((e.clientX - rect.left - rect.width  / 2) / (rect.width  / 2) * 6);
-      yTo((e.clientY - rect.top  - rect.height / 2) / (rect.height / 2) * 6);
-    });
-
-    link.addEventListener('mouseleave', function () {
-      xTo(0);
-      yTo(0);
-    });
-  });
-
-  /* ────────────────────────────────────────────────────────────
-     15. HERO CTA MAGNETIC + SPRING
-  ──────────────────────────────────────────────────────────── */
-  var heroCta = document.querySelector('.hero__cta');
-  if (heroCta && !reducedMotion) {
-    var ctaX  = gsap.quickTo(heroCta, 'x',     { duration: 0.3,  ease: 'power2.out' });
-    var ctaY  = gsap.quickTo(heroCta, 'y',     { duration: 0.3,  ease: 'power2.out' });
-    var ctaSc = gsap.quickTo(heroCta, 'scale', { duration: 0.45, ease: 'elastic.out(1, 0.3)' });
-
-    heroCta.addEventListener('mousemove', function (e) {
-      var rect = heroCta.getBoundingClientRect();
-      ctaX((e.clientX - rect.left - rect.width  / 2) * 0.35);
-      ctaY((e.clientY - rect.top  - rect.height / 2) * 0.35);
-    });
-
-    heroCta.addEventListener('mouseenter', function () { ctaSc(1.05); });
-
-    heroCta.addEventListener('mouseleave', function () {
-      ctaX(0);
-      ctaY(0);
-      ctaSc(1);
-    });
-
-    heroCta.addEventListener('mousedown',  function () { ctaSc(0.96); });
-    heroCta.addEventListener('mouseup',    function () { ctaSc(1.05); });
-  }
-
-  /* ────────────────────────────────────────────────────────────
-     16. CUSTOM CURSOR (pointer:fine devices only)
-  ──────────────────────────────────────────────────────────── */
-  if (window.matchMedia('(pointer:fine)').matches && !reducedMotion) {
-    document.body.classList.add('custom-cursor-active');
-
-    var cursorRing  = document.querySelector('.ok-cursor');
-    var cursorDot   = document.querySelector('.ok-cursor-dot');
-    var cursorLabel = document.querySelector('.ok-cursor-label');
-
-    if (cursorRing && cursorDot) {
-      // Start hidden — appear on first mousemove
-      gsap.set([cursorRing, cursorDot], { opacity: 0 });
-      var cursorVisible = false;
-
-      var xRing = gsap.quickTo(cursorRing, 'x', { duration: 0.35, ease: 'power3' });
-      var yRing = gsap.quickTo(cursorRing, 'y', { duration: 0.35, ease: 'power3' });
-      var xDot  = gsap.quickTo(cursorDot,  'x', { duration: 0.12, ease: 'power3' });
-      var yDot  = gsap.quickTo(cursorDot,  'y', { duration: 0.12, ease: 'power3' });
-
-      window.addEventListener('mousemove', function (e) {
-        if (!cursorVisible) {
-          gsap.to([cursorRing, cursorDot], { opacity: 1, duration: 0.4 });
-          cursorVisible = true;
-        }
-        xRing(e.clientX - 20);
-        yRing(e.clientY - 20);
-        xDot(e.clientX - 3);
-        yDot(e.clientY - 3);
-      });
-
-      var cursorSizes = { SHOP: 62, EXPLORE: 56, VIEW: 48, FOLLOW: 52, CART: 50, HOME: 48 };
-
-      document.querySelectorAll('[data-cursor]').forEach(function (el) {
-        el.addEventListener('mouseenter', function () {
-          var type = el.getAttribute('data-cursor');
-          var size = cursorSizes[type] || 62;
-
-          gsap.to(cursorRing, {
-            width: size,
-            height: size,
-            borderColor: '#C85A08',
+      ScrollTrigger.create({
+        start: '60px top',
+        onEnter: function () {
+          gsap.to(nav, {
+            paddingTop: '10px',
+            paddingBottom: '10px',
+            background: 'rgba(13,13,13,0.97)',
+            borderBottomColor: 'rgba(232,96,10,0.30)',
             duration: 0.3,
             ease: 'power2.out'
           });
-
-          if (cursorLabel && type) {
-            cursorLabel.textContent = type;
-            gsap.to(cursorLabel, { opacity: 1, duration: 0.2 });
-          }
-        });
-
-        el.addEventListener('mouseleave', function () {
-          gsap.to(cursorRing, {
-            width: 40,
-            height: 40,
-            borderColor: 'rgba(255,255,255,0.85)',
-            duration: 0.4,
+        },
+        onLeaveBack: function () {
+          gsap.to(nav, {
+            paddingTop: '20px',
+            paddingBottom: '20px',
+            background: 'rgba(13,13,13,0.80)',
+            borderBottomColor: 'rgba(232,96,10,0.15)',
+            duration: 0.3,
             ease: 'power2.out'
           });
+        }
+      });
+    })();
 
-          if (cursorLabel) {
-            gsap.to(cursorLabel, { opacity: 0, duration: 0.15, onComplete: function () {
-              cursorLabel.textContent = '';
-            }});
+    /* ══════════════════════════════════════════════
+       6. MOBILE DRAWER
+    ══════════════════════════════════════════════ */
+    (function () {
+      var hamburger = document.querySelector('.ok-nav__hamburger');
+      var drawer    = document.getElementById('ok-mobile-drawer');
+      var backdrop  = document.getElementById('ok-drawer-backdrop');
+      var closeBtn  = document.querySelector('.ok-drawer__close');
+      var links     = document.querySelectorAll('.ok-drawer__link');
+      if (!hamburger || !drawer) return;
+
+      function openDrawer() {
+        hamburger.classList.add('is-open');
+        hamburger.setAttribute('aria-expanded', 'true');
+        drawer.classList.add('is-open');
+        if (backdrop) backdrop.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+        gsap.fromTo(links,
+          { x: 40, opacity: 0 },
+          { x: 0, opacity: 1, stagger: 0.05, duration: 0.4, ease: 'power3.out', delay: 0.15 }
+        );
+      }
+
+      function closeDrawer() {
+        hamburger.classList.remove('is-open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        drawer.classList.remove('is-open');
+        if (backdrop) backdrop.classList.remove('is-open');
+        document.body.style.overflow = '';
+      }
+
+      hamburger.addEventListener('click', function () {
+        drawer.classList.contains('is-open') ? closeDrawer() : openDrawer();
+      });
+
+      if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+      if (backdrop) backdrop.addEventListener('click', closeDrawer);
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && drawer.classList.contains('is-open')) closeDrawer();
+      });
+    })();
+
+    /* ══════════════════════════════════════════════
+       7. HERO — SPLIT TEXT on H1
+    ══════════════════════════════════════════════ */
+    (function () {
+      var heading = document.querySelector('.hero__heading');
+      if (!heading) return;
+
+      var rawText = heading.textContent.trim();
+      heading.setAttribute('aria-label', rawText);
+
+      heading.innerHTML = rawText.split('').map(function (char) {
+        if (char === ' ') {
+          return '<span class="ok-char ok-space" aria-hidden="true"> </span>';
+        }
+        return '<span class="ok-char" aria-hidden="true" style="opacity:0;transform:translateY(40px) rotateX(-90deg)">' + char + '</span>';
+      }).join('');
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('.hero__heading .ok-char').forEach(function (c) {
+          c.style.opacity = '1';
+          c.style.transform = 'none';
+        });
+        return;
+      }
+
+      setTimeout(function () {
+        gsap.to('.hero__heading .ok-char', {
+          opacity: 1,
+          y: 0,
+          rotateX: 0,
+          transformOrigin: '50% 50% -20px',
+          stagger: 0.025,
+          ease: 'back.out(1.7)',
+          duration: 0.8
+        });
+      }, 200);
+    })();
+
+    /* ══════════════════════════════════════════════
+       8. HERO — EYEBROW / SUBTITLE / CTA ENTRANCE
+    ══════════════════════════════════════════════ */
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      gsap.from('.ok-hero__eyebrow', { opacity: 0, y: 20, duration: 0.6, ease: 'power3.out', delay: 0.1 });
+      gsap.from('.ok-hero__sub',     { opacity: 0, y: 24, duration: 0.7, ease: 'power3.out', delay: 0.7 });
+      gsap.from('.ok-hero__cta',     { opacity: 0, y: 20, duration: 0.6, ease: 'power3.out', delay: 0.9 });
+    })();
+
+    /* ══════════════════════════════════════════════
+       9. HERO — PARALLAX (background + content)
+    ══════════════════════════════════════════════ */
+    (function () {
+      var heroBg      = document.querySelector('.ok-hero__bg');
+      var heroContent = document.querySelector('.ok-hero__content');
+      var heroSection = document.querySelector('.ok-hero');
+      if (!heroBg || !heroSection) return;
+
+      gsap.to(heroBg, {
+        y: '-15vw',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroSection,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+
+      if (heroContent) {
+        gsap.to(heroContent, {
+          y: '-8vw',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroSection,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true
           }
         });
+      }
+    })();
+
+    /* ══════════════════════════════════════════════
+       10. HERO — SCROLL INDICATOR loop + fade
+    ══════════════════════════════════════════════ */
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var indicator = document.querySelector('.ok-hero__scroll-indicator');
+      if (!indicator) return;
+
+      gsap.to(indicator, {
+        y: 10,
+        repeat: -1,
+        yoyo: true,
+        duration: 0.8,
+        ease: 'power1.inOut'
       });
-    }
-  }
 
-  /* ────────────────────────────────────────────────────────────
-     17. SCROLL PROGRESS BAR (rAF loop)
-  ──────────────────────────────────────────────────────────── */
-  var progressBar = document.getElementById('ok-scroll-progress');
-  if (progressBar) {
-    function updateProgress() {
-      var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      progressBar.style.width = (maxScroll > 0
-        ? Math.min(100, (window.scrollY / maxScroll) * 100)
-        : 0) + '%';
-      requestAnimationFrame(updateProgress);
-    }
-    requestAnimationFrame(updateProgress);
-  }
+      gsap.to(indicator, {
+        opacity: 0,
+        scrollTrigger: {
+          start: '100px top',
+          end: '300px top',
+          scrub: true
+        }
+      });
+    })();
 
-  /* ────────────────────────────────────────────────────────────
-     18. RESIZE HANDLER — keep isMobile in sync
-  ──────────────────────────────────────────────────────────── */
-  window.addEventListener('resize', function () {
-    isMobile = window.innerWidth <= 990;
-    ScrollTrigger.refresh();
-  });
+    /* ══════════════════════════════════════════════
+       11. MARQUEE TICKER
+    ══════════════════════════════════════════════ */
+    (function () {
+      var inner  = document.querySelector('.ok-ticker__inner');
+      var ticker = document.querySelector('.ok-ticker');
+      if (!inner) return;
+
+      /* Calculate width after render to ensure max-content is computed */
+      requestAnimationFrame(function () {
+        var tween = gsap.to(inner, {
+          x: '-50%',
+          duration: 22,
+          ease: 'none',
+          repeat: -1
+        });
+
+        if (ticker) {
+          ticker.addEventListener('mouseenter', function () { tween.pause(); });
+          ticker.addEventListener('mouseleave', function () { tween.resume(); });
+        }
+      });
+    })();
+
+    /* ══════════════════════════════════════════════
+       12. COLLECTIONS FEATURE SPLIT — clip-path reveal
+    ══════════════════════════════════════════════ */
+    (function () {
+      var splitSection = document.querySelector('.ok-split');
+      var leftPanel    = document.querySelector('.ok-split__left');
+      var rightTop     = document.querySelector('.ok-split__right-top');
+      var rightBottom  = document.querySelector('.ok-split__right-bottom');
+
+      if (!splitSection) return;
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var panels = [leftPanel, rightTop, rightBottom];
+      var delays = [0, 0.15, 0.28];
+
+      panels.forEach(function (panel, i) {
+        if (!panel) return;
+        gsap.fromTo(panel,
+          { clipPath: 'inset(0 100% 0 0)' },
+          {
+            clipPath: 'inset(0 0% 0 0)',
+            duration: 1.0,
+            ease: 'power4.out',
+            delay: delays[i],
+            scrollTrigger: {
+              trigger: splitSection,
+              start: 'top 82%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+        /* Content text fade-in after clip completes */
+        var content = panel.querySelector('.ok-split__content');
+        if (content) {
+          gsap.from(content, {
+            opacity: 0,
+            y: 20,
+            duration: 0.6,
+            ease: 'power3.out',
+            delay: delays[i] + 0.75,
+            scrollTrigger: {
+              trigger: splitSection,
+              start: 'top 82%',
+              toggleActions: 'play none none none'
+            }
+          });
+        }
+      });
+    })();
+
+    /* ══════════════════════════════════════════════
+       13. SECTION LABEL — heading + bar reveal
+    ══════════════════════════════════════════════ */
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var section = document.getElementById('ok-section-label');
+      if (!section) return;
+
+      var heading = section.querySelector('.ok-section-label__heading');
+      var bar     = section.querySelector('.ok-section-label__bar');
+      var desc    = section.querySelector('.ok-section-label__desc');
+
+      if (bar) {
+        gsap.from(bar, {
+          scaleX: 0,
+          transformOrigin: 'left center',
+          duration: 0.6,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: section, start: 'top 88%', toggleActions: 'play none none none' }
+        });
+      }
+      if (heading) {
+        gsap.from(heading, {
+          y: '100%',
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power4.out',
+          delay: 0.1,
+          scrollTrigger: { trigger: section, start: 'top 88%', toggleActions: 'play none none none' }
+        });
+      }
+      if (desc) {
+        gsap.from(desc, {
+          opacity: 0,
+          y: 16,
+          duration: 0.6,
+          ease: 'power3.out',
+          delay: 0.3,
+          scrollTrigger: { trigger: section, start: 'top 88%', toggleActions: 'play none none none' }
+        });
+      }
+    })();
+
+    /* ══════════════════════════════════════════════
+       14. MOSAIC GRID — staggered clip-path reveal
+    ══════════════════════════════════════════════ */
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var mosaic = document.getElementById('ok-mosaic');
+      if (!mosaic) return;
+
+      var tiles = mosaic.querySelectorAll('.ok-mosaic__tile');
+      tiles.forEach(function (tile, index) {
+        gsap.fromTo(tile,
+          { clipPath: 'inset(0 100% 0 0)' },
+          {
+            clipPath: 'inset(0 0 0 0)',
+            duration: 0.9,
+            ease: 'power4.out',
+            delay: index * 0.10,
+            scrollTrigger: {
+              trigger: mosaic,
+              start: 'top 80%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+      });
+    })();
+
+    /* ══════════════════════════════════════════════
+       15. BREATHING SECTION — quote + glow + line
+    ══════════════════════════════════════════════ */
+    (function () {
+      var section = document.querySelector('.ok-breathing');
+      if (!section) return;
+
+      /* Radial glow pulse runs regardless of reduced-motion (it's ambient) */
+      var glow = section.querySelector('.ok-breath__glow');
+      if (glow) {
+        gsap.fromTo(glow,
+          { opacity: 0.15, scale: 0.75 },
+          { opacity: 0.45, scale: 1.3, duration: 3.5, repeat: -1, yoyo: true, ease: 'power1.inOut' }
+        );
+      }
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var quote = section.querySelector('.ok-breath__quote');
+      var line  = section.querySelector('.ok-breath__line');
+      var sub   = section.querySelector('.ok-breath__sub');
+
+      if (quote) {
+        gsap.from(quote, {
+          opacity: 0,
+          scale: 0.94,
+          duration: 1.3,
+          ease: 'expo.out',
+          scrollTrigger: { trigger: section, start: 'top 65%', toggleActions: 'play none none none' }
+        });
+      }
+      if (line) {
+        gsap.from(line, {
+          scaleX: 0,
+          transformOrigin: 'center center',
+          duration: 0.8,
+          ease: 'power4.out',
+          delay: 0.6,
+          scrollTrigger: { trigger: section, start: 'top 65%', toggleActions: 'play none none none' }
+        });
+      }
+      if (sub) {
+        gsap.from(sub, {
+          opacity: 0,
+          y: 10,
+          duration: 0.6,
+          ease: 'power3.out',
+          delay: 0.85,
+          scrollTrigger: { trigger: section, start: 'top 65%', toggleActions: 'play none none none' }
+        });
+      }
+    })();
+
+    /* ══════════════════════════════════════════════
+       16. CTA BAND — slide-in from sides
+    ══════════════════════════════════════════════ */
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var band = document.getElementById('ok-cta-band');
+      if (!band) return;
+
+      var left  = band.querySelector('.ok-cta-band__left');
+      var right = band.querySelector('.ok-cta-band__right');
+      var bar   = band.querySelector('.ok-cta-band__bar');
+
+      if (bar) {
+        gsap.from(bar, {
+          scaleX: 0,
+          transformOrigin: 'left center',
+          duration: 0.7,
+          ease: 'power4.out',
+          scrollTrigger: { trigger: band, start: 'top 80%', toggleActions: 'play none none none' }
+        });
+      }
+      if (left) {
+        gsap.from(left, {
+          opacity: 0,
+          x: -60,
+          duration: 0.9,
+          ease: 'power4.out',
+          scrollTrigger: { trigger: band, start: 'top 80%', toggleActions: 'play none none none' }
+        });
+      }
+      if (right) {
+        gsap.from(right, {
+          opacity: 0,
+          x: 60,
+          duration: 0.9,
+          ease: 'power4.out',
+          delay: 0.18,
+          scrollTrigger: { trigger: band, start: 'top 80%', toggleActions: 'play none none none' }
+        });
+      }
+    })();
+
+    /* ══════════════════════════════════════════════
+       17. FOOTER — fade-up reveal
+    ══════════════════════════════════════════════ */
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var footerInner = document.querySelector('.ok-footer__inner');
+      if (!footerInner) return;
+      gsap.from(footerInner, {
+        opacity: 0,
+        y: 60,
+        duration: 1.0,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: '#ok-footer', start: 'top 95%', toggleActions: 'play none none none' }
+      });
+    })();
+
+    /* ══════════════════════════════════════════════
+       18. MAGNETIC BUTTONS — cursor-following translate + shine
+    ══════════════════════════════════════════════ */
+    (function () {
+      document.querySelectorAll('.ok-magnetic').forEach(function (btn) {
+        var strength  = parseInt(btn.dataset.strength || '12');
+        var glowColor = btn.dataset.glow || 'rgba(232,96,10,0.4)';
+        var defaultBg = btn.dataset.bg   || '';
+
+        btn.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease';
+
+        btn.addEventListener('mousemove', function (e) {
+          var rect = btn.getBoundingClientRect();
+          var dx   = (e.clientX - rect.left  - rect.width  / 2) / (rect.width  / 2);
+          var dy   = (e.clientY - rect.top   - rect.height / 2) / (rect.height / 2);
+          var gx   = (e.clientX - rect.left) / rect.width  * 100;
+          var gy   = (e.clientY - rect.top)  / rect.height * 100;
+
+          btn.style.transform  = 'translate(' + (dx * strength) + 'px,' + (dy * strength) + 'px) scale(1.03)';
+          btn.style.boxShadow  = '0 0 30px ' + glowColor;
+          btn.style.background = 'radial-gradient(circle at ' + gx + '% ' + gy + '%, rgba(255,255,255,0.15) 0%, transparent 60%), ' + (defaultBg || '#e8600a');
+        });
+
+        btn.addEventListener('mouseleave', function () {
+          btn.style.transform  = 'translate(0,0) scale(1)';
+          btn.style.boxShadow  = '';
+          btn.style.background = defaultBg || '';
+        });
+      });
+    })();
+
+    /* ══════════════════════════════════════════════
+       19. NAV LINKS — subtle magnetic pull
+    ══════════════════════════════════════════════ */
+    (function () {
+      document.querySelectorAll('.ok-nav__link').forEach(function (link) {
+        link.addEventListener('mousemove', function (e) {
+          var rect = link.getBoundingClientRect();
+          var dx   = e.clientX - rect.left - rect.width  / 2;
+          var dy   = e.clientY - rect.top  - rect.height / 2;
+          gsap.to(link, { x: dx * 0.3, y: dy * 0.3, duration: 0.3, ease: 'power2.out' });
+        });
+        link.addEventListener('mouseleave', function () {
+          gsap.to(link, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.3)' });
+        });
+      });
+    })();
+
+    /* ══════════════════════════════════════════════
+       20. FOOTER SOCIAL ICONS — magnetic
+    ══════════════════════════════════════════════ */
+    (function () {
+      document.querySelectorAll('.ok-footer__social-icon').forEach(function (icon) {
+        icon.addEventListener('mousemove', function (e) {
+          var rect = icon.getBoundingClientRect();
+          var dx   = e.clientX - rect.left - rect.width  / 2;
+          var dy   = e.clientY - rect.top  - rect.height / 2;
+          gsap.to(icon, { x: dx * 0.35, y: dy * 0.35, duration: 0.3, ease: 'power2.out' });
+        });
+        icon.addEventListener('mouseleave', function () {
+          gsap.to(icon, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.3)' });
+        });
+      });
+    })();
+
+  } /* end init() */
 
 })();
 </script>

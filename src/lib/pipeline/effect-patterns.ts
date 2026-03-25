@@ -7,50 +7,6 @@
 export const EFFECT_PATTERNS = `
 ## CODE PATTERNS — Copy and adapt these. Do NOT invent simpler versions.
 
-### Custom Cursor (GSAP quickTo — smooth, mix-blend-mode difference)
-HTML:
-  <div class="ok-cursor" style="position:fixed;top:0;left:0;width:40px;height:40px;border:1px solid #fff;border-radius:50%;z-index:10000;pointer-events:none;mix-blend-mode:difference;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0"></div>
-  <div class="ok-cursor-dot" style="position:fixed;top:0;left:0;width:6px;height:6px;background:#fff;border-radius:50%;z-index:10000;pointer-events:none;mix-blend-mode:difference"></div>
-
-CSS:
-  body.cursor-active, body.cursor-active * { cursor: none !important; }
-  @media (pointer: coarse) { .ok-cursor, .ok-cursor-dot { display: none !important; } }
-
-JS:
-  (function() {
-    if ('ontouchstart' in window || !window.matchMedia('(pointer: fine)').matches) return;
-    var outer = document.querySelector('.ok-cursor');
-    var dot = document.querySelector('.ok-cursor-dot');
-    if (!outer || !dot) return;
-    document.body.classList.add('cursor-active');
-    var xO = gsap.quickTo(outer, 'x', { duration: 0.35, ease: 'power3' });
-    var yO = gsap.quickTo(outer, 'y', { duration: 0.35, ease: 'power3' });
-    var xD = gsap.quickTo(dot, 'x', { duration: 0.15, ease: 'power3' });
-    var yD = gsap.quickTo(dot, 'y', { duration: 0.15, ease: 'power3' });
-    window.addEventListener('mousemove', function(e) {
-      xO(e.clientX - 20); yO(e.clientY - 20);
-      xD(e.clientX - 3); yD(e.clientY - 3);
-    });
-    document.addEventListener('mouseover', function(e) {
-      var t = e.target.closest('[data-cursor]');
-      if (!t) return;
-      var type = t.getAttribute('data-cursor');
-      if (type === 'expand') gsap.to(outer, { width: 80, height: 80, duration: 0.3 });
-      else if (type && type.startsWith('text:')) {
-        outer.textContent = type.slice(5);
-        gsap.to(outer, { width: 100, height: 100, fontSize: 14, duration: 0.3 });
-      }
-    });
-    document.addEventListener('mouseout', function(e) {
-      var t = e.target.closest('[data-cursor]');
-      if (!t) return;
-      outer.textContent = '';
-      gsap.to(outer, { width: 40, height: 40, fontSize: 0, duration: 0.3 });
-    });
-  })();
-
-Usage: Add data-cursor="expand" to cards, data-cursor="text:SHOP" to CTAs, data-cursor="text:VIEW" to links.
-
 ### Magnetic Button (cursor-following translate + radial shine + glow)
 JS (apply to all elements with class 'ok-magnetic'):
   document.querySelectorAll('.ok-magnetic').forEach(function(btn) {

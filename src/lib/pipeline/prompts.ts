@@ -179,11 +179,10 @@ export function buildPlannerSystemPrompt(
     `Run every phase. For each, prescribe EXACT treatments with specific values.\n\n` +
     `### Phase 1: Hero Transformation (non-negotiable)\n` +
     `Prescribe ALL of these — every hero gets every treatment:\n` +
-    `- **Preloader**: Brand name in display font, counter 0→100% over 1800ms, clip-path curtain wipe exit (top→bottom, 600ms ease.inOut), hero entrance choreographed after exit\n` +
     `- **Background**: Full-bleed real hero image with dark gradient overlay (linear-gradient from rgba(base,0) at 40% to rgba(base,0.85) at 100%). For Bold/Industrial: add diagonal clip-path cut at bottom (polygon clip-path)\n` +
     `- **Parallax layers**: Image moves at 0.6x scroll speed (translateY from 0 to -15vw). Text layer moves at 0.3x. Background grain layer fixed.\n` +
-    `- **Text treatment**: GSAP split-text per-character stagger — from {opacity:0, y:60px, rotateX:-90deg} to visible, stagger:0.025s, ease:back.out(1.7), trigger 200ms after preloader exit\n` +
-    `- **CTA button**: Magnetic (80px detection radius), spring scale(1.05) on hover with ease:elastic.out(1,0.3), cursor label "SHOP" / "VIEW" / "EXPLORE" as appropriate\n` +
+    `- **Text treatment**: GSAP split-text per-character stagger — from {opacity:0, y:60px, rotateX:-90deg} to visible, stagger:0.025s, ease:back.out(1.7), trigger on page load. Heading MUST use text-wrap:balance and word-break:keep-all.\n` +
+    `- **CTA button**: Magnetic (80px detection radius), spring scale(1.05) on hover with ease:elastic.out(1,0.3)\n` +
     `- **Scroll indicator**: Animated chevron or line at hero bottom, loops up-down, fades on scroll\n\n` +
     `### Phase 2: Navigation (non-negotiable)\n` +
     `- **Glass morphism**: backdrop-filter:blur(12px), background:rgba(#0d0d0d, 0.75), border-bottom:1px solid rgba(255,255,255,0.08), z-index:1000\n` +
@@ -200,8 +199,8 @@ export function buildPlannerSystemPrompt(
     `- Scroll progress bar: 2px fixed top, brand accent gradient left-to-right, z-index:10000\n\n` +
     `### Phase 4: Interactive Elements — Zero Dead Spots\n` +
     `Every interactive element gets ALL three states (hover/focus/active). No exceptions:\n` +
-    `- **Every button**: Magnetic pull (80px radius), spring scale(1.05) hover, scale(0.96) active, cursor label, 2px brand accent focus ring with 4px blur\n` +
-    `- **Every card**: CSS perspective tilt on hover (perspective:1000px, rotateX:±6deg, rotateY:±6deg, translateZ:20px), shadow depth shift, cursor expands to 48px\n` +
+    `- **Every button**: Magnetic pull (80px radius), spring scale(1.05) hover, scale(0.96) active, 2px brand accent focus ring with 4px blur\n` +
+    `- **Every card**: CSS perspective tilt on hover (perspective:1000px, rotateX:±6deg, rotateY:±6deg, translateZ:20px), shadow depth shift\n` +
     `- **Every nav link**: Animated underline scaleX 0→1, eased 200ms\n` +
     `- **Every image**: Scroll-triggered clip-path reveal (inset(0 100% 0 0 → inset(0 0 0 0), 800ms ease.out, ScrollTrigger start:top 85%)\n` +
     `- **Every input**: Floating label (transform translateY 0→-20px, scale 1→0.85 on focus), brand accent focus ring\n\n` +
@@ -234,9 +233,8 @@ export function buildPlannerSystemPrompt(
     `---\n\n` +
     `## STEP 3: Complete Page Architecture\n\n` +
     `Define the FULL transformed page from top to bottom:\n\n` +
-    `**Preloader** → brand counter + curtain exit\n` +
     `**Glass Nav** → scroll-responsive + magnetic links + mobile drawer\n` +
-    `**Hero** → preloader-choreographed entrance + parallax layers + split-text + magnetic CTA + scroll indicator\n` +
+    `**Hero** → parallax layers + split-text + magnetic CTA + scroll indicator\n` +
     `**[Each Section]** → scroll enter animation + specific treatments from audit\n` +
     `**[Breathing Section]** → full-viewport minimal content\n` +
     `**Footer** → parallax reveal (translateY 60px→0 on ScrollTrigger) + magnetic social icons + film grain\n\n` +
@@ -256,17 +254,10 @@ export function buildPlannerSystemPrompt(
     `    "brandArchetype": "Bold/Industrial | Elegant/Luxury | Modern/SaaS | Creative/Portfolio",\n` +
     `    "colorPalette": ["#hex1", "#hex2"],\n` +
     `    "typography": ["Font 1 (weight, size)", "Font 2"],\n` +
-    `    "layoutStructure": "Preloader -> Glass Nav -> Hero -> ...",\n` +
+    `    "layoutStructure": "Glass Nav -> Hero -> ...",\n` +
     `    "brandPersonality": "..."\n` +
     `  },\n` +
     `  "buildSteps": [\n` +
-    `    {\n` +
-    `      "section": "Preloader",\n` +
-    `      "layout": "Full-screen overlay div#overkill-preloader, centered brand name + loading bar + percentage counter",\n` +
-    `      "css": "position: fixed; inset: 0; z-index: 9999; background: #0d0d0d; display: flex; align-items: center; justify-content: center; flex-direction: column;",\n` +
-    `      "animation": "Animate fill width 0% to 100% over 1800ms with random increments. On complete: gsap.to('#overkill-preloader', {yPercent: -100, duration: 0.8, ease: 'power4.inOut'}). Then trigger hero entrance animations.",\n` +
-    `      "notes": "Brand name in display font at 48px. Loading bar: 200px wide, 2px tall, brand accent fill."\n` +
-    `    },\n` +
     `    {\n` +
     `      "section": "Glass Nav",\n` +
     `      "layout": "Fixed nav with logo left, nav links center (Home, Catalog, Contact), cart icon right",\n` +
@@ -312,7 +303,7 @@ export function buildPlannerSystemPrompt(
     `2. buildSteps MUST cover every section top to bottom. Nothing skipped.\n` +
     `3. Every color = hex. Every size = px or rem. Every duration = ms or s. Every easing = named function.\n` +
     `4. The nav MUST get glassmorphism + scroll shrink + magnetic links.\n` +
-    `5. The hero MUST get preloader + parallax layers + split-text + magnetic CTA.\n` +
+    `5. The hero MUST get parallax layers + split-text + magnetic CTA. NO preloader. NO custom cursor.\n` +
     `6. Every interactive element must have hover + active + focus state specified.\n` +
     `7. Zero arbitrary colors — all derive from the brand palette.\n` +
     `8. The layout MUST be reimagined — not the original layout with new colors.`
@@ -355,11 +346,10 @@ export function buildExecutorSystemPrompt(): string {
     `## Implementation Mandate\n` +
     `- Follow the design spec for colors, sizes, animations, easings — implement ALL exactly.\n` +
     `- Build a completely new layout. Do NOT reproduce any original site template.\n` +
-    `- Include preloader (id="overkill-preloader"). Include glass nav. Include hero parallax.\n` +
+    `- Include glass nav. Include hero parallax.\n` +
     `- Use GSAP for all animations. Load Lenis for smooth scroll.\n` +
     `- Film grain: position:fixed, inset:0, pointer-events:none, z-index:9999.\n` +
-    `- Custom cursor: position:fixed, pointer-events:none, z-index:10000, mix-blend-mode:difference.\n` +
-    `- Hero heading: use font-size clamp(36px, 6vw, 80px) so it NEVER breaks mid-word.\n` +
+    `- Hero heading: use font-size clamp(48px, 7vw, 100px) with text-wrap:balance and word-break:keep-all so it NEVER breaks mid-word.\n` +
     `- All effects: respect prefers-reduced-motion.\n\n` +
     `${EFFECT_PATTERNS}\n\n` +
     `## Required CDN links for the HTML head (include all of these, in this order):\n` +
@@ -369,12 +359,6 @@ export function buildExecutorSystemPrompt(): string {
     `- GSAP ScrollTrigger from https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js\n` +
     `- Lenis from https://unpkg.com/lenis@1.1.18/dist/lenis.min.js\n\n` +
     `## Mandatory elements (these MUST appear — build them from scratch if needed):\n\n` +
-    `PRELOADER: A full-screen overlay div with id="overkill-preloader" that covers the page on load. ` +
-    `Contains the brand name in Bebas Neue, a loading bar div with a fill div inside, and a percentage counter. ` +
-    `In JS: animate the fill width from 0% to 100% with setInterval over ~1800ms using random increments. ` +
-    `When 100% is reached, use gsap.to to slide the preloader off-screen upward (yPercent:-100, duration:0.8, ease:power4.inOut), ` +
-    `then call a function that triggers the hero entrance animations. ` +
-    `Preloader CSS: position fixed, inset 0, z-index 9999, brand background color, centered content.\n\n` +
     `LENIS SMOOTH SCROLL: Initialize Lenis at the top of the JS IIFE with lerp:0.1, duration:1.2, smoothWheel:true. ` +
     `Sync with GSAP: lenis.on("scroll", ScrollTrigger.update) and gsap.ticker.add to call lenis.raf each frame. ` +
     `Set gsap.ticker.lagSmoothing(0).\n\n` +
@@ -405,11 +389,11 @@ export function buildExecutorSystemPrompt(): string {
     `6. EVERY nav link uses the correct href from the site map.\n` +
     `7. Use Bebas Neue for ALL display headings — it is loaded via Google Fonts.\n` +
     `8. Lenis smooth scroll is mandatory — initialize it as described above.\n` +
-    `9. Preloader is mandatory — implement it as described above.\n` +
-    `10. Glass nav is mandatory — implement it as described above.\n` +
-    `11. Hero parallax is mandatory — implement it as described above.\n` +
-    `12. Add prefers-reduced-motion media query that disables all animations.\n` +
-    `13. The page must look like a real award-winning website — not a wireframe.`
+    `9. Glass nav is mandatory — implement it as described above.\n` +
+    `10. Hero parallax is mandatory — implement it as described above.\n` +
+    `11. Add prefers-reduced-motion media query that disables all animations.\n` +
+    `12. The page must look like a real award-winning website — not a wireframe.\n` +
+    `13. Hero heading MUST use text-wrap:balance and word-break:keep-all — NEVER break a word mid-syllable.`
   );
 }
 
@@ -423,7 +407,7 @@ export function buildReviewerSystemPrompt(): string {
     `You receive a structural audit of the Builder's output and verify it against the spec.\n\n` +
     `## Overkill Quality Checklist\n\n` +
     `1. **Content** — All real image URLs from site map present? All nav links correct?\n` +
-    `2. **Non-negotiables** — Is there a preloader? A glass nav? Hero parallax layers? Split-text?\n` +
+    `2. **Non-negotiables** — Is there a glass nav? Hero parallax layers? Scroll reveals?\n` +
     `3. **Palette** — All colors derived from brand palette? No arbitrary colors?\n` +
     `4. **Interactive** — Magnetic buttons present? Card tilt present? Scroll reveals present?\n` +
     `5. **Features** — Every selected feature actually implemented?\n` +
@@ -445,12 +429,12 @@ export function buildReviewerSystemPrompt(): string {
     `  ]\n` +
     `}\n\n` +
     `## Severity\n` +
-    `- **critical** — Missing real images, broken links, missing preloader/nav/hero parallax\n` +
+    `- **critical** — Missing real images, broken links, missing glass nav/hero parallax\n` +
     `- **major** — Missing features, off-palette colors, no magnetic buttons, no card tilt\n` +
     `- **minor** — Slight timing differences, minor spacing issues\n\n` +
     `## Approval Threshold\n` +
     `APPROVED: Zero critical + zero major. REJECTED: Any critical or major.\n\n` +
-    `Rules: Return ONLY the JSON. Missing real image = CRITICAL. Missing preloader = CRITICAL. Missing glass nav = MAJOR.`
+    `Rules: Return ONLY the JSON. Missing real image = CRITICAL. Missing glass nav = MAJOR.`
   );
 }
 
