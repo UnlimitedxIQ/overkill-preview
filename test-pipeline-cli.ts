@@ -243,38 +243,36 @@ Build the complete transformed page. Preserve ALL image URLs and link hrefs from
 
   let executorRaw: string | null;
 
-  // If we have a mockup image AND an API key, use the API to send the image
-  if (hasMockup && process.env.ANTHROPIC_API_KEY) {
-    log("executor", "Using API with mockup image...");
-    const Anthropic = (await import("@anthropic-ai/sdk")).default;
-    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-    const imageData = fs.readFileSync(mockupPath);
-    const base64 = imageData.toString("base64");
-    const mediaType = mockupPath.endsWith(".jpg") || mockupPath.endsWith(".jpeg") ? "image/jpeg" as const : "image/png" as const;
+  if (hasMockup) {
+    // Use CLI with --allowedTools "Read" so Claude can see the mockup image
+    const mockupPrompt = `FIRST: Read the image file at ${mockupPath.replace(/\\/g, "/")} — this is the DESIGN MOCKUP you must match exactly.
 
-    const message = await client.messages.create({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 32_000,
-      system: executorSystem,
-      messages: [{
-        role: "user",
-        content: [
-          { type: "image", source: { type: "base64", media_type: mediaType, data: base64 } },
-          { type: "text", text: executorUser },
-        ],
-      }],
+THEN: Build the website to match that mockup layout precisely.
+
+${executorUser}`;
+
+    log("executor", "Using CLI with Read tool for mockup image...");
+    const result = spawnSync("claude", [
+      "--print", "--model", "sonnet", "--output-format", "text",
+      "--system-prompt", executorSystem,
+      "--allowedTools", "Read",
+    ], {
+      input: mockupPrompt,
+      timeout: 1_800_000,
+      encoding: "utf8",
+      maxBuffer: 20 * 1024 * 1024,
+      env: { ...process.env, CLAUDE_CODE_MAX_OUTPUT_TOKENS: "128000" },
     });
 
-    executorRaw = message.content
-      .filter((b) => b.type === "text")
-      .map((b) => (b as { type: "text"; text: string }).text)
-      .join("");
-    if (executorRaw) {
-      fs.writeFileSync(`${OUT_DIR}/executor-out.txt`, executorRaw, "utf8");
-      log("CLI", `Got ${executorRaw.length} bytes via API`);
+    const output = (result.stdout ?? "").trim() || (result.stderr ?? "").trim();
+    if (result.error) { err("CLI", `Spawn error: ${(result.error as Error).message}`); }
+    if (output) {
+      fs.writeFileSync(`${OUT_DIR}/executor-out.txt`, output, "utf8");
+      log("CLI", `Got ${output.length} bytes (exit ${result.status})`);
     }
+    executorRaw = output || null;
   } else {
-    // Fallback: CLI without image (text spec only)
+    // No mockup — text spec only
     executorRaw = runClaude("sonnet", executorSystem, executorUser, `${OUT_DIR}/executor-out.txt`);
   }
   if (!executorRaw) { err("executor", "Failed"); process.exit(1); }

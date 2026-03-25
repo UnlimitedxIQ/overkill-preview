@@ -1,921 +1,764 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Britain Racing LLC. — Performance Parts &amp; Accessories</title>
-  <meta name="description" content="Race-ready components engineered for competitors who refuse to settle. Shop performance parts and accessories for serious club racers and motorsport competitors.">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Britain Racing LLC. — Performance Parts</title>
+  <meta name="description" content="Performance parts for serious racers. No shortcuts.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
   <style id="overkill-styles">
-/* ============================================================
-   BRITAIN RACING — OVERKILL TRANSFORM
-   ============================================================ */
 
-/* === RESET & BASE === */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
+/* ─── RESET & VARIABLES ─────────────────────────────────────── */
 :root {
-  --bg: #0d0d0d;
-  --bg-mid: #111111;
-  --accent: #C85A00;
-  --accent-dark: #9C4A07;
-  --accent-deep: #3D0400;
-  --cream: #FFE1B8;
-  --muted: #6C6464;
+  --bg:       #0d0d0d;
+  --dark:     #3d0400;
+  --accent:   #c4520a;
+  --accent2:  #e8820a;
+  --warm:     #ffe1b8;
+  --text:     #f0f0f0;
+  --grain-opacity: 0.04;
 }
-
-html {
-  scroll-behavior: auto;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: auto; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Oswald', sans-serif;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  background: #0d0d0d;
-  color: #FFE1B8;
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.7;
-  overflow-x: hidden;
+/* ─── SELECTION & SCROLLBAR ─────────────────────────────────── */
+::selection { background: var(--accent); color: var(--text); }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: rgba(196,82,10,0.06); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent2); }
+html { scrollbar-width: thin; scrollbar-color: var(--accent) rgba(196,82,10,0.06); }
+
+/* ─── SKIP LINK ─────────────────────────────────────────────── */
+.ok-skip {
+  position: fixed;
+  top: -100%;
+  left: 16px;
+  z-index: 999999;
+  background: var(--accent);
+  color: var(--text);
+  padding: 10px 20px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: top 0.2s;
+}
+.ok-skip:focus { top: 16px; }
+
+/* ─── SCROLL PROGRESS ───────────────────────────────────────── */
+#ok-scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0%;
+  z-index: 100000;
+  background: linear-gradient(90deg, #3d0400 0%, #c4520a 45%, #e8820a 100%);
+  pointer-events: none;
+  transform-origin: left center;
+  will-change: width;
 }
 
-a { color: inherit; text-decoration: none; }
-img { display: block; max-width: 100%; }
+/* ─── PRELOADER ─────────────────────────────────────────────── */
+#overkill-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.ok-pre-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 64px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+.ok-pre-sub {
+  font-family: 'Oswald', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(196,82,10,0.85);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+#ok-loader-track {
+  width: 240px;
+  height: 2px;
+  background: rgba(240,240,240,0.08);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+#ok-loader-fill {
+  position: absolute;
+  left: 0; top: 0;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #3d0400, #c4520a, #e8820a);
+  will-change: width;
+}
+#ok-loader-pct {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(240,240,240,0.35);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
 
-/* === CUSTOM SCROLLBAR === */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-thumb { background: #C85A00; border-radius: 0; }
-::-webkit-scrollbar-track { background: rgba(200,90,0,0.06); }
-
-/* === TEXT SELECTION === */
-::selection { background: #C85A00; color: #0d0d0d; }
-
-/* === CURSOR === */
+/* ─── CUSTOM CURSOR ─────────────────────────────────────────── */
 #ok-cursor-ring {
   position: fixed;
   top: 0; left: 0;
   width: 40px; height: 40px;
-  border: 1px solid rgba(255,225,184,0.85);
+  border: 1.5px solid rgba(240,240,240,0.85);
   border-radius: 50%;
-  z-index: 10001;
   pointer-events: none;
+  z-index: 99998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   mix-blend-mode: difference;
+  transition: width 280ms cubic-bezier(0.34,1.56,0.64,1),
+              height 280ms cubic-bezier(0.34,1.56,0.64,1),
+              border-color 220ms ease-out,
+              opacity 220ms ease-out;
   will-change: transform;
-  transition: width 0.25s cubic-bezier(0.16,1,0.3,1),
-              height 0.25s cubic-bezier(0.16,1,0.3,1),
-              border-color 0.2s ease;
 }
-
 #ok-cursor-dot {
   position: fixed;
   top: 0; left: 0;
   width: 6px; height: 6px;
-  background: #C85A00;
+  background: var(--accent);
   border-radius: 50%;
-  z-index: 10001;
   pointer-events: none;
+  z-index: 99998;
+  transition: transform 180ms cubic-bezier(0.34,1.56,0.64,1);
   will-change: transform;
 }
-
-#ok-cursor-label {
-  position: fixed;
-  top: 0; left: 0;
-  font-family: 'Oswald', sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  color: #FFE1B8;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  z-index: 10001;
-  pointer-events: none;
-  opacity: 0;
-  white-space: nowrap;
-  transition: opacity 0.18s ease;
-}
-
 body.ok-cursor-active,
 body.ok-cursor-active * { cursor: none !important; }
-
 @media (pointer: coarse) {
-  #ok-cursor-ring, #ok-cursor-dot, #ok-cursor-label { display: none !important; }
+  #ok-cursor-ring, #ok-cursor-dot { display: none !important; }
 }
 
-/* === SCROLL PROGRESS BAR === */
-#ok-scroll-bar {
-  position: fixed;
-  top: 0; left: 0;
-  height: 2px;
-  width: 0%;
-  z-index: 10000;
-  background: linear-gradient(90deg, #9C4A07 0%, #C85A00 55%, #FFE1B8 100%);
-  pointer-events: none;
-  will-change: width;
-  transform-origin: left center;
-}
-
-/* === PRELOADER === */
-#ok-preloader {
+/* ─── FILM GRAIN ────────────────────────────────────────────── */
+#ok-film-grain {
   position: fixed;
   inset: 0;
-  z-index: 99999;
-  background: #0d0d0d;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 28px;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-}
-
-#ok-pre-wordmark {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 52px;
-  color: #FFE1B8;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  opacity: 0;
-}
-
-#ok-pre-track {
-  width: 200px;
-  height: 2px;
-  background: rgba(200,90,0,0.15);
-  position: relative;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: var(--grain-opacity);
   overflow: hidden;
 }
-
-#ok-pre-fill {
-  position: absolute;
-  left: 0; top: 0;
-  height: 2px;
-  width: 0%;
-  background: linear-gradient(90deg, #9C4A07 0%, #C85A00 100%);
-  will-change: width;
+#ok-film-grain svg {
+  animation: ok-grain-anim 0.5s steps(1) infinite;
+  will-change: transform;
 }
-
-#ok-pre-count {
-  font-family: 'Oswald', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  color: rgba(255,225,184,0.4);
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
+@keyframes ok-grain-anim {
+  0%,100% { transform: translate(0,0) scale(1.04); }
+  10%      { transform: translate(-3%,-2%) scale(1.06); }
+  20%      { transform: translate(2%,3%) scale(1.04); }
+  30%      { transform: translate(-2%,1%) scale(1.05); }
+  40%      { transform: translate(3%,-3%) scale(1.04); }
+  50%      { transform: translate(-1%,2%) scale(1.06); }
+  60%      { transform: translate(2%,-2%) scale(1.04); }
+  70%      { transform: translate(-2%,3%) scale(1.05); }
+  80%      { transform: translate(3%,1%) scale(1.04); }
+  90%      { transform: translate(-3%,-2%) scale(1.06); }
 }
+body.ok-grain-intense { --grain-opacity: 0.07; }
 
-#ok-pre-angular {
-  position: absolute;
-  bottom: 0; left: 0;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, #C85A00 50%, transparent 100%);
-  opacity: 0.3;
-}
-
-/* === GLASS NAV === */
+/* ─── NAVIGATION ────────────────────────────────────────────── */
 #ok-nav {
   position: fixed;
   top: 0; left: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 10000;
   background: rgba(13,13,13,0.82);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(200,90,0,0.1);
-  padding: 20px 48px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 20px 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: padding 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+  will-change: padding, background;
 }
-
-#ok-nav-logo-wrap { display: flex; align-items: center; }
-
-#ok-nav-logo {
-  height: 34px;
+.ok-nav-logo-link { display: flex; align-items: center; }
+.ok-nav-logo {
+  height: 38px;
   width: auto;
   object-fit: contain;
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
+  opacity: 0.82;
+  filter: brightness(1.1);
+  transition: opacity 300ms ease-out;
   display: block;
 }
+.ok-nav-logo:hover { opacity: 1; }
 
-#ok-nav-logo-wrap:hover #ok-nav-logo { opacity: 1; }
-
-#ok-nav-desktop {
+.ok-nav-links {
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: 36px;
 }
-
 .ok-nav-link {
   font-family: 'Oswald', sans-serif;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(255,225,184,0.65);
+  color: rgba(240,240,240,0.7);
   text-decoration: none;
   position: relative;
   padding-bottom: 4px;
-  transition: color 0.2s ease;
+  display: inline-block;
+  transition: color 200ms ease-out;
 }
-
-.ok-nav-link:hover { color: #FFE1B8; }
-
-.ok-nav-link:focus {
-  outline: 2px solid #C85A00;
-  outline-offset: 4px;
-}
-
 .ok-nav-link::after {
   content: '';
   position: absolute;
-  bottom: 0; left: 0;
-  width: 100%;
-  height: 2px;
-  background: #C85A00;
+  bottom: -2px; left: 0;
+  width: 100%; height: 2px;
+  background: var(--accent);
   transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.2s ease;
+  transform-origin: left center;
+  transition: transform 200ms ease-out;
 }
-
+.ok-nav-link:hover { color: var(--text); }
 .ok-nav-link:hover::after { transform: scaleX(1); }
+.ok-nav-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; border-radius: 1px; }
 
-#ok-nav-actions {
+.ok-nav-right {
   display: flex;
   align-items: center;
   gap: 20px;
 }
-
-#ok-cart-link {
-  color: rgba(255,225,184,0.75);
-  position: relative;
+.ok-nav-cart {
   display: flex;
   align-items: center;
-  transition: color 0.2s ease, transform 0.2s ease;
+  gap: 8px;
+  color: rgba(240,240,240,0.75);
+  text-decoration: none;
+  transition: color 200ms ease-out;
 }
+.ok-nav-cart:hover { color: var(--accent); }
+.ok-nav-cart:active { transform: scale(0.92); }
+.ok-nav-cart:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
 
-#ok-cart-link:hover { color: #FFE1B8; transform: translateY(-1px); }
-#ok-cart-link:focus { outline: 2px solid #C85A00; outline-offset: 4px; }
-
-/* Hamburger */
-#ok-hamburger {
+/* ─── HAMBURGER ─────────────────────────────────────────────── */
+.ok-hamburger {
   display: none;
   flex-direction: column;
-  gap: 5px;
-  width: 24px;
+  gap: 6px;
+  cursor: pointer;
+  padding: 4px;
   background: none;
   border: none;
-  padding: 0;
-  cursor: pointer;
+  outline: none;
 }
-
-#ok-hamburger span {
+.ok-hamburger span {
   display: block;
-  width: 100%;
-  height: 2px;
-  background: #FFE1B8;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  width: 26px; height: 2px;
+  background: var(--text);
+  transition: transform 350ms cubic-bezier(0.16,1,0.3,1), opacity 300ms ease-out;
 }
+.ok-hamburger.is-open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.ok-hamburger.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.ok-hamburger.is-open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+.ok-hamburger:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
 
-#ok-hamburger.ok-hamburger-open span:nth-child(1) { transform: rotate(45deg) translateY(7px); }
-#ok-hamburger.ok-hamburger-open span:nth-child(2) { opacity: 0; }
-#ok-hamburger.ok-hamburger-open span:nth-child(3) { transform: rotate(-45deg) translateY(-7px); }
-#ok-hamburger:focus { outline: 2px solid #C85A00; outline-offset: 6px; }
-
-/* Drawer */
-#ok-drawer {
+/* ─── MOBILE DRAWER ─────────────────────────────────────────── */
+.ok-drawer-overlay {
   position: fixed;
-  top: 0;
-  right: -340px;
-  width: 300px;
+  inset: 0;
+  background: rgba(13,13,13,0.6);
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms ease-out;
+}
+.ok-drawer-overlay.is-open { opacity: 1; pointer-events: all; }
+.ok-drawer {
+  position: fixed;
+  top: 0; right: 0;
   height: 100vh;
-  background: rgba(13,13,13,0.97);
+  width: min(340px, 84vw);
+  background: rgba(13,13,13,0.98);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  z-index: 1001;
-  padding: 88px 40px 48px;
-  border-left: 1px solid rgba(200,90,0,0.12);
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.ok-drawer-link {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 42px;
-  color: rgba(255,225,184,0.8);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  display: block;
-  transition: color 0.2s ease, padding-left 0.2s ease;
-  text-decoration: none;
-}
-
-.ok-drawer-link:hover { color: #FFE1B8; padding-left: 12px; }
-
-#ok-drawer-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(13,13,13,0.65);
-  z-index: 1000;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-/* === HERO === */
-#ok-hero {
-  position: relative;
-  min-height: 100vh;
-  overflow: hidden;
-  clip-path: polygon(0 0, 100% 0, 100% 94%, 0 100%);
-  background: #0d0d0d;
-  z-index: 1;
-}
-
-#ok-hero-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 115%;
-  object-fit: cover;
-  object-position: center;
-  z-index: 0;
-  transform: scale(1.08);
-  transform-origin: center center;
-  will-change: transform;
-}
-
-#ok-hero-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(
-    180deg,
-    rgba(13,13,13,0.12) 0%,
-    rgba(13,13,13,0.35) 40%,
-    rgba(13,13,13,0.85) 80%,
-    rgba(13,13,13,0.94) 100%
-  );
-  pointer-events: none;
-}
-
-#ok-hero-vignette {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(
-    90deg,
-    rgba(13,13,13,0.55) 0%,
-    transparent 25%,
-    transparent 75%,
-    rgba(13,13,13,0.4) 100%
-  );
-  pointer-events: none;
-}
-
-#ok-hero-content {
-  position: absolute;
-  bottom: 100px;
-  left: 80px;
-  z-index: 2;
-  max-width: 760px;
-}
-
-.ok-hero-label {
-  display: block;
-  font-family: 'Oswald', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  color: #C85A00;
-  margin-bottom: 18px;
-  opacity: 0;
-}
-
-.ok-hero-heading {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(52px, 8.5vw, 124px);
-  font-weight: 700;
-  line-height: 0.92;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  color: #FFE1B8;
-  margin: 0 0 28px;
-  perspective: 600px;
-  text-shadow: 0 4px 60px rgba(13,13,13,0.7);
-}
-
-.ok-hero-sub {
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.6;
-  color: rgba(255,225,184,0.6);
-  max-width: 420px;
-  margin-bottom: 36px;
-  opacity: 0;
-}
-
-#ok-hero-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  background: #C85A00;
-  color: #0d0d0d;
-  font-family: 'Oswald', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  padding: 17px 44px 16px;
-  text-decoration: none;
-  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 100%, 14px 100%);
-  will-change: transform;
-  transition: background 0.2s ease;
-  opacity: 0;
-}
-
-#ok-hero-cta:hover { background: #FFE1B8; }
-#ok-hero-cta:focus { outline: 2px solid #FFE1B8; outline-offset: 4px; }
-#ok-hero-cta:active { transform: scale(0.96); }
-
-#ok-scroll-ind {
-  position: absolute;
-  bottom: 36px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  color: rgba(255,225,184,0.4);
-  font-family: 'Oswald', sans-serif;
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  opacity: 0;
-}
-
-/* === COLLECTIONS === */
-#ok-collections {
-  position: relative;
-  z-index: 2;
-  background: #0d0d0d;
-  padding-bottom: 0;
-  margin-top: -2px;
-  clip-path: polygon(0 0, 100% 0, 100% 97%, 0 100%);
-}
-
-#ok-collections-header {
-  padding: 80px 80px 56px;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 24px;
-}
-
-.ok-section-eyebrow {
-  font-family: 'Oswald', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  color: #C85A00;
-  opacity: 0;
-  flex-shrink: 0;
-}
-
-.ok-section-title {
-  overflow: hidden;
-  margin: 0;
-  line-height: 1;
-}
-
-.ok-section-title-inner {
-  display: block;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(36px, 5.5vw, 76px);
-  color: #FFE1B8;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  transform: translateY(100%);
-  line-height: 1;
-}
-
-/* Collection Rows */
-.ok-collection-row {
-  display: grid;
-  height: 380px;
-  overflow: hidden;
-  text-decoration: none;
-  position: relative;
-  border-top: 1px solid rgba(255,255,255,0.04);
-  opacity: 0;
-  transform-style: preserve-3d;
-}
-
-.ok-row-odd  { grid-template-columns: 40% 60%; }
-.ok-row-even { grid-template-columns: 60% 40%; }
-
-.ok-row-image {
-  position: relative;
-  overflow: hidden;
-}
-
-.ok-row-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
-  will-change: transform;
-}
-
-.ok-row-img-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(13,13,13,0.2);
-  transition: background 0.3s ease;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.ok-collection-row:hover .ok-row-img { transform: scale(1.05); }
-.ok-collection-row:hover .ok-row-img-overlay { background: rgba(13,13,13,0.05); }
-
-.ok-row-text {
-  background: #111111;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 36px 48px;
-  border-left: 1px solid rgba(200,90,0,0.08);
-  transition: background 0.3s ease;
-  position: relative;
-  z-index: 2;
-}
-
-.ok-row-even .ok-row-text {
-  border-left: none;
-  border-right: 1px solid rgba(200,90,0,0.08);
-}
-
-.ok-collection-row:hover .ok-row-text { background: #161616; }
-
-.ok-row-text-inner {
-  display: flex;
-  flex-direction: column;
-}
-
-.ok-row-num {
-  font-family: 'Oswald', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.25em;
-  color: rgba(200,90,0,0.5);
-  margin-bottom: 12px;
-}
-
-.ok-row-label {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(28px, 3.2vw, 52px);
-  font-weight: 400;
-  color: #FFE1B8;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  line-height: 1.05;
-  margin: 0;
-}
-
-.ok-row-arrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border: 1px solid rgba(200,90,0,0.35);
-  margin-top: 16px;
-  transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
-}
-
-.ok-collection-row:hover .ok-row-arrow {
-  border-color: #C85A00;
-  transform: translateX(6px);
-  background: rgba(200,90,0,0.12);
-}
-
-/* 3-Column Grid */
-.ok-grid-three {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  height: 320px;
-  gap: 2px;
-  border-top: 1px solid rgba(255,255,255,0.04);
-}
-
-.ok-grid-cell {
-  position: relative;
-  overflow: hidden;
-  text-decoration: none;
-  display: block;
-}
-
-.ok-grid-cell img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-  will-change: transform;
-}
-
-.ok-grid-cell:hover img { transform: scale(1.07); }
-
-.ok-grid-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 35%, rgba(13,13,13,0.88) 100%);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.ok-grid-label {
-  position: absolute;
-  bottom: 24px;
-  left: 24px;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(22px, 2.8vw, 36px);
-  color: #FFE1B8;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  z-index: 2;
-}
-
-/* === BREATHING SECTION === */
-#ok-breath {
-  position: relative;
-  min-height: 100vh;
-  background: #0d0d0d;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  overflow: hidden;
-  clip-path: polygon(0 3%, 100% 0, 100% 97%, 0 100%);
-  margin-top: -40px;
-  z-index: 3;
-}
-
-#ok-breath-glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 55% 55% at 50% 50%, rgba(156,74,7,0.14) 0%, transparent 68%);
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.15;
-}
-
-.ok-breath-top-line {
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1px;
-  height: 90px;
-  background: linear-gradient(180deg, transparent 0%, #C85A00 100%);
-  opacity: 0.35;
-  z-index: 1;
-}
-
-.ok-breath-bottom-line {
-  position: absolute;
-  bottom: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1px;
-  height: 90px;
-  background: linear-gradient(0deg, transparent 0%, #C85A00 100%);
-  opacity: 0.35;
-  z-index: 1;
-}
-
-/* Corner Marks */
-.ok-corner-mark {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  z-index: 1;
-}
-
-.ok-corner-mark::before,
-.ok-corner-mark::after {
-  content: '';
-  position: absolute;
-  background: rgba(200,90,0,0.25);
-}
-
-.ok-cm-tl { top: 40px; left: 40px; }
-.ok-cm-tl::before { top: 0; left: 0; width: 100%; height: 1px; }
-.ok-cm-tl::after  { top: 0; left: 0; width: 1px; height: 100%; }
-
-.ok-cm-tr { top: 40px; right: 40px; }
-.ok-cm-tr::before { top: 0; right: 0; width: 100%; height: 1px; }
-.ok-cm-tr::after  { top: 0; right: 0; width: 1px; height: 100%; }
-
-.ok-cm-bl { bottom: 40px; left: 40px; }
-.ok-cm-bl::before { bottom: 0; left: 0; width: 100%; height: 1px; }
-.ok-cm-bl::after  { bottom: 0; left: 0; width: 1px; height: 100%; }
-
-.ok-cm-br { bottom: 40px; right: 40px; }
-.ok-cm-br::before { bottom: 0; right: 0; width: 100%; height: 1px; }
-.ok-cm-br::after  { bottom: 0; right: 0; width: 1px; height: 100%; }
-
-.ok-stat-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(96px, 16vw, 220px);
-  line-height: 0.82;
-  letter-spacing: 0.02em;
-  color: #FFE1B8;
-  text-align: center;
-  z-index: 1;
-  position: relative;
-}
-
-.ok-stat-label-wrap {
-  overflow: hidden;
-  z-index: 1;
-  margin-top: 20px;
-}
-
-.ok-breath-label-inner {
-  display: block;
-  font-family: 'Oswald', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.38em;
-  text-transform: uppercase;
-  color: rgba(200,90,0,0.8);
-  text-align: center;
-  transform: translateY(110%);
-}
-
-/* === FOOTER === */
-#ok-footer {
-  position: relative;
-  background: #111111;
-  border-top: 1px solid rgba(200,90,0,0.18);
-  padding: 88px 80px 48px;
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr;
-  gap: 64px;
-  z-index: 2;
-}
-
-.ok-footer-ambient {
-  position: absolute;
-  top: 0;
-  right: -10%;
-  width: 60%;
-  height: 200px;
-  background: radial-gradient(ellipse 80% 100% at 80% 0%, rgba(156,74,7,0.07) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.ok-footer-col {
-  position: relative;
-  z-index: 1;
+  border-left: 1px solid rgba(196,82,10,0.18);
+  z-index: 10001;
+  transform: translateX(100%);
+  transition: transform 400ms cubic-bezier(0.16,1,0.3,1);
+  padding: 80px 40px 40px;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
+.ok-drawer.is-open { transform: translateX(0); }
+.ok-drawer-link {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: rgba(240,240,240,0.8);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 200ms ease-out;
+}
+.ok-drawer-link:hover { color: var(--accent); }
 
-.ok-footer-brand { gap: 20px; }
-
-#ok-footer-logo {
-  height: 30px;
-  width: auto;
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
+/* ─── HERO ──────────────────────────────────────────────────── */
+#ok-hero {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+  clip-path: polygon(0 0, 100% 0, 100% 94%, 0 100%);
+  isolation: isolate;
+}
+#ok-hero-img {
+  position: absolute;
+  top: -15%; left: 0;
+  width: 100%; height: 130%;
+  object-fit: cover;
+  object-position: center 40%;
+  z-index: 0;
+  will-change: transform;
+  pointer-events: none;
   display: block;
 }
-
-.ok-footer-logo-wrap:hover #ok-footer-logo { opacity: 1; }
-
-.ok-footer-tagline {
-  font-family: 'Oswald', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: rgba(255,225,184,0.3);
+.ok-hero-grad-primary {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg,
+    rgba(13,13,13,0.12) 0%,
+    rgba(13,13,13,0.35) 45%,
+    rgba(13,13,13,0.88) 80%,
+    rgba(13,13,13,0.97) 100%);
+  pointer-events: none;
 }
-
-.ok-footer-copy {
-  font-family: Helvetica, Arial, sans-serif;
+.ok-hero-grad-side {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(90deg,
+    rgba(13,13,13,0.72) 0%,
+    rgba(13,13,13,0.2) 55%,
+    rgba(13,13,13,0) 100%);
+  pointer-events: none;
+}
+#ok-hero-content {
+  position: absolute;
+  bottom: 12%; left: 6%;
+  z-index: 4;
+  max-width: 720px;
+  will-change: transform;
+}
+#ok-hero-eyebrow {
+  font-family: 'Oswald', sans-serif;
   font-size: 12px;
-  color: rgba(255,225,184,0.22);
-  margin-top: auto;
-}
-
-.ok-footer-col-heading {
-  font-family: 'Oswald', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
+  font-weight: 500;
+  color: var(--accent);
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #C85A00;
-  margin-bottom: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+#ok-hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 36px; height: 2px;
+  background: linear-gradient(90deg, #3d0400, #c4520a);
+  flex-shrink: 0;
+}
+.ok-heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 8vw, 118px);
+  font-weight: 700;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 0.9;
+  margin: 0 0 32px 0;
+  perspective: 800px;
+  overflow: visible;
+}
+.ok-char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+#ok-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--accent);
+  color: var(--text);
+  font-family: 'Oswald', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 18px 48px 18px 44px;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 100%, 14px 100%);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  transition: background 200ms ease-out;
+}
+#ok-hero-cta:hover { background: var(--accent2); }
+#ok-hero-cta:active { transform: scale(0.96); }
+#ok-hero-cta:focus-visible { outline: 2px solid var(--accent2); outline-offset: 8px; }
+#ok-hero-cta .ok-cta-arrow { transition: transform 250ms ease-out; }
+#ok-hero-cta:hover .ok-cta-arrow { transform: translateX(4px); }
+
+#ok-scroll-ind {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 1;
+  transition: opacity 400ms ease-out;
+  pointer-events: none;
+}
+.ok-scroll-label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(240,240,240,0.35);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
 }
 
+/* ─── CATEGORIES ────────────────────────────────────────────── */
+#ok-categories {
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+  padding-top: 80px;
+}
+#ok-cat-header { padding: 0 6% 56px; }
+.ok-cat-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.ok-cat-rule-line {
+  display: block;
+  width: 52px; height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  flex-shrink: 0;
+}
+#ok-cat-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(32px, 5vw, 72px);
+  font-weight: 700;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ok-cat-row {
+  display: grid;
+  min-height: 380px;
+  position: relative;
+  border-top: 1px solid rgba(255,255,255,0.04);
+  transition: border-color 300ms ease-out;
+}
+.ok-cat-row:hover { border-color: rgba(196,82,10,0.2); }
+.ok-cat-row--odd  { grid-template-columns: 55fr 45fr; }
+.ok-cat-row--even { grid-template-columns: 45fr 55fr; }
+
+.ok-cat-img-wrap {
+  position: relative;
+  overflow: hidden;
+}
+.ok-cat-img-wrap--odd  { clip-path: polygon(0 0, 100% 0, 93% 100%, 0 100%); }
+.ok-cat-img-wrap--even { clip-path: polygon(7% 0, 100% 0, 100% 100%, 0 100%); }
+.ok-cat-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 700ms ease-out;
+  display: block;
+}
+.ok-cat-row:hover .ok-cat-img-wrap img { transform: scale(1.06); }
+.ok-cat-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(61,4,0,0.45) 0%, rgba(13,13,13,0) 55%);
+  z-index: 1;
+  pointer-events: none;
+}
+.ok-cat-img-wrap--even .ok-cat-img-overlay {
+  background: linear-gradient(225deg, rgba(61,4,0,0.45) 0%, rgba(13,13,13,0) 55%);
+}
+
+.ok-cat-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 6%;
+  background: var(--bg);
+  position: relative;
+}
+.ok-cat-text::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, transparent 0%, var(--accent) 50%, transparent 100%);
+  opacity: 0;
+  transition: opacity 350ms ease-out;
+}
+.ok-cat-row--even .ok-cat-text::before { left: auto; right: 0; }
+.ok-cat-row:hover .ok-cat-text::before { opacity: 1; }
+
+.ok-cat-badge {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(196,82,10,0.5);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: block;
+}
+.ok-cat-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(28px, 4vw, 58px);
+  font-weight: 700;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 0.95;
+  margin-bottom: 20px;
+  transition: color 200ms ease-out;
+}
+.ok-cat-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  margin-top: 8px;
+  transition: color 200ms ease-out, gap 200ms ease-out;
+}
+.ok-cat-link:hover { color: var(--accent2); gap: 20px; }
+.ok-cat-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+.ok-cat-link svg { transition: transform 250ms ease-out; flex-shrink: 0; }
+.ok-cat-link:hover svg { transform: translateX(5px); }
+
+/* ─── BREATHING SECTION ─────────────────────────────────────── */
+#ok-breathing {
+  min-height: 100vh;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(61,4,0,0.38) 0%, rgba(13,13,13,0) 70%), #0d0d0d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+#ok-breathing-lines {
+  position: absolute;
+  inset: -20%;
+  width: 140%; height: 140%;
+  z-index: 0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(196,82,10,0.04) 0px,
+    rgba(196,82,10,0.04) 1px,
+    transparent 1px,
+    transparent 48px
+  );
+  pointer-events: none;
+}
+#ok-breathing-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 24px;
+}
+.ok-breathing-rule {
+  width: 100px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  display: block;
+  flex-shrink: 0;
+}
+.ok-breathing-rule:first-child { margin-bottom: 44px; }
+.ok-breathing-rule:last-child  { margin-top: 44px; }
+.ok-breathing-line1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 6.5vw, 88px);
+  font-weight: 700;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  line-height: 1.0;
+}
+.ok-breathing-line2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 6.5vw, 88px);
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  line-height: 1.0;
+  margin-bottom: 36px;
+}
+.ok-breathing-sub {
+  font-family: 'Oswald', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(240,240,240,0.38);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+/* ─── FOOTER ────────────────────────────────────────────────── */
+#ok-footer {
+  background: var(--bg);
+  border-top: 1px solid rgba(196,82,10,0.22);
+  padding: 72px 6% 36px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.ok-footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 48px;
+  position: relative;
+  z-index: 1;
+}
+.ok-footer-col { display: flex; flex-direction: column; }
+.ok-footer-logo {
+  height: 44px;
+  width: auto;
+  filter: brightness(1.05);
+  margin-bottom: 20px;
+  display: block;
+  object-fit: contain;
+  object-position: left;
+}
+.ok-footer-copy {
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(240,240,240,0.38);
+  letter-spacing: 0.06em;
+  line-height: 1.75;
+  max-width: 260px;
+}
+.ok-footer-label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.ok-footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 .ok-footer-link {
   font-family: 'Oswald', sans-serif;
   font-size: 14px;
   font-weight: 400;
+  color: rgba(240,240,240,0.52);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255,225,184,0.5);
   text-decoration: none;
-  padding: 6px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: color 0.2s ease, padding-left 0.2s ease;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 2px;
+  transition: color 200ms ease-out;
 }
-
-.ok-footer-link:hover { color: #FFE1B8; padding-left: 8px; }
-.ok-footer-link:focus { outline: 2px solid #C85A00; outline-offset: 3px; }
-
-.ok-footer-link-arrow {
-  color: #C85A00;
-  font-size: 18px;
-  line-height: 1;
-  transition: transform 0.2s ease;
+.ok-footer-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 200ms ease-out;
 }
+.ok-footer-link:hover { color: var(--text); }
+.ok-footer-link:hover::after { transform: scaleX(1); }
+.ok-footer-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
 
-.ok-footer-link:hover .ok-footer-link-arrow { transform: translateX(4px); }
-
-.ok-footer-social-heading {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(24px, 3.5vw, 38px);
-  color: #FFE1B8;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  line-height: 1;
-  margin-bottom: 24px;
-}
-
-.ok-social-icons {
-  display: flex;
-  gap: 14px;
-}
-
+.ok-social-row { display: flex; gap: 14px; margin-top: 20px; }
 .ok-social-icon {
-  width: 44px;
-  height: 44px;
-  border: 1px solid rgba(200,90,0,0.25);
+  width: 46px; height: 46px;
+  border: 1px solid rgba(255,255,255,0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255,225,184,0.65);
-  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.3s ease;
+  color: rgba(240,240,240,0.58);
   text-decoration: none;
+  transition: border-color 250ms ease-out, color 250ms ease-out,
+              background 250ms ease-out, transform 200ms ease-out;
 }
-
 .ok-social-icon:hover {
-  border-color: #C85A00;
-  background: rgba(200,90,0,0.1);
-  color: #FFE1B8;
+  border-color: var(--accent);
+  color: var(--accent2);
+  background: rgba(196,82,10,0.1);
   transform: scale(1.1);
 }
+.ok-social-icon:active { transform: scale(0.94); }
+.ok-social-icon:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
 
-.ok-social-icon:focus { outline: 2px solid #C85A00; outline-offset: 4px; }
-
-/* Footer Bottom Bar */
 .ok-footer-bottom {
-  grid-column: 1 / -1;
-  margin-top: 48px;
+  margin-top: 56px;
   padding-top: 24px;
   border-top: 1px solid rgba(255,255,255,0.05);
   display: flex;
@@ -926,1168 +769,817 @@ body.ok-cursor-active * { cursor: none !important; }
   position: relative;
   z-index: 1;
 }
-
-.ok-footer-bottom-text {
-  font-family: Helvetica, Arial, sans-serif;
+.ok-footer-copy-text {
+  font-family: 'Oswald', sans-serif;
   font-size: 11px;
-  color: rgba(255,225,184,0.2);
-  letter-spacing: 0.06em;
+  font-weight: 400;
+  color: rgba(240,240,240,0.28);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
-
-.ok-footer-bottom-links {
-  display: flex;
-  gap: 24px;
-}
-
-.ok-footer-bottom-link {
-  font-family: Helvetica, Arial, sans-serif;
+.ok-footer-shopify {
+  font-family: 'Oswald', sans-serif;
   font-size: 11px;
-  color: rgba(255,225,184,0.2);
-  letter-spacing: 0.06em;
+  font-weight: 400;
+  color: rgba(240,240,240,0.22);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 200ms ease-out;
 }
+.ok-footer-shopify:hover { color: rgba(240,240,240,0.55); }
 
-.ok-footer-bottom-link:hover { color: rgba(255,225,184,0.45); }
-
-/* === FILM GRAIN === */
-#ok-grain {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.05;
-  mix-blend-mode: overlay;
-  overflow: hidden;
-}
-
-#ok-grain svg {
+.ok-footer-watermark {
   position: absolute;
-  left: -100%;
-  top: -100%;
-  width: 300%;
-  height: 300%;
-  animation: ok-grain-anim 0.5s steps(1) infinite;
+  bottom: 16px; right: 4%;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 120px;
+  font-weight: 700;
+  color: rgba(61,4,0,0.14);
+  letter-spacing: 0.06em;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  line-height: 1;
 }
 
-@keyframes ok-grain-anim {
-  0%,100% { transform: translate(0,0); }
-  10%  { transform: translate(-2%,-3%); }
-  20%  { transform: translate(3%,2%); }
-  30%  { transform: translate(-1%,4%); }
-  40%  { transform: translate(4%,-1%); }
-  50%  { transform: translate(-3%,3%); }
-  60%  { transform: translate(2%,-4%); }
-  70%  { transform: translate(-4%,2%); }
-  80%  { transform: translate(3%,-2%); }
-  90%  { transform: translate(-2%,4%); }
+/* ─── SCROLL REVEAL BASE ────────────────────────────────────── */
+.ok-reveal {
+  opacity: 0.3;
+  transform: translateY(40px);
 }
 
-/* === RESPONSIVE === */
+/* ─── RESPONSIVE ────────────────────────────────────────────── */
 @media (max-width: 990px) {
+  .ok-nav-links { display: none; }
+  .ok-hamburger { display: flex; }
   #ok-nav { padding: 16px 24px; }
-  #ok-nav-desktop { display: none; }
-  #ok-hamburger { display: flex; }
 }
-
 @media (max-width: 768px) {
-  #ok-nav { padding: 14px 20px; }
-
-  #ok-hero-content {
-    bottom: 80px;
-    left: 24px;
-    right: 24px;
-    max-width: 100%;
-    text-align: center;
-  }
-  .ok-hero-label { text-align: center; }
-  .ok-hero-sub { max-width: 100%; }
-  #ok-hero-img { object-position: 60% center; }
-  #ok-hero-cta { width: 100%; justify-content: center; }
-
-  .ok-collection-row {
-    height: 260px;
-    grid-template-columns: 1fr !important;
-    position: relative;
-  }
-
-  .ok-row-image {
-    position: absolute;
-    inset: 0;
-  }
-
-  .ok-row-text {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    background: linear-gradient(0deg, rgba(13,13,13,0.92) 0%, rgba(13,13,13,0.4) 100%) !important;
-    border: none !important;
-    padding: 20px 24px;
-    z-index: 2;
-  }
-
-  .ok-row-label { font-size: 28px; }
-  .ok-row-arrow { display: none; }
-
-  .ok-grid-three { grid-template-columns: 1fr; height: auto; }
-  .ok-grid-cell { height: 200px; }
-
-  #ok-collections-header {
-    padding: 60px 24px 40px;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .ok-section-title-inner { font-size: clamp(36px, 8vw, 52px); }
-
-  #ok-footer {
+  .ok-cat-row--odd,
+  .ok-cat-row--even {
     grid-template-columns: 1fr;
-    gap: 48px;
-    padding: 64px 32px 40px;
   }
-
-  #ok-breath {
-    clip-path: polygon(0 2%, 100% 0, 100% 98%, 0 100%);
-  }
-
-  .ok-cm-tl, .ok-cm-tr, .ok-cm-bl, .ok-cm-br { display: none; }
+  .ok-cat-row--odd  { grid-template-rows: 240px auto; }
+  .ok-cat-row--even { grid-template-rows: 240px auto; }
+  .ok-cat-row--even .ok-cat-text     { order: 2; }
+  .ok-cat-row--even .ok-cat-img-wrap { order: 1; }
+  .ok-cat-img-wrap--odd,
+  .ok-cat-img-wrap--even { clip-path: none; }
+  .ok-footer-grid { grid-template-columns: 1fr 1fr; }
+  #ok-hero-content { left: 5%; bottom: 10%; }
+}
+@media (max-width: 600px) {
+  .ok-footer-grid { grid-template-columns: 1fr; gap: 36px; }
+  .ok-footer-watermark { font-size: 72px; }
 }
 
-/* === REDUCED MOTION === */
+/* ─── REDUCED MOTION ────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  #ok-hero-img { transform: none !important; }
-
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-
-  #ok-grain svg { animation-duration: 999999s !important; }
+  #ok-film-grain svg { animation: none !important; }
+  .ok-reveal { opacity: 1 !important; transform: none !important; }
+  #ok-scroll-progress { display: none; }
+  #ok-cursor-ring, #ok-cursor-dot { display: none !important; }
 }
+
   </style>
 </head>
 <body>
 
-  <!-- Scroll Progress Bar -->
-  <div id="ok-scroll-bar"></div>
+  <!-- Skip to content -->
+  <a href="#ok-main" class="ok-skip">Skip to content</a>
 
-  <!-- Custom Cursor -->
-  <div id="ok-cursor-ring"></div>
-  <div id="ok-cursor-dot"></div>
-  <span id="ok-cursor-label"></span>
+  <!-- Scroll Progress -->
+  <div id="ok-scroll-progress"></div>
 
   <!-- Preloader -->
-  <div id="ok-preloader" role="status" aria-label="Loading Britain Racing">
-    <div id="ok-pre-wordmark">BRITAIN RACING</div>
-    <div id="ok-pre-track">
-      <div id="ok-pre-fill"></div>
+  <div id="overkill-preloader" style="clip-path: inset(0 0 0% 0)">
+    <div class="ok-pre-name">BRITAIN RACING</div>
+    <div class="ok-pre-sub">LLC.</div>
+    <div id="ok-loader-track">
+      <div id="ok-loader-fill"></div>
     </div>
-    <div id="ok-pre-count" aria-live="polite">0%</div>
-    <div id="ok-pre-angular"></div>
+    <div id="ok-loader-pct">0%</div>
   </div>
 
-  <!-- Glass Nav -->
-  <header id="ok-nav" role="banner">
-    <a href="https://britainracing.com/" id="ok-nav-logo-wrap" aria-label="Britain Racing Home">
-      <img id="ok-nav-logo"
-           src="https://britainracing.com/cdn/shop/files/BritainRacing_-_Large_0bbd4388-4a07-4574-8f9e-9fddcae6e659.jpg?v=1743437605&width=300"
-           alt="Britain Racing LLC."
-           height="34">
+  <!-- Custom Cursor -->
+  <div id="ok-cursor-ring" aria-hidden="true"></div>
+  <div id="ok-cursor-dot" aria-hidden="true"></div>
+
+  <!-- Film Grain -->
+  <div id="ok-film-grain" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+      <filter id="ok-grain-filter">
+        <feTurbulence id="ok-grain-turb" type="fractalNoise" baseFrequency="0.68" numOctaves="3" stitchTiles="stitch"/>
+        <feColorMatrix type="saturate" values="0"/>
+      </filter>
+      <rect width="100%" height="100%" filter="url(#ok-grain-filter)"/>
+    </svg>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="ok-nav" aria-label="Main navigation">
+    <a href="/" class="ok-nav-logo-link" aria-label="Britain Racing — Home">
+      <img
+        class="ok-nav-logo"
+        src="https://britainracing.com/cdn/shop/files/BritainRacing_-_Large_0bbd4388-4a07-4574-8f9e-9fddcae6e659.jpg?v=1743437605&width=300"
+        alt="Britain Racing LLC."
+        height="38"
+        loading="eager"
+      >
     </a>
-    <nav id="ok-nav-desktop" aria-label="Primary navigation">
-      <a href="https://britainracing.com/" class="ok-nav-link" data-cursor-label="VIEW">Home</a>
-      <a href="https://britainracing.com/collections" class="ok-nav-link" data-cursor-label="VIEW">Catalog</a>
-      <a href="https://britainracing.com/pages/contact" class="ok-nav-link" data-cursor-label="VIEW">Contact</a>
-    </nav>
-    <div id="ok-nav-actions">
-      <a href="https://britainracing.com/cart" id="ok-cart-link" aria-label="View cart" data-cursor-label="CART">
+    <div class="ok-nav-links">
+      <a href="https://britainracing.com/" class="ok-nav-link">Home</a>
+      <a href="https://britainracing.com/collections" class="ok-nav-link">Catalog</a>
+      <a href="https://britainracing.com/pages/contact" class="ok-nav-link">Contact</a>
+    </div>
+    <div class="ok-nav-right">
+      <a href="https://britainracing.com/cart" class="ok-nav-cart" data-cursor="VIEW" aria-label="View cart">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
           <line x1="3" y1="6" x2="21" y2="6"/>
-          <path d="M16 10a4 4 0 01-8 0"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
         </svg>
       </a>
-      <button id="ok-hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="ok-drawer">
-        <span></span><span></span><span></span>
+      <button class="ok-hamburger" id="ok-hamburger" aria-label="Open navigation menu" aria-expanded="false" data-cursor="OPEN">
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
     </div>
-  </header>
+  </nav>
 
   <!-- Mobile Drawer -->
-  <nav id="ok-drawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <div class="ok-drawer-overlay" id="ok-drawer-overlay" aria-hidden="true"></div>
+  <nav class="ok-drawer" id="ok-drawer" aria-label="Mobile navigation" aria-hidden="true">
     <a href="https://britainracing.com/" class="ok-drawer-link">Home</a>
     <a href="https://britainracing.com/collections" class="ok-drawer-link">Catalog</a>
     <a href="https://britainracing.com/pages/contact" class="ok-drawer-link">Contact</a>
   </nav>
-  <div id="ok-drawer-backdrop" aria-hidden="true"></div>
 
-  <!-- Hero -->
-  <section id="ok-hero" aria-label="Britain Racing hero">
-    <img id="ok-hero-img"
-         src="https://britainracing.com/cdn/shop/files/received_1560715844870613.jpg?v=1766099602&width=3840"
-         alt="Britain Racing — High-performance motorsport parts"
-         fetchpriority="high">
-    <div id="ok-hero-overlay" aria-hidden="true"></div>
-    <div id="ok-hero-vignette" aria-hidden="true"></div>
+  <main id="ok-main">
 
-    <div id="ok-hero-content">
-      <span class="ok-hero-label">PERFORMANCE PARTS &amp; ACCESSORIES</span>
-      <h1 class="ok-hero-heading">DON'T COMPROMISE... CUSTOMIZE</h1>
-      <p class="ok-hero-sub">Race-ready components engineered for competitors who refuse to settle.</p>
-      <a href="https://britainracing.com/collections/all" id="ok-hero-cta" data-cursor-label="SHOP">
-        SHOP NOW
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <line x1="3" y1="8" x2="13" y2="8"/>
-          <polyline points="9,4 13,8 9,12"/>
+    <!-- Hero -->
+    <section id="ok-hero" aria-label="Hero banner">
+      <img
+        id="ok-hero-img"
+        src="https://britainracing.com/cdn/shop/files/received_1560715844870613.jpg?v=1766099602&width=3840"
+        alt=""
+        aria-hidden="true"
+        loading="eager"
+      >
+      <div class="ok-hero-grad-primary" aria-hidden="true"></div>
+      <div class="ok-hero-grad-side" aria-hidden="true"></div>
+
+      <div id="ok-hero-content">
+        <div id="ok-hero-eyebrow">PERFORMANCE PARTS</div>
+        <h1 class="ok-heading" aria-label="Don't Compromise... Customize">DON'T COMPROMISE... CUSTOMIZE</h1>
+        <a
+          href="https://britainracing.com/collections/all"
+          id="ok-hero-cta"
+          class="ok-magnetic"
+          data-cursor="SHOP"
+          data-strength="12"
+          data-glow="rgba(196,82,10,0.5)"
+          data-bg="#c4520a"
+        >
+          SHOP NOW
+          <svg class="ok-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
+
+      <div id="ok-scroll-ind" aria-hidden="true">
+        <span class="ok-scroll-label">SCROLL</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(196,82,10,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"/>
         </svg>
-      </a>
-    </div>
+      </div>
+    </section>
 
-    <div id="ok-scroll-ind" aria-hidden="true">
-      <span>SCROLL</span>
-      <svg class="ok-scroll-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="rgba(255,225,184,0.4)" stroke-width="1.5" stroke-linecap="round">
-        <polyline points="3,5 8,10 13,5"/>
-      </svg>
-    </div>
-  </section>
-
-  <!-- Collections -->
-  <section id="ok-collections" aria-labelledby="ok-collections-title">
-    <div id="ok-collections-header">
-      <span class="ok-section-eyebrow" aria-hidden="true">Our Categories</span>
-      <h2 class="ok-section-title" id="ok-collections-title">
-        <span class="ok-section-title-inner">SHOP BY CATEGORY</span>
-      </h2>
-    </div>
-
-    <div class="ok-rows-wrapper">
-
-      <!-- Row 1: LuckyDog — ODD: text left, image right -->
-      <a href="https://britainracing.com/collections/luckydog-trophies"
-         class="ok-collection-row ok-row-odd"
-         data-cursor-label="EXPLORE"
-         aria-label="Browse LuckyDog Racing Trophies collection">
-        <div class="ok-row-text">
-          <div class="ok-row-text-inner">
-            <span class="ok-row-num">01</span>
-            <h3 class="ok-row-label">LUCKYDOG RACING TROPHIES</h3>
-            <div class="ok-row-arrow" aria-hidden="true">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#C85A00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,2 9,7 4,12"/></svg>
-            </div>
-          </div>
+    <!-- Category Showcase -->
+    <section id="ok-categories" aria-label="Shop by category">
+      <div id="ok-cat-header">
+        <div class="ok-cat-header-inner ok-reveal">
+          <span class="ok-cat-rule-line" aria-hidden="true"></span>
+          <h2 id="ok-cat-title">SHOP BY CATEGORY</h2>
         </div>
-        <div class="ok-row-image">
-          <img class="ok-row-img ok-lazy-img"
-               src="https://britainracing.com/cdn/shop/collections/20250330_114148_e771bfe8-70e2-435b-a413-f0929311c10b.jpg?v=1766089427"
-               alt="LuckyDog Racing Trophies"
-               loading="lazy">
-          <div class="ok-row-img-overlay" aria-hidden="true"></div>
+      </div>
+
+      <!-- Row 1: Trophies (image-left) -->
+      <article class="ok-cat-row ok-cat-row--odd ok-reveal">
+        <div class="ok-cat-img-wrap ok-cat-img-wrap--odd" data-cursor="VIEW">
+          <img src="https://britainracing.com/cdn/shop/collections/20250330_114148_e771bfe8-70e2-435b-a413-f0929311c10b.jpg?v=1766089427" alt="LuckyDog Racing Trophies" loading="lazy">
+          <div class="ok-cat-img-overlay" aria-hidden="true"></div>
         </div>
-      </a>
-
-      <!-- Row 2: Brake Ducts — EVEN: image left, text right -->
-      <a href="https://britainracing.com/collections/brake-ducts"
-         class="ok-collection-row ok-row-even"
-         data-cursor-label="EXPLORE"
-         aria-label="Browse Brake Ducts collection">
-        <div class="ok-row-image">
-          <img class="ok-row-img ok-lazy-img"
-               src="https://britainracing.com/cdn/shop/files/20251220_210652.jpg?v=1766351519"
-               alt="Brake Ducts"
-               loading="lazy">
-          <div class="ok-row-img-overlay" aria-hidden="true"></div>
+        <div class="ok-cat-text">
+          <span class="ok-cat-badge">01 / TROPHIES</span>
+          <h3 class="ok-cat-name">LuckyDog Racing<br>Trophies</h3>
+          <a href="https://britainracing.com/collections/luckydog-trophies" class="ok-cat-link" data-cursor="EXPLORE">
+            SHOP NOW
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
         </div>
-        <div class="ok-row-text">
-          <div class="ok-row-text-inner">
-            <span class="ok-row-num">02</span>
-            <h3 class="ok-row-label">BRAKE DUCTS</h3>
-            <div class="ok-row-arrow" aria-hidden="true">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#C85A00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,2 9,7 4,12"/></svg>
-            </div>
-          </div>
+      </article>
+
+      <!-- Row 2: Brake Ducts (image-right) -->
+      <article class="ok-cat-row ok-cat-row--even ok-reveal">
+        <div class="ok-cat-text">
+          <span class="ok-cat-badge">02 / BRAKE DUCTS</span>
+          <h3 class="ok-cat-name">Brake<br>Ducts</h3>
+          <a href="https://britainracing.com/collections/brake-ducts" class="ok-cat-link" data-cursor="EXPLORE">
+            SHOP NOW
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
         </div>
-      </a>
-
-      <!-- Row 3: Fueling — ODD: text left, image right -->
-      <a href="https://britainracing.com/collections/frontpage"
-         class="ok-collection-row ok-row-odd"
-         data-cursor-label="EXPLORE"
-         aria-label="Browse Fueling Products collection">
-        <div class="ok-row-text">
-          <div class="ok-row-text-inner">
-            <span class="ok-row-num">03</span>
-            <h3 class="ok-row-label">FUELING PRODUCTS</h3>
-            <div class="ok-row-arrow" aria-hidden="true">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#C85A00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,2 9,7 4,12"/></svg>
-            </div>
-          </div>
+        <div class="ok-cat-img-wrap ok-cat-img-wrap--even" data-cursor="VIEW">
+          <img src="https://britainracing.com/cdn/shop/files/20251220_210652.jpg?v=1766351519" alt="Brake Ducts" loading="lazy">
+          <div class="ok-cat-img-overlay" aria-hidden="true"></div>
         </div>
-        <div class="ok-row-image">
-          <img class="ok-row-img ok-lazy-img"
-               src="https://britainracing.com/cdn/shop/collections/20220822_213152.jpg?v=1745990244"
-               alt="Fueling Products"
-               loading="lazy">
-          <div class="ok-row-img-overlay" aria-hidden="true"></div>
+      </article>
+
+      <!-- Row 3: Fueling Products (image-left) -->
+      <article class="ok-cat-row ok-cat-row--odd ok-reveal">
+        <div class="ok-cat-img-wrap ok-cat-img-wrap--odd" data-cursor="VIEW">
+          <img src="https://britainracing.com/cdn/shop/collections/20220822_213152.jpg?v=1745990244" alt="Fueling Products" loading="lazy">
+          <div class="ok-cat-img-overlay" aria-hidden="true"></div>
         </div>
-      </a>
-
-      <!-- Row 4: Carbon Fiber — EVEN: image left, text right -->
-      <a href="https://britainracing.com/collections/carbon-fiber-parts"
-         class="ok-collection-row ok-row-even"
-         data-cursor-label="EXPLORE"
-         aria-label="Browse Carbon Fiber Parts collection">
-        <div class="ok-row-image">
-          <img class="ok-row-img ok-lazy-img"
-               src="https://britainracing.com/cdn/shop/collections/486552782_1256153009503247_2987420766831371503_n.jpg?v=1745990264"
-               alt="Carbon Fiber Parts"
-               loading="lazy">
-          <div class="ok-row-img-overlay" aria-hidden="true"></div>
+        <div class="ok-cat-text">
+          <span class="ok-cat-badge">03 / FUELING</span>
+          <h3 class="ok-cat-name">Fueling<br>Products</h3>
+          <a href="https://britainracing.com/collections/frontpage" class="ok-cat-link" data-cursor="EXPLORE">
+            SHOP NOW
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
         </div>
-        <div class="ok-row-text">
-          <div class="ok-row-text-inner">
-            <span class="ok-row-num">04</span>
-            <h3 class="ok-row-label">CARBON FIBER PARTS</h3>
-            <div class="ok-row-arrow" aria-hidden="true">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#C85A00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,2 9,7 4,12"/></svg>
-            </div>
-          </div>
+      </article>
+
+      <!-- Row 4: Carbon Fiber (image-right) -->
+      <article class="ok-cat-row ok-cat-row--even ok-reveal">
+        <div class="ok-cat-text">
+          <span class="ok-cat-badge">04 / CARBON FIBER</span>
+          <h3 class="ok-cat-name">Carbon Fiber<br>Parts</h3>
+          <a href="https://britainracing.com/collections/carbon-fiber-parts" class="ok-cat-link" data-cursor="EXPLORE">
+            SHOP NOW
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
         </div>
-      </a>
+        <div class="ok-cat-img-wrap ok-cat-img-wrap--even" data-cursor="VIEW">
+          <img src="https://britainracing.com/cdn/shop/collections/486552782_1256153009503247_2987420766831371503_n.jpg?v=1745990264" alt="Carbon Fiber Parts" loading="lazy">
+          <div class="ok-cat-img-overlay" aria-hidden="true"></div>
+        </div>
+      </article>
 
-    </div><!-- /.ok-rows-wrapper -->
+      <!-- Row 5: Hood Vents (image-left) -->
+      <article class="ok-cat-row ok-cat-row--odd ok-reveal">
+        <div class="ok-cat-img-wrap ok-cat-img-wrap--odd" data-cursor="VIEW">
+          <img src="https://britainracing.com/cdn/shop/collections/191613587_10219163884914540_5061107731261156786_n_135f0956-9cc8-454e-a180-5b9c95a6d659.jpg?v=1745990208" alt="Hood Vents" loading="lazy">
+          <div class="ok-cat-img-overlay" aria-hidden="true"></div>
+        </div>
+        <div class="ok-cat-text">
+          <span class="ok-cat-badge">05 / HOOD VENTS</span>
+          <h3 class="ok-cat-name">Hood<br>Vents</h3>
+          <a href="https://britainracing.com/collections/hood-vents" class="ok-cat-link" data-cursor="EXPLORE">
+            SHOP NOW
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+        </div>
+      </article>
 
-    <!-- 3-Column Grid -->
-    <div class="ok-grid-three">
-      <a href="https://britainracing.com/collections/hood-vents"
-         class="ok-grid-cell"
-         data-cursor-label="EXPLORE"
-         aria-label="Browse Hood Vents collection">
-        <img class="ok-lazy-img"
-             src="https://britainracing.com/cdn/shop/collections/191613587_10219163884914540_5061107731261156786_n_135f0956-9cc8-454e-a180-5b9c95a6d659.jpg?v=1745990208"
-             alt="Hood Vents"
-             loading="lazy">
-        <div class="ok-grid-overlay" aria-hidden="true"></div>
-        <span class="ok-grid-label">HOOD VENTS</span>
-      </a>
-      <a href="https://britainracing.com/collections/exhaust-flanges"
-         class="ok-grid-cell"
-         data-cursor-label="EXPLORE"
-         aria-label="Browse Exhaust Flanges collection">
-        <img class="ok-lazy-img"
-             src="https://britainracing.com/cdn/shop/collections/20210107_213129_4f7fb588-c941-4214-991a-d1c81097493f.jpg?v=1745990887"
-             alt="Exhaust Flanges"
-             loading="lazy">
-        <div class="ok-grid-overlay" aria-hidden="true"></div>
-        <span class="ok-grid-label">EXHAUST FLANGES</span>
-      </a>
-      <a href="https://britainracing.com/collections/wing-uprights"
-         class="ok-grid-cell"
-         data-cursor-label="EXPLORE"
-         aria-label="Browse Wing Uprights collection">
-        <img class="ok-lazy-img"
-             src="https://britainracing.com/cdn/shop/collections/122660246_10217819728151461_4579971352753520728_n.jpg?v=1745993135"
-             alt="Wing Uprights"
-             loading="lazy">
-        <div class="ok-grid-overlay" aria-hidden="true"></div>
-        <span class="ok-grid-label">WING UPRIGHTS</span>
-      </a>
-    </div>
-  </section>
+      <!-- Row 6: Exhaust Flanges (image-right) -->
+      <article class="ok-cat-row ok-cat-row--even ok-reveal">
+        <div class="ok-cat-text">
+          <span class="ok-cat-badge">06 / EXHAUST</span>
+          <h3 class="ok-cat-name">Exhaust<br>Flanges</h3>
+          <a href="https://britainracing.com/collections/exhaust-flanges" class="ok-cat-link" data-cursor="EXPLORE">
+            SHOP NOW
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+        </div>
+        <div class="ok-cat-img-wrap ok-cat-img-wrap--even" data-cursor="VIEW">
+          <img src="https://britainracing.com/cdn/shop/collections/20210107_213129_4f7fb588-c941-4214-991a-d1c81097493f.jpg?v=1745990887" alt="Exhaust Flanges" loading="lazy">
+          <div class="ok-cat-img-overlay" aria-hidden="true"></div>
+        </div>
+      </article>
 
-  <!-- Breathing / Brand Statement -->
-  <section id="ok-breath" aria-label="Brand statement">
-    <div id="ok-breath-glow" aria-hidden="true"></div>
+      <!-- Row 7: Wing Uprights (image-left) -->
+      <article class="ok-cat-row ok-cat-row--odd ok-reveal">
+        <div class="ok-cat-img-wrap ok-cat-img-wrap--odd" data-cursor="VIEW">
+          <img src="https://britainracing.com/cdn/shop/collections/122660246_10217819728151461_4579971352753520728_n.jpg?v=1745993135" alt="Wing Uprights" loading="lazy">
+          <div class="ok-cat-img-overlay" aria-hidden="true"></div>
+        </div>
+        <div class="ok-cat-text">
+          <span class="ok-cat-badge">07 / WING UPRIGHTS</span>
+          <h3 class="ok-cat-name">Wing<br>Uprights</h3>
+          <a href="https://britainracing.com/collections/wing-uprights" class="ok-cat-link" data-cursor="EXPLORE">
+            SHOP NOW
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+    </section>
 
-    <div class="ok-corner-mark ok-cm-tl" aria-hidden="true"></div>
-    <div class="ok-corner-mark ok-cm-tr" aria-hidden="true"></div>
-    <div class="ok-corner-mark ok-cm-bl" aria-hidden="true"></div>
-    <div class="ok-corner-mark ok-cm-br" aria-hidden="true"></div>
+    <!-- Breathing Section -->
+    <section id="ok-breathing" data-cursor-dim="true" aria-label="Brand statement">
+      <div id="ok-breathing-lines" aria-hidden="true"></div>
+      <div id="ok-breathing-content">
+        <div class="ok-breathing-rule" aria-hidden="true"></div>
+        <p class="ok-breathing-line1">BUILT FOR THE TRACK.</p>
+        <p class="ok-breathing-line2">BUILT TO WIN.</p>
+        <p class="ok-breathing-sub">BRITAIN RACING LLC — PERFORMANCE PARTS FOR SERIOUS RACERS</p>
+        <div class="ok-breathing-rule" aria-hidden="true"></div>
+      </div>
+    </section>
 
-    <div class="ok-breath-top-line" aria-hidden="true"></div>
-
-    <div class="ok-stat-num" aria-label="7 racing categories" data-target="7">0</div>
-
-    <div class="ok-stat-label-wrap">
-      <span class="ok-breath-label-inner">RACING CATEGORIES — ZERO COMPROMISES</span>
-    </div>
-
-    <div class="ok-breath-bottom-line" aria-hidden="true"></div>
-  </section>
+  </main>
 
   <!-- Footer -->
-  <footer id="ok-footer" role="contentinfo">
-    <div class="ok-footer-ambient" aria-hidden="true"></div>
-
-    <!-- Brand Column -->
-    <div class="ok-footer-col ok-footer-brand">
-      <a href="https://britainracing.com/" class="ok-footer-logo-wrap" aria-label="Britain Racing home">
-        <img id="ok-footer-logo"
-             src="https://britainracing.com/cdn/shop/files/BritainRacing_-_Large_0bbd4388-4a07-4574-8f9e-9fddcae6e659.jpg?v=1743437605&width=300"
-             alt="Britain Racing LLC."
-             height="30">
-      </a>
-      <p class="ok-footer-tagline">RACE-READY COMPONENTS</p>
-      <p class="ok-footer-copy">&copy; 2026 Britain Racing LLC. All rights reserved.</p>
-    </div>
-
-    <!-- Quick Links Column -->
-    <div class="ok-footer-col">
-      <h4 class="ok-footer-col-heading">Quick Links</h4>
-      <a href="https://britainracing.com/" class="ok-footer-link">
-        <span class="ok-footer-link-arrow">›</span>Home
-      </a>
-      <a href="https://britainracing.com/collections" class="ok-footer-link">
-        <span class="ok-footer-link-arrow">›</span>Catalog
-      </a>
-      <a href="https://britainracing.com/pages/contact" class="ok-footer-link">
-        <span class="ok-footer-link-arrow">›</span>Contact
-      </a>
-      <a href="https://britainracing.com/policies/privacy-policy" class="ok-footer-link">
-        <span class="ok-footer-link-arrow">›</span>Privacy Policy
-      </a>
-    </div>
-
-    <!-- Social Column -->
-    <div class="ok-footer-col">
-      <h3 class="ok-footer-social-heading">LET'S KEEP IN TOUCH</h3>
-      <div class="ok-social-icons">
-        <a href="http://instagram.com/shopify"
-           class="ok-social-icon"
-           aria-label="Follow us on Instagram"
-           data-cursor-label="INSTAGRAM"
-           target="_blank"
-           rel="noopener noreferrer">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-            <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
-            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-          </svg>
+  <footer id="ok-footer" aria-label="Site footer">
+    <div class="ok-footer-grid">
+      <div class="ok-footer-col">
+        <a href="https://britainracing.com/" aria-label="Britain Racing — Home">
+          <img
+            src="https://britainracing.com/cdn/shop/files/BritainRacing_-_Large_0bbd4388-4a07-4574-8f9e-9fddcae6e659.jpg?v=1743437605&width=300"
+            alt="Britain Racing LLC."
+            class="ok-footer-logo"
+            loading="lazy"
+          >
         </a>
-        <a href="https://tiktok.com/@shopify"
-           class="ok-social-icon"
-           aria-label="Follow us on TikTok"
-           data-cursor-label="TIKTOK"
-           target="_blank"
-           rel="noopener noreferrer">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/>
-          </svg>
-        </a>
+        <p class="ok-footer-copy">Performance parts for serious racers. No shortcuts.</p>
+      </div>
+      <div class="ok-footer-col">
+        <div class="ok-footer-label">NAVIGATE</div>
+        <nav class="ok-footer-links" aria-label="Footer navigation">
+          <a href="https://britainracing.com/" class="ok-footer-link">Home</a>
+          <a href="https://britainracing.com/collections" class="ok-footer-link">Catalog</a>
+          <a href="https://britainracing.com/pages/contact" class="ok-footer-link">Contact</a>
+          <a href="https://britainracing.com/policies/privacy-policy" class="ok-footer-link">Privacy Policy</a>
+        </nav>
+      </div>
+      <div class="ok-footer-col">
+        <div class="ok-footer-label">FOLLOW THE BUILD</div>
+        <div class="ok-social-row">
+          <a href="http://instagram.com/shopify" class="ok-social-icon" aria-label="Instagram" data-cursor="VIEW">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            </svg>
+          </a>
+          <a href="https://tiktok.com/@shopify" class="ok-social-icon" aria-label="TikTok" data-cursor="VIEW">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
-
-    <!-- Bottom Bar -->
     <div class="ok-footer-bottom">
-      <span class="ok-footer-bottom-text">Britain Racing LLC. — Motorsport Performance Parts</span>
-      <div class="ok-footer-bottom-links">
-        <a href="https://britainracing.com/policies/privacy-policy" class="ok-footer-bottom-link">Privacy Policy</a>
-        <a href="https://www.shopify.com/?utm_campaign=poweredby&utm_medium=shopify&utm_source=onlinestore"
-           class="ok-footer-bottom-link"
-           target="_blank"
-           rel="noopener noreferrer">Powered by Shopify</a>
-      </div>
+      <span class="ok-footer-copy-text">© 2025 BRITAIN RACING LLC. ALL RIGHTS RESERVED.</span>
+      <a href="https://www.shopify.com/?utm_campaign=poweredby&utm_medium=shopify&utm_source=onlinestore" class="ok-footer-shopify">POWERED BY SHOPIFY</a>
     </div>
+    <div class="ok-footer-watermark" aria-hidden="true">BR</div>
   </footer>
 
-  <!-- Film Grain -->
-  <div id="ok-grain" aria-hidden="true">
-    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-      <filter id="ok-grain-f">
-        <feTurbulence id="ok-grain-turb" type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
-      </filter>
-      <rect width="100%" height="100%" filter="url(#ok-grain-f)"/>
-    </svg>
-  </div>
-
   <script id="overkill-scripts">
-(function () {
-  'use strict';
+  (function () {
+    'use strict';
 
-  /* ============================================================
-     BRITAIN RACING — OVERKILL SCRIPTS
-     ============================================================ */
-
-  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var drawerOpen = false;
-
-  // Register GSAP plugins
-  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    /* ─── GSAP REGISTRATION ─────────────────────────────────── */
     gsap.registerPlugin(ScrollTrigger);
-  }
 
-  /* ============================================================
-     SCROLL PROGRESS BAR
-  ============================================================ */
-  function initScrollBar() {
-    var bar = document.getElementById('ok-scroll-bar');
-    if (!bar) return;
-    (function tick() {
-      var scrolled = window.scrollY;
-      var total = document.documentElement.scrollHeight - window.innerHeight;
-      if (total > 0) {
-        bar.style.width = Math.min((scrolled / total) * 100, 100) + '%';
+    /* ─── REDUCED MOTION CHECK ──────────────────────────────── */
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ─── LENIS SMOOTH SCROLL ───────────────────────────────── */
+    var lenis = null;
+    if (!prefersReduced && typeof Lenis !== 'undefined') {
+      lenis = new Lenis({ lerp: 0.1, duration: 1.2, smoothWheel: true });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
+    }
+
+    /* ─── SCROLL PROGRESS BAR ───────────────────────────────── */
+    var progressBar = document.getElementById('ok-scroll-progress');
+    if (progressBar && !prefersReduced) {
+      (function tickProgress() {
+        var st = window.scrollY || document.documentElement.scrollTop;
+        var sh = document.documentElement.scrollHeight - window.innerHeight;
+        progressBar.style.width = (sh > 0 ? Math.min(100, (st / sh) * 100) : 0) + '%';
+        requestAnimationFrame(tickProgress);
+      })();
+    }
+
+    /* ─── CUSTOM CURSOR ─────────────────────────────────────── */
+    (function initCursor() {
+      if (!window.matchMedia('(pointer: fine)').matches) return;
+      var ring = document.getElementById('ok-cursor-ring');
+      var dot  = document.getElementById('ok-cursor-dot');
+      if (!ring || !dot) return;
+
+      document.body.classList.add('ok-cursor-active');
+
+      var xR = gsap.quickTo(ring, 'x', { duration: 0.35, ease: 'power3.out' });
+      var yR = gsap.quickTo(ring, 'y', { duration: 0.35, ease: 'power3.out' });
+      var xD = gsap.quickTo(dot,  'x', { duration: 0.14, ease: 'power3.out' });
+      var yD = gsap.quickTo(dot,  'y', { duration: 0.14, ease: 'power3.out' });
+
+      window.addEventListener('mousemove', function (e) {
+        xR(e.clientX - 20); yR(e.clientY - 20);
+        xD(e.clientX - 3);  yD(e.clientY - 3);
+      }, { passive: true });
+
+      document.querySelectorAll('[data-cursor]').forEach(function (el) {
+        el.addEventListener('mouseenter', function () {
+          var label = el.dataset.cursor || '';
+          ring.style.width  = '72px';
+          ring.style.height = '72px';
+          ring.style.borderColor = '#c4520a';
+          ring.innerHTML = label
+            ? '<span style="font-family:Oswald,sans-serif;font-size:10px;font-weight:600;letter-spacing:0.18em;color:#c4520a;mix-blend-mode:normal;position:absolute;">' + label + '</span>'
+            : '';
+        });
+        el.addEventListener('mouseleave', function () {
+          ring.style.width  = '40px';
+          ring.style.height = '40px';
+          ring.style.borderColor = 'rgba(240,240,240,0.85)';
+          ring.innerHTML = '';
+        });
+      });
+
+      document.addEventListener('mousedown', function () {
+        dot.style.transform = 'translate(-50%,-50%) scale(2.2)';
+      });
+      document.addEventListener('mouseup', function () {
+        dot.style.transform = 'translate(-50%,-50%) scale(1)';
+      });
+
+      /* Dim cursor on breathing section */
+      var breathEl = document.getElementById('ok-breathing');
+      if (breathEl && 'IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            ring.style.opacity = e.intersectionRatio > 0.5 ? '0.4' : '1';
+          });
+        }, { threshold: [0, 0.5] }).observe(breathEl);
       }
-      requestAnimationFrame(tick);
     })();
-  }
 
-  /* ============================================================
-     CUSTOM CURSOR
-  ============================================================ */
-  function initCursor() {
-    if (!window.matchMedia('(pointer: fine)').matches) return;
-    if (typeof gsap === 'undefined') return;
-
-    var ring = document.getElementById('ok-cursor-ring');
-    var dot  = document.getElementById('ok-cursor-dot');
-    var lbl  = document.getElementById('ok-cursor-label');
-    if (!ring || !dot) return;
-
-    document.body.classList.add('ok-cursor-active');
-
-    // GSAP owns the transform — set centering via xPercent/yPercent
-    gsap.set(ring, { xPercent: -50, yPercent: -50 });
-    gsap.set(dot,  { xPercent: -50, yPercent: -50 });
-    if (lbl) gsap.set(lbl, { xPercent: -50, yPercent: -50 });
-
-    var xR = gsap.quickTo(ring, 'x', { duration: 0.35, ease: 'power3.out' });
-    var yR = gsap.quickTo(ring, 'y', { duration: 0.35, ease: 'power3.out' });
-    var xD = gsap.quickTo(dot,  'x', { duration: 0.12, ease: 'power3.out' });
-    var yD = gsap.quickTo(dot,  'y', { duration: 0.12, ease: 'power3.out' });
-    var xL = lbl ? gsap.quickTo(lbl, 'x', { duration: 0.35, ease: 'power3.out' }) : null;
-    var yL = lbl ? gsap.quickTo(lbl, 'y', { duration: 0.35, ease: 'power3.out' }) : null;
-
-    window.addEventListener('mousemove', function (e) {
-      xR(e.clientX); yR(e.clientY);
-      xD(e.clientX); yD(e.clientY);
-      if (xL) xL(e.clientX);
-      if (yL) yL(e.clientY + 28); // label sits 28px below cursor center
-    });
-
-    // Collection rows — expand ring
-    document.querySelectorAll('.ok-collection-row').forEach(function (el) {
-      el.addEventListener('mouseenter', function () {
-        gsap.to(ring, { width: 64, height: 64, duration: 0.3, ease: 'power2.out' });
-      });
-      el.addEventListener('mouseleave', function () {
-        gsap.to(ring, { width: 40, height: 40, duration: 0.3, ease: 'power2.out' });
-      });
-    });
-
-    // Grid cells — expand ring
-    document.querySelectorAll('.ok-grid-cell').forEach(function (el) {
-      el.addEventListener('mouseenter', function () {
-        gsap.to(ring, { width: 64, height: 64, duration: 0.3, ease: 'power2.out' });
-      });
-      el.addEventListener('mouseleave', function () {
-        gsap.to(ring, { width: 40, height: 40, duration: 0.3, ease: 'power2.out' });
-      });
-    });
-
-    // Footer links — shrink ring
-    document.querySelectorAll('.ok-footer-link').forEach(function (el) {
-      el.addEventListener('mouseenter', function () {
-        gsap.to(ring, { width: 28, height: 28, borderColor: '#C85A00', duration: 0.25, ease: 'power2.out' });
-      });
-      el.addEventListener('mouseleave', function () {
-        gsap.to(ring, { width: 40, height: 40, borderColor: 'rgba(255,225,184,0.85)', duration: 0.25, ease: 'power2.out' });
-      });
-    });
-
-    // Data-cursor-label elements
-    document.querySelectorAll('[data-cursor-label]').forEach(function (el) {
-      var labelText = el.dataset.cursorLabel;
-      el.addEventListener('mouseenter', function () {
-        if (lbl) lbl.textContent = labelText;
-        gsap.to(lbl, { opacity: 1, duration: 0.2 });
-      });
-      el.addEventListener('mouseleave', function () {
-        gsap.to(lbl, { opacity: 0, duration: 0.15 });
-      });
-    });
-  }
-
-  /* ============================================================
-     PRELOADER
-  ============================================================ */
-  function initPreloader() {
-    var preWordmark = document.getElementById('ok-pre-wordmark');
-    var preFill     = document.getElementById('ok-pre-fill');
-    var preCount    = document.getElementById('ok-pre-count');
-
-    if (!preWordmark || !preFill || !preCount) {
-      // No preloader? Skip straight to page init
-      initLenis();
-      triggerHeroEntrance();
-      return;
-    }
-
-    // Wordmark entrance
-    gsap.fromTo(preWordmark,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', delay: 0.1 }
-    );
-
-    // Animate progress with deliberate stalls at 23%, 67%, 89%
-    var progress = { value: 0 };
-
-    function updateBar() {
-      var pct = Math.round(progress.value);
-      if (preFill)  preFill.style.width = pct + '%';
-      if (preCount) preCount.textContent = pct + '%';
-    }
-
-    var tl = gsap.timeline({
-      onComplete: function () {
-        progress.value = 100;
-        updateBar();
-        finishPreloader();
-      }
-    });
-
-    tl.to(progress, { value: 23,  duration: 0.42, ease: 'power1.inOut',  onUpdate: updateBar })
-      .to({}, { duration: 0.38 })
-      .to(progress, { value: 67,  duration: 0.52, ease: 'power1.inOut',  onUpdate: updateBar })
-      .to({}, { duration: 0.3  })
-      .to(progress, { value: 89,  duration: 0.28, ease: 'power1.inOut',  onUpdate: updateBar })
-      .to({}, { duration: 0.22 })
-      .to(progress, { value: 100, duration: 0.2,  ease: 'power2.in',     onUpdate: updateBar });
-  }
-
-  function finishPreloader() {
-    var preloader = document.getElementById('ok-preloader');
-    if (!preloader) { initLenis(); triggerHeroEntrance(); return; }
-
-    gsap.to(preloader, {
-      clipPath: 'polygon(0 0, 100% 0, 100% 0%, 0 0%)',
-      duration: 0.7,
-      ease: 'power4.inOut',
-      onComplete: function () {
-        preloader.style.display = 'none';
-        initLenis();
-        triggerHeroEntrance();
-      }
-    });
-  }
-
-  /* ============================================================
-     LENIS SMOOTH SCROLL
-  ============================================================ */
-  function initLenis() {
-    if (typeof Lenis === 'undefined') return;
-
-    var lenis = new Lenis({
-      lerp: 0.1,
-      duration: 1.2,
-      smoothWheel: true
-    });
-
-    lenis.on('scroll', function () {
-      if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.update();
-    });
-
-    gsap.ticker.add(function (time) {
-      lenis.raf(time * 1000);
-    });
-
-    gsap.ticker.lagSmoothing(0);
-  }
-
-  /* ============================================================
-     SPLIT TEXT — HERO HEADING
-  ============================================================ */
-  function splitHeroText() {
-    var heading = document.querySelector('.ok-hero-heading');
-    if (!heading) return;
-
-    if (reducedMotion) {
-      gsap.fromTo(heading, { opacity: 0 }, { opacity: 1, duration: 0.4 });
-      return;
-    }
-
-    var raw = heading.textContent;
-    heading.style.perspective = '600px';
-    heading.innerHTML = raw.split('').map(function (ch) {
-      if (ch === ' ') {
-        return '<span class="ok-char ok-sp" style="display:inline-block;">&nbsp;</span>';
-      }
-      var safe = ch === "'" ? '&#39;' : ch.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-      return '<span class="ok-char" style="display:inline-block;will-change:transform,opacity;">' + safe + '</span>';
-    }).join('');
-
-    gsap.set('.ok-hero-heading .ok-char', {
-      opacity: 0, y: 60, rotateX: -90, transformOrigin: '50% 50% -30px'
-    });
-  }
-
-  /* ============================================================
-     HERO ENTRANCE
-  ============================================================ */
-  function triggerHeroEntrance() {
-    splitHeroText();
-
-    if (reducedMotion) {
-      // Instant reveal — skip all animation
-      var allEls = ['#ok-hero-img', '.ok-hero-label', '.ok-hero-sub', '#ok-hero-cta', '#ok-scroll-ind'];
-      allEls.forEach(function (sel) {
-        var el = document.querySelector(sel);
-        if (el) gsap.set(el, { opacity: 1, y: 0, scale: 1 });
-      });
-      var chars = document.querySelectorAll('.ok-hero-heading .ok-char');
-      if (chars.length) gsap.set(chars, { opacity: 1, y: 0, rotateX: 0 });
-      else {
-        var h = document.querySelector('.ok-hero-heading');
-        if (h) gsap.set(h, { opacity: 1 });
-      }
-      setTimeout(initScrollAnimations, 100);
-      return;
-    }
-
-    // Hero image scale entrance
-    var heroImg = document.getElementById('ok-hero-img');
-    if (heroImg) gsap.to(heroImg, { scale: 1, duration: 1.6, ease: 'power3.out' });
-
-    // Pre-heading label
-    gsap.fromTo('.ok-hero-label',
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', delay: 0.15 }
-    );
-
-    // Split-text characters
-    gsap.to('.ok-hero-heading .ok-char', {
-      opacity: 1, y: 0, rotateX: 0,
-      stagger: 0.025, duration: 0.8, ease: 'back.out(1.7)', delay: 0.3
-    });
-
-    // Sub text and CTA
-    gsap.fromTo('.ok-hero-sub',
-      { opacity: 0, y: 24 },
-      { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out', delay: 1.1 }
-    );
-    gsap.fromTo('#ok-hero-cta',
-      { opacity: 0, y: 16 },
-      { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', delay: 1.3 }
-    );
-    gsap.fromTo('#ok-scroll-ind',
-      { opacity: 0 },
-      { opacity: 1, duration: 0.4, delay: 1.8 }
-    );
-
-    // Scroll chevron bounce
-    gsap.to('.ok-scroll-chevron', {
-      y: 5, repeat: -1, yoyo: true, duration: 0.75, ease: 'power1.inOut', delay: 2
-    });
-
-    // Trigger scroll-based animations shortly after
-    setTimeout(initScrollAnimations, 200);
-  }
-
-  /* ============================================================
-     SCROLL ANIMATIONS
-  ============================================================ */
-  function initScrollAnimations() {
-    if (typeof ScrollTrigger === 'undefined') return;
-
-    // ── Hero parallax ──
-    var heroImg = document.getElementById('ok-hero-img');
-    if (heroImg) {
-      gsap.to(heroImg, {
-        yPercent: -15, ease: 'none',
-        scrollTrigger: { trigger: '#ok-hero', start: 'top top', end: 'bottom top', scrub: true }
-      });
-    }
-
-    var heroContent = document.getElementById('ok-hero-content');
-    if (heroContent) {
-      gsap.to(heroContent, {
-        yPercent: -8, ease: 'none',
-        scrollTrigger: { trigger: '#ok-hero', start: 'top top', end: 'bottom top', scrub: true }
-      });
-    }
-
-    // Scroll indicator fade on scroll
-    var scrollInd = document.getElementById('ok-scroll-ind');
-    if (scrollInd) {
-      gsap.to(scrollInd, {
-        opacity: 0,
-        scrollTrigger: { trigger: '#ok-hero', start: '200px top', toggleActions: 'play none none reverse' }
-      });
-    }
-
-    // ── Nav shrink on scroll ──
-    ScrollTrigger.create({
-      trigger: 'body',
-      start: '60px top',
-      onEnter: function () {
-        gsap.to('#ok-nav', {
-          paddingTop: '10px', paddingBottom: '10px',
-          background: 'rgba(13,13,13,0.96)',
-          borderBottomColor: 'rgba(200,90,0,0.2)',
-          duration: 0.3, ease: 'power2.out'
+    /* ─── FILM GRAIN INTENSITY ──────────────────────────────── */
+    (function initGrainIntensity() {
+      var breathEl = document.getElementById('ok-breathing');
+      if (!breathEl || !('IntersectionObserver' in window)) return;
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          document.body.classList.toggle('ok-grain-intense', e.intersectionRatio > 0.5);
         });
-      },
-      onLeaveBack: function () {
-        gsap.to('#ok-nav', {
-          paddingTop: '20px', paddingBottom: '20px',
-          background: 'rgba(13,13,13,0.82)',
-          borderBottomColor: 'rgba(200,90,0,0.1)',
-          duration: 0.3, ease: 'power2.out'
-        });
+      }, { threshold: [0, 0.5] }).observe(breathEl);
+    })();
+
+    /* ─── SPLIT TEXT ────────────────────────────────────────── */
+    (function splitHeroText() {
+      var heading = document.querySelector('#ok-hero .ok-heading');
+      if (!heading) return;
+      var text = heading.textContent;
+      heading.setAttribute('aria-label', text);
+      heading.innerHTML = text.split('').map(function (ch) {
+        if (ch === ' ') {
+          return '<span class="ok-char ok-space" aria-hidden="true" style="display:inline-block;width:0.28em;"></span>';
+        }
+        return '<span class="ok-char" aria-hidden="true" style="display:inline-block;will-change:transform,opacity;">' + ch + '</span>';
+      }).join('');
+    })();
+
+    /* ─── HERO ENTRANCE (fires after preloader) ─────────────── */
+    function initHeroEntrance() {
+      if (prefersReduced) {
+        var h = document.querySelector('.ok-heading');
+        if (h) gsap.from(h, { opacity: 0, duration: 0.6, ease: 'power2.out' });
+        return;
       }
-    });
+      document.fonts.ready.then(function () {
+        setTimeout(function () {
+          gsap.from('.ok-char:not(.ok-space)', {
+            opacity: 0,
+            y: 66,
+            rotateX: -90,
+            stagger: { each: 0.024, from: 'start' },
+            ease: 'back.out(1.7)',
+            duration: 0.74,
+            transformOrigin: '50% 100% -28px',
+            clearProps: 'all'
+          });
+        }, 200);
+      });
 
-    if (reducedMotion) return;
+      var eyebrow = document.getElementById('ok-hero-eyebrow');
+      if (eyebrow) gsap.from(eyebrow, { opacity: 0, x: -24, duration: 0.6, ease: 'power3.out', delay: 0.15 });
 
-    // ── Collections header reveal ──
-    var eyebrow = document.querySelector('.ok-section-eyebrow');
-    if (eyebrow) {
-      gsap.fromTo(eyebrow,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out',
-          scrollTrigger: { trigger: '#ok-collections', start: 'top 80%' }
-        }
-      );
+      var cta = document.getElementById('ok-hero-cta');
+      if (cta) gsap.from(cta, { opacity: 0, y: 20, scale: 0.94, duration: 0.55, ease: 'back.out(2)', delay: 1.05 });
+
+      var scrollInd = document.getElementById('ok-scroll-ind');
+      if (scrollInd) {
+        gsap.to(scrollInd, { y: 9, repeat: -1, yoyo: true, duration: 0.85, ease: 'sine.inOut' });
+        window.addEventListener('scroll', function () {
+          scrollInd.style.opacity = window.scrollY > 100 ? '0' : '1';
+        }, { passive: true });
+      }
     }
 
-    var titleInner = document.querySelector('.ok-section-title-inner');
-    if (titleInner) {
-      gsap.fromTo(titleInner,
-        { y: '100%' },
-        { y: '0%', duration: 0.7, ease: 'power4.out', delay: 0.1,
-          scrollTrigger: { trigger: '#ok-collections', start: 'top 80%' }
-        }
-      );
-    }
+    /* ─── PRELOADER ─────────────────────────────────────────── */
+    (function runPreloader() {
+      var pre  = document.getElementById('overkill-preloader');
+      var fill = document.getElementById('ok-loader-fill');
+      var pct  = document.getElementById('ok-loader-pct');
 
-    // ── Collection row entrances ──
-    var rows = document.querySelectorAll('.ok-collection-row');
-    if (rows.length) {
-      gsap.fromTo(rows,
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, stagger: 0.08, duration: 0.6, ease: 'power3.out',
-          scrollTrigger: { trigger: '.ok-rows-wrapper', start: 'top 82%' }
-        }
-      );
-
-      // Per-row image clip-path reveal
-      rows.forEach(function (row) {
-        var img = row.querySelector('.ok-row-img');
-        if (!img) return;
-        gsap.fromTo(img,
-          { clipPath: 'inset(0 100% 0 0)' },
-          { clipPath: 'inset(0 0% 0 0)', duration: 0.85, ease: 'power3.out',
-            scrollTrigger: { trigger: row, start: 'top 88%' }
+      function exitPreloader() {
+        if (!pre) { initHeroEntrance(); return; }
+        gsap.to(pre, {
+          clipPath: 'inset(0 0 100% 0)',
+          duration: 0.6,
+          ease: 'power4.inOut',
+          onComplete: function () {
+            pre.style.display = 'none';
+            initHeroEntrance();
           }
-        );
+        });
+      }
+
+      if (!fill) { exitPreloader(); return; }
+
+      gsap.to(fill, {
+        width: '240px',
+        duration: 1.8,
+        ease: 'power2.inOut',
+        onUpdate: function () {
+          var w = parseFloat(fill.style.width) || 0;
+          if (pct) pct.textContent = Math.round((w / 240) * 100) + '%';
+        },
+        onComplete: exitPreloader
       });
-    }
+    })();
 
-    // ── Grid cells entrance ──
-    var gridCells = document.querySelectorAll('.ok-grid-cell');
-    if (gridCells.length) {
-      gsap.fromTo(gridCells,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, stagger: 0.06, duration: 0.5, ease: 'power3.out',
-          scrollTrigger: { trigger: '.ok-grid-three', start: 'top 85%' }
-        }
-      );
-    }
+    /* ─── NAV SCROLL BEHAVIOR ───────────────────────────────── */
+    (function initNav() {
+      var nav = document.getElementById('ok-nav');
+      if (!nav) return;
 
-    // ── Breathing section ──
-    var breathGlow = document.getElementById('ok-breath-glow');
-    if (breathGlow) {
       ScrollTrigger.create({
-        trigger: '#ok-breath',
-        start: 'top 80%',
-        once: true,
+        trigger: 'body',
+        start: '60px top',
         onEnter: function () {
-          gsap.fromTo(breathGlow,
-            { opacity: 0.15 },
-            { opacity: 0.45, duration: 2.5, yoyo: true, repeat: -1, ease: 'power1.inOut' }
-          );
+          gsap.to(nav, { padding: '10px 40px', background: 'rgba(13,13,13,0.96)', duration: 0.3, ease: 'power2.out' });
+        },
+        onLeaveBack: function () {
+          gsap.to(nav, { padding: '20px 40px', background: 'rgba(13,13,13,0.82)', duration: 0.3, ease: 'power2.out' });
         }
       });
-    }
 
-    var breathLbl = document.querySelector('.ok-breath-label-inner');
-    if (breathLbl) {
-      gsap.fromTo(breathLbl,
-        { y: '110%' },
-        { y: '0%', duration: 0.7, ease: 'power4.out',
-          scrollTrigger: { trigger: '#ok-breath', start: 'top 70%' }
-        }
-      );
-    }
+      /* Desktop nav link magnetic */
+      document.querySelectorAll('.ok-nav-link').forEach(function (link) {
+        link.addEventListener('mousemove', function (e) {
+          var r = link.getBoundingClientRect();
+          var dx = Math.max(-6, Math.min(6, (e.clientX - r.left - r.width  / 2) * 0.3));
+          var dy = Math.max(-6, Math.min(6, (e.clientY - r.top  - r.height / 2) * 0.3));
+          gsap.to(link, { x: dx, y: dy, duration: 0.3, ease: 'power2.out' });
+        });
+        link.addEventListener('mouseleave', function () {
+          gsap.to(link, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1,0.4)' });
+        });
+      });
+    })();
 
-    // Stat counter (0 → 7)
-    var statNum = document.querySelector('.ok-stat-num');
-    if (statNum) {
-      var counter = { val: 0 };
-      ScrollTrigger.create({
-        trigger: '#ok-breath',
-        start: 'top center',
-        once: true,
-        onEnter: function () {
-          gsap.to(counter, {
-            val: 7, duration: 1.8, ease: 'power2.out',
-            onUpdate: function () {
-              statNum.textContent = Math.round(counter.val);
-            }
+    /* ─── MOBILE HAMBURGER ──────────────────────────────────── */
+    (function initHamburger() {
+      var btn     = document.getElementById('ok-hamburger');
+      var drawer  = document.getElementById('ok-drawer');
+      var overlay = document.getElementById('ok-drawer-overlay');
+      if (!btn || !drawer || !overlay) return;
+      var isOpen = false;
+
+      function open() {
+        isOpen = true;
+        btn.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+        drawer.classList.add('is-open');
+        drawer.setAttribute('aria-hidden', 'false');
+        overlay.classList.add('is-open');
+        overlay.setAttribute('aria-hidden', 'false');
+        gsap.from('.ok-drawer-link', { x: 40, opacity: 0, stagger: 0.06, duration: 0.45, ease: 'power3.out' });
+      }
+      function close() {
+        isOpen = false;
+        btn.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+        drawer.classList.remove('is-open');
+        drawer.setAttribute('aria-hidden', 'true');
+        overlay.classList.remove('is-open');
+        overlay.setAttribute('aria-hidden', 'true');
+      }
+
+      btn.addEventListener('click', function () { isOpen ? close() : open(); });
+      overlay.addEventListener('click', close);
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && isOpen) close(); });
+    })();
+
+    /* ─── HERO PARALLAX ─────────────────────────────────────── */
+    (function initHeroParallax() {
+      if (prefersReduced) return;
+      var heroImg     = document.getElementById('ok-hero-img');
+      var heroContent = document.getElementById('ok-hero-content');
+      if (!heroImg) return;
+
+      gsap.to(heroImg, {
+        yPercent: -15,
+        ease: 'none',
+        scrollTrigger: { trigger: '#ok-hero', start: 'top top', end: 'bottom top', scrub: 1.2 }
+      });
+      if (heroContent) {
+        gsap.to(heroContent, {
+          yPercent: -8,
+          ease: 'none',
+          scrollTrigger: { trigger: '#ok-hero', start: 'top top', end: 'bottom top', scrub: 1.2 }
+        });
+      }
+    })();
+
+    /* ─── SCROLL REVEALS ────────────────────────────────────── */
+    (function initReveals() {
+      if (prefersReduced) {
+        document.querySelectorAll('.ok-reveal').forEach(function (el) {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        });
+        return;
+      }
+      gsap.utils.toArray('.ok-reveal').forEach(function (el) {
+        gsap.to(el, {
+          y: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+        });
+      });
+    })();
+
+    /* ─── CATEGORY ROW ANIMATIONS ───────────────────────────── */
+    (function initCatAnimations() {
+      if (prefersReduced) return;
+      document.querySelectorAll('.ok-cat-row').forEach(function (row) {
+        /* Entrance */
+        gsap.from(row, {
+          y: 32, opacity: 0, duration: 0.7, ease: 'power3.out',
+          scrollTrigger: { trigger: row, start: 'top 85%', once: true }
+        });
+
+        /* Image fade-in */
+        var img = row.querySelector('.ok-cat-img-wrap img');
+        if (img) {
+          gsap.from(img, {
+            opacity: 0, scale: 1.1, duration: 1.1, ease: 'power3.out',
+            scrollTrigger: { trigger: row, start: 'top 82%', once: true }
           });
         }
       });
-    }
+    })();
 
-    // Breathing section pin — pause here for 40% scroll depth
-    ScrollTrigger.create({
-      trigger: '#ok-breath',
-      pin: true,
-      start: 'top top',
-      end: '+=40%',
-      scrub: 1
-    });
-
-    // ── Footer reveal ──
-    var footer = document.getElementById('ok-footer');
-    if (footer) {
-      gsap.fromTo(footer,
-        { y: 60, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out',
-          scrollTrigger: { trigger: footer, start: 'top 92%', toggleActions: 'play none none none' }
-        }
-      );
-    }
-
-    var footerLogo = document.getElementById('ok-footer-logo');
-    if (footerLogo) {
-      gsap.fromTo(footerLogo,
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', delay: 0.1,
-          scrollTrigger: { trigger: '#ok-footer', start: 'top 90%' }
-        }
-      );
-    }
-
-    var footerChildren = document.querySelectorAll('.ok-footer-col > *');
-    if (footerChildren.length) {
-      gsap.fromTo(footerChildren,
-        { opacity: 0, y: 12 },
-        { opacity: 1, y: 0, stagger: 0.07, duration: 0.4, ease: 'power2.out', delay: 0.2,
-          scrollTrigger: { trigger: '#ok-footer', start: 'top 90%' }
-        }
-      );
-    }
-  }
-
-  /* ============================================================
-     CTA MAGNETIC
-  ============================================================ */
-  function initCtaMagnetic() {
-    var cta = document.getElementById('ok-hero-cta');
-    if (!cta || reducedMotion) return;
-
-    cta.addEventListener('mousemove', function (e) {
-      var r  = cta.getBoundingClientRect();
-      var cx = r.left + r.width / 2;
-      var cy = r.top  + r.height / 2;
-      gsap.to(cta, {
-        x: (e.clientX - cx) * 0.3,
-        y: (e.clientY - cy) * 0.3,
-        duration: 0.3, ease: 'power2.out'
-      });
-    });
-
-    cta.addEventListener('mouseleave', function () {
-      gsap.to(cta, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1,0.3)' });
-    });
-  }
-
-  /* ============================================================
-     MAGNETIC NAV LINKS
-  ============================================================ */
-  function initMagneticLinks() {
-    if (reducedMotion) return;
-
-    // Desktop nav links
-    document.querySelectorAll('.ok-nav-link').forEach(function (link) {
-      link.addEventListener('mousemove', function (e) {
-        var rect = link.getBoundingClientRect();
-        var cx = rect.left + rect.width  / 2;
-        var cy = rect.top  + rect.height / 2;
-        gsap.to(link, {
-          x: (e.clientX - cx) * 0.3,
-          y: (e.clientY - cy) * 0.3,
-          duration: 0.3, ease: 'power2.out'
+    /* ─── CATEGORY TILT ─────────────────────────────────────── */
+    (function initCatTilt() {
+      if (prefersReduced || window.matchMedia('(max-width: 768px)').matches) return;
+      document.querySelectorAll('.ok-cat-row').forEach(function (row) {
+        gsap.set(row, { transformPerspective: 1200 });
+        row.addEventListener('mousemove', function (e) {
+          var rect = row.getBoundingClientRect();
+          var dx = (e.clientX - rect.left - rect.width  / 2) / (rect.width  / 2);
+          var dy = (e.clientY - rect.top  - rect.height / 2) / (rect.height / 2);
+          gsap.to(row, { rotateX: -dy * 3, rotateY: dx * 5, duration: 0.3, ease: 'power2.out' });
+        });
+        row.addEventListener('mouseleave', function () {
+          gsap.to(row, { rotateX: 0, rotateY: 0, duration: 0.7, ease: 'elastic.out(1,0.3)' });
         });
       });
-      link.addEventListener('mouseleave', function () {
-        gsap.to(link, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.4)' });
-      });
-    });
+    })();
 
-    // Social icons
-    document.querySelectorAll('.ok-social-icon').forEach(function (icon) {
-      icon.addEventListener('mousemove', function (e) {
-        var rect = icon.getBoundingClientRect();
-        var cx = rect.left + rect.width  / 2;
-        var cy = rect.top  + rect.height / 2;
-        gsap.to(icon, {
-          x: (e.clientX - cx) * 0.4,
-          y: (e.clientY - cy) * 0.4,
-          duration: 0.3, ease: 'power2.out'
+    /* ─── BREATHING SECTION ─────────────────────────────────── */
+    (function initBreathing() {
+      var el = document.getElementById('ok-breathing');
+      if (!el) return;
+
+      if (!prefersReduced) {
+        /* Pin */
+        ScrollTrigger.create({
+          trigger: el,
+          pin: true,
+          pinSpacing: true,
+          start: 'top top',
+          end: '+=500',
+          anticipatePin: 1
+        });
+
+        /* Content entrance */
+        gsap.from('#ok-breathing-content', {
+          opacity: 0, y: 44, duration: 1.1, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 65%', once: true }
+        });
+
+        /* Rules */
+        gsap.from('.ok-breathing-rule', {
+          scaleX: 0, transformOrigin: 'center center', duration: 1.0,
+          ease: 'power3.out', stagger: 0.25,
+          scrollTrigger: { trigger: el, start: 'top 65%', once: true }
+        });
+
+        /* Lines parallax */
+        gsap.to('#ok-breathing-lines', {
+          yPercent: -8, ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 1.5 }
+        });
+      }
+    })();
+
+    /* ─── FOOTER ANIMATIONS ─────────────────────────────────── */
+    (function initFooter() {
+      var footer = document.getElementById('ok-footer');
+      if (!footer || prefersReduced) return;
+
+      gsap.from(footer, {
+        y: 60, opacity: 0, duration: 0.95, ease: 'power3.out',
+        scrollTrigger: { trigger: footer, start: 'top 92%', once: true }
+      });
+      gsap.from('.ok-footer-col', {
+        y: 30, opacity: 0, stagger: 0.1, duration: 0.7, ease: 'power3.out',
+        scrollTrigger: { trigger: footer, start: 'top 88%', once: true }
+      });
+      gsap.from('.ok-social-icon', {
+        scale: 0.8, opacity: 0, stagger: 0.08, ease: 'back.out(2)', duration: 0.45,
+        scrollTrigger: { trigger: footer, start: 'top 85%', once: true }
+      });
+
+      /* Magnetic social icons */
+      document.querySelectorAll('.ok-social-icon').forEach(function (icon) {
+        icon.addEventListener('mousemove', function (e) {
+          var r = icon.getBoundingClientRect();
+          gsap.to(icon, {
+            x: ((e.clientX - r.left - r.width  / 2) / (r.width  / 2)) * 8,
+            y: ((e.clientY - r.top  - r.height / 2) / (r.height / 2)) * 8,
+            duration: 0.3, ease: 'power2.out'
+          });
+        });
+        icon.addEventListener('mouseleave', function () {
+          gsap.to(icon, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1,0.4)' });
         });
       });
-      icon.addEventListener('mouseleave', function () {
-        gsap.to(icon, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.4)' });
-      });
-    });
-  }
+    })();
 
-  /* ============================================================
-     COLLECTION ROW TILT ON MOUSEMOVE
-  ============================================================ */
-  function initRowTilt() {
-    if (reducedMotion) return;
+    /* ─── MAGNETIC BUTTONS ──────────────────────────────────── */
+    (function initMagnetic() {
+      document.querySelectorAll('.ok-magnetic').forEach(function (btn) {
+        var strength   = parseInt(btn.dataset.strength || '12');
+        var glowColor  = btn.dataset.glow || 'rgba(196,82,10,0.4)';
+        var baseBg     = btn.dataset.bg   || '#c4520a';
 
-    document.querySelectorAll('.ok-collection-row').forEach(function (row) {
-      row.addEventListener('mousemove', function (e) {
-        var rect    = row.getBoundingClientRect();
-        var offsetX = (e.clientX - rect.left - rect.width  / 2) / (rect.width  / 2);
-        var offsetY = (e.clientY - rect.top  - rect.height / 2) / (rect.height / 2);
-        gsap.to(row, {
-          rotateX: offsetY * -1.5,
-          rotateY: offsetX *  1.5,
-          transformPerspective: 1000,
-          transformOrigin: 'center center',
-          duration: 0.4, ease: 'power2.out'
+        btn.addEventListener('mousemove', function (e) {
+          var r  = btn.getBoundingClientRect();
+          var dx = (e.clientX - r.left - r.width  / 2) / (r.width  / 2);
+          var dy = (e.clientY - r.top  - r.height / 2) / (r.height / 2);
+          var gx = ((e.clientX - r.left) / r.width  * 100).toFixed(1);
+          var gy = ((e.clientY - r.top)  / r.height * 100).toFixed(1);
+          btn.style.transform  = 'translate(' + (dx * strength) + 'px,' + (dy * strength) + 'px) scale(1.03)';
+          btn.style.boxShadow  = '0 0 30px ' + glowColor;
+          btn.style.background = 'radial-gradient(circle at ' + gx + '% ' + gy + '%, rgba(255,255,255,0.15) 0%, transparent 60%), ' + baseBg;
         });
+        btn.addEventListener('mouseleave', function () {
+          btn.style.transform  = 'translate(0,0) scale(1)';
+          btn.style.boxShadow  = '';
+          btn.style.background = baseBg;
+        });
+        btn.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s';
       });
-      row.addEventListener('mouseleave', function () {
-        gsap.to(row, { rotateX: 0, rotateY: 0, duration: 0.5, ease: 'power2.out' });
-      });
-    });
-  }
+    })();
 
-  /* ============================================================
-     MOBILE DRAWER
-  ============================================================ */
-  function initDrawer() {
-    var hamburger = document.getElementById('ok-hamburger');
-    var drawer    = document.getElementById('ok-drawer');
-    var backdrop  = document.getElementById('ok-drawer-backdrop');
-    if (!hamburger || !drawer || !backdrop) return;
-
-    hamburger.addEventListener('click', function () {
-      drawerOpen ? closeDrawer() : openDrawer();
-    });
-
-    backdrop.addEventListener('click', closeDrawer);
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && drawerOpen) closeDrawer();
-    });
-  }
-
-  function openDrawer() {
-    drawerOpen = true;
-    var hamburger = document.getElementById('ok-hamburger');
-    var drawer    = document.getElementById('ok-drawer');
-    var backdrop  = document.getElementById('ok-drawer-backdrop');
-
-    if (hamburger) { hamburger.classList.add('ok-hamburger-open'); hamburger.setAttribute('aria-expanded', 'true'); }
-    if (backdrop)  { backdrop.style.pointerEvents = 'auto'; gsap.to(backdrop, { opacity: 1, duration: 0.3 }); }
-    if (drawer) {
-      gsap.to(drawer, { right: 0, duration: 0.4, ease: 'cubic-bezier(0.16,1,0.3,1)' });
-      var links = document.querySelectorAll('.ok-drawer-link');
-      if (links.length) {
-        gsap.fromTo(links,
-          { x: 40, opacity: 0 },
-          { x: 0, opacity: 1, stagger: 0.06, duration: 0.4, ease: 'power3.out', delay: 0.1 }
-        );
-      }
-    }
-  }
-
-  function closeDrawer() {
-    drawerOpen = false;
-    var hamburger = document.getElementById('ok-hamburger');
-    var drawer    = document.getElementById('ok-drawer');
-    var backdrop  = document.getElementById('ok-drawer-backdrop');
-
-    if (hamburger) { hamburger.classList.remove('ok-hamburger-open'); hamburger.setAttribute('aria-expanded', 'false'); }
-    if (backdrop) {
-      gsap.to(backdrop, {
-        opacity: 0, duration: 0.3,
-        onComplete: function () { backdrop.style.pointerEvents = 'none'; }
-      });
-    }
-    if (drawer) {
-      gsap.to(drawer, { right: -340, duration: 0.35, ease: 'power3.in' });
-    }
-  }
-
-  /* ============================================================
-     IMAGE BLUR-UP (lazy images)
-  ============================================================ */
-  function initImageBlurUp() {
-    if (reducedMotion) return;
-
-    document.querySelectorAll('.ok-lazy-img').forEach(function (img) {
-      img.style.filter  = 'blur(20px)';
-      img.style.opacity = '0';
-
-      function reveal() {
-        gsap.to(img, { filter: 'blur(0px)', opacity: 1, duration: 0.5, ease: 'power2.out' });
-      }
-
-      if (img.complete && img.naturalWidth > 0) {
-        reveal();
-      } else {
-        img.addEventListener('load', reveal, { once: true });
-      }
-    });
-  }
-
-  /* ============================================================
-     INITIAL GSAP STATES (set before preloader exits)
-  ============================================================ */
-  function setInitialStates() {
-    if (reducedMotion) return;
-
-    var heroImg = document.getElementById('ok-hero-img');
-    if (heroImg) gsap.set(heroImg, { scale: 1.08 });
-
-    var heroLabel = document.querySelector('.ok-hero-label');
-    if (heroLabel) gsap.set(heroLabel, { opacity: 0, y: 20 });
-
-    var heroSub = document.querySelector('.ok-hero-sub');
-    if (heroSub) gsap.set(heroSub, { opacity: 0, y: 24 });
-
-    var heroCta = document.getElementById('ok-hero-cta');
-    if (heroCta) gsap.set(heroCta, { opacity: 0, y: 16 });
-
-    var scrollInd = document.getElementById('ok-scroll-ind');
-    if (scrollInd) gsap.set(scrollInd, { opacity: 0 });
-  }
-
-  /* ============================================================
-     BOOTSTRAP
-  ============================================================ */
-  document.addEventListener('DOMContentLoaded', function () {
-    setInitialStates();
-    initScrollBar();
-    initCursor();
-    initDrawer();
-    initCtaMagnetic();
-    initMagneticLinks();
-    initRowTilt();
-    initImageBlurUp();
-    initPreloader();
-  });
-
-})();
+  })();
   </script>
+
 </body>
 </html>
