@@ -125,6 +125,7 @@ CSS:
   }
 
 ### Split Text Reveal (GSAP per-character stagger)
+CSS for hero headings: text-wrap: balance; overflow-wrap: normal; word-break: keep-all; font-size: clamp(48px, 8vw, 120px);
 JS:
   function splitText(selector) {
     var el = document.querySelector(selector);
@@ -144,10 +145,11 @@ JS:
 JS:
   gsap.utils.toArray('.ok-reveal').forEach(function(el) {
     gsap.from(el, {
-      y: 40, opacity: 0.3, duration: 0.8, ease: 'power2.out',
+      y: 40, opacity: 0, duration: 0.8, ease: 'power2.out',
       scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
     });
   });
 
-NOTE: Use opacity:0.3 not opacity:0 for initial state — content must be VISIBLE on load, scroll just polishes the entrance.
+CSS fallback (add to stylesheet): @media (prefers-reduced-motion: reduce) { .ok-reveal { opacity: 1 !important; transform: none !important; } }
+NOTE: Initial state is opacity:0. ScrollTrigger reveals on scroll. The CSS fallback ensures content is visible for users with reduced-motion preference.
 `;

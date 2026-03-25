@@ -50,3 +50,4 @@ britain-racing-*.png
 # Large video assets (use LFS or CDN)
 public/*.mp4
 public/*.part
+*.png

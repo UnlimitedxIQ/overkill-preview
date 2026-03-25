@@ -2,10 +2,10 @@ import { FEATURE_INSTRUCTIONS } from "@/lib/transform";
 import { EFFECT_PATTERNS } from "./effect-patterns";
 
 // ---------------------------------------------------------------------------
-// Creative Director system prompt — brainstorms brand-specific concepts
+// Planner system prompt — embeds the full Overkill + 3D-Immersive design philosophy
 // ---------------------------------------------------------------------------
 
-export function buildCreativeDirectorPrompt(): string {
+function _removedCreativeDirectorPrompt(): string {
   return (
     `You are the Creative Director for Overkill — an elite $50k web transformation agency. ` +
     `You are the person who walks into the room, looks at a boring Shopify store selling racing parts, ` +
@@ -362,17 +362,6 @@ export function buildExecutorSystemPrompt(): string {
     `- Hero heading: use font-size clamp(36px, 6vw, 80px) so it NEVER breaks mid-word.\n` +
     `- All effects: respect prefers-reduced-motion.\n\n` +
     `${EFFECT_PATTERNS}\n\n` +
-    `## Output Format\n\n` +
-    `Return EXACTLY three sections with these markers. No markdown code fences. No explanation text.\n\n` +
-    `<!-- TRANSFORMED HTML -->\n` +
-    `(The complete HTML document. Include all CDN script/link tags in <head>.)\n` +
-    `<!-- END HTML -->\n\n` +
-    `/* ENHANCED CSS */\n` +
-    `(All CSS for the redesigned page.)\n` +
-    `/* END CSS */\n\n` +
-    `// NEW JAVASCRIPT\n` +
-    `(All JavaScript. Self-executing IIFE, no module syntax. Include null checks before every querySelector.)\n` +
-    `// END JS\n\n` +
     `## Required CDN links for the HTML head (include all of these, in this order):\n` +
     `- Google Fonts preconnect to fonts.googleapis.com and fonts.gstatic.com\n` +
     `- Google Fonts stylesheet for: Bebas Neue, Oswald (400/600/700), Inter (400/500/600)\n` +
@@ -392,23 +381,26 @@ export function buildExecutorSystemPrompt(): string {
     `GLASS NAV: Position fixed, full width, z-index 1000. Uses backdrop-filter:blur(12px) and a semi-transparent brand background. ` +
     `On scroll past 60px, GSAP shrinks the nav padding and increases opacity.\n\n` +
     `HERO PARALLAX: The hero background image moves at a slower rate than scroll using GSAP ScrollTrigger scrub.\n\n` +
-    `## Output Format\n\n` +
-    `Your response must contain EXACTLY these three labeled sections in this exact order. ` +
-    `Do not output anything before the first label or after the last label.\n\n` +
+    `## Output Format (CRITICAL — follow exactly)\n\n` +
+    `Your response must contain EXACTLY three labeled sections. ` +
+    `Do NOT output anything before the first label or after the last label.\n` +
+    `Do NOT put CSS or JS inside the HTML — output them as SEPARATE sections.\n\n` +
     `SECTION 1 — start with the exact text: <!-- TRANSFORMED HTML -->\n` +
     `Then the complete HTML document from DOCTYPE to closing html tag.\n` +
+    `The HTML must NOT contain any <style> or <script> tags — CSS and JS go in sections 2 and 3.\n` +
+    `Only include CDN <script src="..."> tags in the <head>.\n` +
     `Then the exact text: <!-- END HTML -->\n\n` +
     `SECTION 2 — start with the exact text: /* ENHANCED CSS */\n` +
-    `Then all CSS rules.\n` +
+    `Then ALL CSS rules (not inside the HTML).\n` +
     `Then the exact text: /* END CSS */\n\n` +
     `SECTION 3 — start with the exact text: // NEW JAVASCRIPT\n` +
-    `Then all JavaScript in a self-executing IIFE.\n` +
+    `Then ALL JavaScript in a self-executing IIFE (not inside the HTML).\n` +
     `Then the exact text: // END JS\n\n` +
     `## Rules\n` +
     `1. Output ONLY the three labeled sections — nothing before, nothing after.\n` +
     `2. Section 1 (HTML) comes first. Section 2 (CSS) second. Section 3 (JS) third.\n` +
-    `3. CSS goes in a style tag with id="overkill-styles" inside the HTML head.\n` +
-    `4. JS goes in a script tag with id="overkill-scripts" before the closing body tag.\n` +
+    `3. CSS goes in SECTION 2 (not inline in HTML). The pipeline injects it automatically.\n` +
+    `4. JS goes in SECTION 3 (not inline in HTML). The pipeline injects it automatically.\n` +
     `5. EVERY image src comes from the site map — NEVER placeholder images or SVGs.\n` +
     `6. EVERY nav link uses the correct href from the site map.\n` +
     `7. Use Bebas Neue for ALL display headings — it is loaded via Google Fonts.\n` +

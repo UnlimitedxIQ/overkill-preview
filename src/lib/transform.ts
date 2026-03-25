@@ -177,11 +177,21 @@ export function parseTransformResponse(response: string): TransformOutput {
     /\/\/ NEW JAVASCRIPT\s*([\s\S]*?)\s*\/\/ END JS/,
   );
 
-  return {
-    html: htmlMatch?.[1]?.trim() ?? response,
-    css: cssMatch?.[1]?.trim() ?? "",
-    js: jsMatch?.[1]?.trim() ?? "",
-  };
+  let html = htmlMatch?.[1]?.trim() ?? response;
+  let css = cssMatch?.[1]?.trim() ?? "";
+  let js = jsMatch?.[1]?.trim() ?? "";
+
+  // Fallback: extract CSS/JS from inline tags when executor embeds them in HTML
+  if (!css || css.length < 50) {
+    const inlineCss = html.match(/<style id="overkill-styles">([\s\S]*?)<\/style>/);
+    if (inlineCss) css = inlineCss[1].trim();
+  }
+  if (!js || js.length < 50) {
+    const inlineJs = html.match(/<script id="overkill-scripts">([\s\S]*?)<\/script>/);
+    if (inlineJs) js = inlineJs[1].trim();
+  }
+
+  return { html, css, js };
 }
 
 // ---------------------------------------------------------------------------

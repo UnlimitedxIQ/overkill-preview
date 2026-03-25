@@ -88,49 +88,7 @@ export interface ReviewVerdict {
   summary: string;
 }
 
-// ---------------------------------------------------------------------------
-// Creative Director types
-// ---------------------------------------------------------------------------
-
-export interface CreativeConcept {
-  name: string;
-  tagline: string;
-  description: string;
-  heroTreatment: string;
-  scrollExperience: string;
-  productPresentation: string;
-  signature: string;
-  technicalApproach: string;
-}
-
-export interface CreativeBrief {
-  brandIdentity: {
-    archetype: string;
-    personality: string;
-    audience: string;
-    siteType: string;
-    scalability: string;
-  };
-  palette: {
-    base: string;
-    surface: string;
-    accent: string;
-    accentMuted: string;
-    text: string;
-    textMuted: string;
-  };
-  typography: {
-    display: string;
-    heading: string;
-    body: string;
-  };
-  concepts: CreativeConcept[];
-  recommendedConcept: CreativeConcept & { buildSteps?: string[] };
-  practicalConsiderations: string;
-}
-
 export type PipelineStage =
-  | "creative-direction"
   | "planning"
   | "building"
   | "reviewing"

@@ -70,7 +70,7 @@ export async function runExecutor(
 
   const textPrompt = `Build the transformed website following this design specification EXACTLY.
 
-${spec.mockupImagePath ? "## DESIGN MOCKUP\nThe attached image shows the EXACT design to build. Match its layout, typography scale, spacing, grid structure, and color usage. The image is the spec — build what you see." : ""}
+${spec.mockupImagePath ? "## DESIGN MOCKUP\nThe attached image shows the TARGET LAYOUT — section order, grid structure, spacing proportions, and visual hierarchy. The buildSteps below provide EXACT CSS values, animation timings, and color codes. Use the mockup for layout, buildSteps for precision. When they conflict, buildSteps take priority." : ""}
 
 ${buildSpec}
 
