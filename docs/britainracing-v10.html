@@ -3,910 +3,1446 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Britain Racing LLC. — Performance Parts</title>
-  <meta name="description" content="Performance parts for serious racers. No shortcuts.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Britain Racing LLC. — Precision Engineered Motorsport Parts</title>
+  <meta name="description" content="Britain Racing supplies precision-engineered motorsport parts to drivers who demand more from their machines. Built to survive race day.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&family=Oswald:wght@600&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
-  <style id="overkill-styles">
-
-/* ─── RESET & VARIABLES ─────────────────────────────────────── */
+<style id="overkill-styles">
+/* ═══════════════════════════════════════════════════════════════
+   BRAND TOKENS
+═══════════════════════════════════════════════════════════════ */
 :root {
-  --bg:       #0d0d0d;
-  --dark:     #3d0400;
-  --accent:   #c4520a;
-  --accent2:  #e8820a;
-  --warm:     #ffe1b8;
-  --text:     #f0f0f0;
-  --grain-opacity: 0.04;
+  --ok-base: #0d0d0d;
+  --ok-surface: #111111;
+  --ok-deep: #0a0a0a;
+  --ok-warm: #0f0a07;
+  --ok-accent: #C85A08;
+  --ok-accent-bright: #FF7A1A;
+  --ok-accent-warm: #FFE1B8;
+  --ok-accent-dark: #3D0400;
+  --ok-muted: #3B3838;
+  --ok-text: rgba(255,255,255,0.75);
+  --ok-text-dim: rgba(255,255,255,0.45);
+  --ok-text-dimmer: rgba(255,255,255,0.25);
+  --ok-border: rgba(200,90,8,0.12);
+  --ok-border-subtle: rgba(255,255,255,0.06);
+  --ok-glow: 0 12px 40px rgba(200,90,8,0.35);
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: auto; }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto;
+  font-size: 16px;
+}
+
 body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Oswald', sans-serif;
+  background: var(--ok-base);
+  color: var(--ok-text);
+  font-family: 'Inter', sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ─── SELECTION & SCROLLBAR ─────────────────────────────────── */
-::selection { background: var(--accent); color: var(--text); }
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: rgba(196,82,10,0.06); }
-::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: var(--accent2); }
-html { scrollbar-width: thin; scrollbar-color: var(--accent) rgba(196,82,10,0.06); }
-
-/* ─── SKIP LINK ─────────────────────────────────────────────── */
-.ok-skip {
-  position: fixed;
-  top: -100%;
-  left: 16px;
-  z-index: 999999;
-  background: var(--accent);
-  color: var(--text);
-  padding: 10px 20px;
-  font-family: 'Oswald', sans-serif;
-  font-size: 13px;
-  letter-spacing: 0.1em;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: top 0.2s;
+img {
+  display: block;
+  max-width: 100%;
 }
-.ok-skip:focus { top: 16px; }
 
-/* ─── SCROLL PROGRESS ───────────────────────────────────────── */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul { list-style: none; }
+
+::selection {
+  background: var(--ok-accent);
+  color: #ffffff;
+}
+
+::-webkit-scrollbar { width: 6px; background: var(--ok-base); }
+::-webkit-scrollbar-thumb { background: var(--ok-accent); border-radius: 0; }
+::-webkit-scrollbar-track { background: rgba(200,90,8,0.06); }
+
+:focus-visible {
+  outline: 2px solid var(--ok-accent);
+  outline-offset: 4px;
+  border-radius: 1px;
+}
+:focus:not(:focus-visible) { outline: none; }
+
+/* ═══════════════════════════════════════════════════════════════
+   SKIP LINK
+═══════════════════════════════════════════════════════════════ */
+.ok-skip-link {
+  position: absolute;
+  top: -120px;
+  left: 24px;
+  z-index: 999999;
+  background: var(--ok-accent);
+  color: #fff;
+  padding: 10px 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: top 0.2s ease;
+}
+.ok-skip-link:focus { top: 16px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLL PROGRESS BAR
+═══════════════════════════════════════════════════════════════ */
 #ok-scroll-progress {
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   height: 2px;
   width: 0%;
-  z-index: 100000;
-  background: linear-gradient(90deg, #3d0400 0%, #c4520a 45%, #e8820a 100%);
+  background: linear-gradient(90deg, var(--ok-accent) 0%, var(--ok-accent-bright) 55%, var(--ok-accent-warm) 100%);
+  z-index: 10000;
   pointer-events: none;
-  transform-origin: left center;
   will-change: width;
+  transition: none;
 }
 
-/* ─── PRELOADER ─────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   PRELOADER
+═══════════════════════════════════════════════════════════════ */
 #overkill-preloader {
   position: fixed;
   inset: 0;
   z-index: 99999;
-  background: var(--bg);
+  background: var(--ok-base);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  gap: 28px;
+  clip-path: inset(0 0 0% 0);
 }
-.ok-pre-name {
+
+.preloader__wordmark {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 64px;
-  font-weight: 700;
-  color: var(--text);
-  letter-spacing: 0.12em;
+  font-size: 52px;
+  letter-spacing: 0.18em;
+  color: #ffffff;
   text-transform: uppercase;
   line-height: 1;
-  margin-bottom: 2px;
 }
-.ok-pre-sub {
-  font-family: 'Oswald', sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  color: rgba(196,82,10,0.85);
-  letter-spacing: 0.28em;
+
+.preloader__sublabel {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  color: rgba(255,255,255,0.35);
   text-transform: uppercase;
-  margin-bottom: 40px;
+  margin-top: -14px;
 }
-#ok-loader-track {
+
+.preloader__bar-container {
   width: 240px;
   height: 2px;
-  background: rgba(240,240,240,0.08);
+  background: rgba(255,255,255,0.08);
   position: relative;
   overflow: hidden;
-  margin-bottom: 14px;
 }
-#ok-loader-fill {
+
+.preloader__bar-fill {
   position: absolute;
-  left: 0; top: 0;
-  height: 100%;
-  width: 0;
-  background: linear-gradient(90deg, #3d0400, #c4520a, #e8820a);
+  left: 0;
+  top: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--ok-accent), var(--ok-accent-bright));
   will-change: width;
 }
-#ok-loader-pct {
-  font-family: 'Oswald', sans-serif;
-  font-size: 11px;
-  font-weight: 400;
-  color: rgba(240,240,240,0.35);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+
+.preloader__count {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.25em;
+  color: var(--ok-accent);
+  margin-top: 10px;
 }
 
-/* ─── CUSTOM CURSOR ─────────────────────────────────────────── */
-#ok-cursor-ring {
-  position: fixed;
-  top: 0; left: 0;
-  width: 40px; height: 40px;
-  border: 1.5px solid rgba(240,240,240,0.85);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 99998;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  mix-blend-mode: difference;
-  transition: width 280ms cubic-bezier(0.34,1.56,0.64,1),
-              height 280ms cubic-bezier(0.34,1.56,0.64,1),
-              border-color 220ms ease-out,
-              opacity 220ms ease-out;
-  will-change: transform;
-}
-#ok-cursor-dot {
-  position: fixed;
-  top: 0; left: 0;
-  width: 6px; height: 6px;
-  background: var(--accent);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 99998;
-  transition: transform 180ms cubic-bezier(0.34,1.56,0.64,1);
-  will-change: transform;
-}
-body.ok-cursor-active,
-body.ok-cursor-active * { cursor: none !important; }
-@media (pointer: coarse) {
-  #ok-cursor-ring, #ok-cursor-dot { display: none !important; }
-}
-
-/* ─── FILM GRAIN ────────────────────────────────────────────── */
-#ok-film-grain {
-  position: fixed;
-  inset: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: var(--grain-opacity);
-  overflow: hidden;
-}
-#ok-film-grain svg {
-  animation: ok-grain-anim 0.5s steps(1) infinite;
-  will-change: transform;
-}
-@keyframes ok-grain-anim {
-  0%,100% { transform: translate(0,0) scale(1.04); }
-  10%      { transform: translate(-3%,-2%) scale(1.06); }
-  20%      { transform: translate(2%,3%) scale(1.04); }
-  30%      { transform: translate(-2%,1%) scale(1.05); }
-  40%      { transform: translate(3%,-3%) scale(1.04); }
-  50%      { transform: translate(-1%,2%) scale(1.06); }
-  60%      { transform: translate(2%,-2%) scale(1.04); }
-  70%      { transform: translate(-2%,3%) scale(1.05); }
-  80%      { transform: translate(3%,1%) scale(1.04); }
-  90%      { transform: translate(-3%,-2%) scale(1.06); }
-}
-body.ok-grain-intense { --grain-opacity: 0.07; }
-
-/* ─── NAVIGATION ────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   GLASS NAV
+═══════════════════════════════════════════════════════════════ */
 #ok-nav {
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100%;
-  z-index: 10000;
+  z-index: 1000;
   background: rgba(13,13,13,0.82);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  padding: 20px 40px;
+  border-bottom: 1px solid var(--ok-border);
+  padding: 20px 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  transition: padding 300ms ease, background 300ms ease;
   will-change: padding, background;
 }
-.ok-nav-logo-link { display: flex; align-items: center; }
-.ok-nav-logo {
-  height: 38px;
+
+.nav__logo-wrap {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.nav__logo {
+  height: 36px;
   width: auto;
   object-fit: contain;
   opacity: 0.82;
-  filter: brightness(1.1);
-  transition: opacity 300ms ease-out;
-  display: block;
+  transition: opacity 300ms ease;
+  filter: brightness(1.15) contrast(1.05);
 }
-.ok-nav-logo:hover { opacity: 1; }
 
-.ok-nav-links {
+.nav__logo-wrap:hover .nav__logo { opacity: 1; }
+
+.nav__links-desktop {
   display: flex;
   align-items: center;
-  gap: 36px;
-}
-.ok-nav-link {
-  font-family: 'Oswald', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(240,240,240,0.7);
-  text-decoration: none;
-  position: relative;
-  padding-bottom: 4px;
-  display: inline-block;
-  transition: color 200ms ease-out;
-}
-.ok-nav-link::after {
-  content: '';
+  gap: 44px;
   position: absolute;
-  bottom: -2px; left: 0;
-  width: 100%; height: 2px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 200ms ease-out;
-}
-.ok-nav-link:hover { color: var(--text); }
-.ok-nav-link:hover::after { transform: scaleX(1); }
-.ok-nav-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; border-radius: 1px; }
-
-.ok-nav-right {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-.ok-nav-cart {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: rgba(240,240,240,0.75);
-  text-decoration: none;
-  transition: color 200ms ease-out;
-}
-.ok-nav-cart:hover { color: var(--accent); }
-.ok-nav-cart:active { transform: scale(0.92); }
-.ok-nav-cart:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
-
-/* ─── HAMBURGER ─────────────────────────────────────────────── */
-.ok-hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 6px;
-  cursor: pointer;
-  padding: 4px;
-  background: none;
-  border: none;
-  outline: none;
-}
-.ok-hamburger span {
-  display: block;
-  width: 26px; height: 2px;
-  background: var(--text);
-  transition: transform 350ms cubic-bezier(0.16,1,0.3,1), opacity 300ms ease-out;
-}
-.ok-hamburger.is-open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-.ok-hamburger.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-.ok-hamburger.is-open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-.ok-hamburger:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
-
-/* ─── MOBILE DRAWER ─────────────────────────────────────────── */
-.ok-drawer-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(13,13,13,0.6);
-  z-index: 10000;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 400ms ease-out;
-}
-.ok-drawer-overlay.is-open { opacity: 1; pointer-events: all; }
-.ok-drawer {
-  position: fixed;
-  top: 0; right: 0;
-  height: 100vh;
-  width: min(340px, 84vw);
-  background: rgba(13,13,13,0.98);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-left: 1px solid rgba(196,82,10,0.18);
-  z-index: 10001;
-  transform: translateX(100%);
-  transition: transform 400ms cubic-bezier(0.16,1,0.3,1);
-  padding: 80px 40px 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.ok-drawer.is-open { transform: translateX(0); }
-.ok-drawer-link {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 42px;
-  font-weight: 700;
-  color: rgba(240,240,240,0.8);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: color 200ms ease-out;
-}
-.ok-drawer-link:hover { color: var(--accent); }
-
-/* ─── HERO ──────────────────────────────────────────────────── */
-#ok-hero {
-  min-height: 100vh;
-  position: relative;
-  overflow: hidden;
-  background: var(--bg);
-  clip-path: polygon(0 0, 100% 0, 100% 94%, 0 100%);
-  isolation: isolate;
-}
-#ok-hero-img {
-  position: absolute;
-  top: -15%; left: 0;
-  width: 100%; height: 130%;
-  object-fit: cover;
-  object-position: center 40%;
-  z-index: 0;
-  will-change: transform;
-  pointer-events: none;
-  display: block;
-}
-.ok-hero-grad-primary {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(180deg,
-    rgba(13,13,13,0.12) 0%,
-    rgba(13,13,13,0.35) 45%,
-    rgba(13,13,13,0.88) 80%,
-    rgba(13,13,13,0.97) 100%);
-  pointer-events: none;
-}
-.ok-hero-grad-side {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: linear-gradient(90deg,
-    rgba(13,13,13,0.72) 0%,
-    rgba(13,13,13,0.2) 55%,
-    rgba(13,13,13,0) 100%);
-  pointer-events: none;
-}
-#ok-hero-content {
-  position: absolute;
-  bottom: 12%; left: 6%;
-  z-index: 4;
-  max-width: 720px;
-  will-change: transform;
-}
-#ok-hero-eyebrow {
-  font-family: 'Oswald', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--accent);
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-#ok-hero-eyebrow::before {
-  content: '';
-  display: block;
-  width: 36px; height: 2px;
-  background: linear-gradient(90deg, #3d0400, #c4520a);
-  flex-shrink: 0;
-}
-.ok-heading {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(56px, 8vw, 118px);
-  font-weight: 700;
-  color: var(--text);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  line-height: 0.9;
-  margin: 0 0 32px 0;
-  perspective: 800px;
-  overflow: visible;
-}
-.ok-char {
-  display: inline-block;
-  will-change: transform, opacity;
-}
-#ok-hero-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  background: var(--accent);
-  color: var(--text);
-  font-family: 'Oswald', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  padding: 18px 48px 18px 44px;
-  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 100%, 14px 100%);
-  border: none;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  text-decoration: none;
-  transition: background 200ms ease-out;
-}
-#ok-hero-cta:hover { background: var(--accent2); }
-#ok-hero-cta:active { transform: scale(0.96); }
-#ok-hero-cta:focus-visible { outline: 2px solid var(--accent2); outline-offset: 8px; }
-#ok-hero-cta .ok-cta-arrow { transition: transform 250ms ease-out; }
-#ok-hero-cta:hover .ok-cta-arrow { transform: translateX(4px); }
-
-#ok-scroll-ind {
-  position: absolute;
-  bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 4;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  opacity: 1;
-  transition: opacity 400ms ease-out;
-  pointer-events: none;
-}
-.ok-scroll-label {
-  font-family: 'Oswald', sans-serif;
-  font-size: 10px;
-  font-weight: 500;
-  color: rgba(240,240,240,0.35);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
 }
 
-/* ─── CATEGORIES ────────────────────────────────────────────── */
-#ok-categories {
-  background: var(--bg);
+.nav__link {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.68);
   position: relative;
-  overflow: hidden;
-  padding-top: 80px;
+  padding: 4px 0;
+  transition: color 200ms ease;
+  white-space: nowrap;
 }
-#ok-cat-header { padding: 0 6% 56px; }
-.ok-cat-header-inner {
+
+.nav__link:hover { color: #ffffff; }
+
+.nav__link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--ok-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 200ms ease;
+}
+
+.nav__link:hover::after { transform: scaleX(1); }
+
+.nav__right-cluster {
   display: flex;
   align-items: center;
   gap: 20px;
-}
-.ok-cat-rule-line {
-  display: block;
-  width: 52px; height: 4px;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
   flex-shrink: 0;
 }
-#ok-cat-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(32px, 5vw, 72px);
-  font-weight: 700;
-  color: var(--text);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
 
-.ok-cat-row {
-  display: grid;
-  min-height: 380px;
+.nav__cart-btn {
   position: relative;
-  border-top: 1px solid rgba(255,255,255,0.04);
-  transition: border-color 300ms ease-out;
-}
-.ok-cat-row:hover { border-color: rgba(196,82,10,0.2); }
-.ok-cat-row--odd  { grid-template-columns: 55fr 45fr; }
-.ok-cat-row--even { grid-template-columns: 45fr 55fr; }
-
-.ok-cat-img-wrap {
-  position: relative;
-  overflow: hidden;
-}
-.ok-cat-img-wrap--odd  { clip-path: polygon(0 0, 100% 0, 93% 100%, 0 100%); }
-.ok-cat-img-wrap--even { clip-path: polygon(7% 0, 100% 0, 100% 100%, 0 100%); }
-.ok-cat-img-wrap img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform 700ms ease-out;
-  display: block;
-}
-.ok-cat-row:hover .ok-cat-img-wrap img { transform: scale(1.06); }
-.ok-cat-img-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(61,4,0,0.45) 0%, rgba(13,13,13,0) 55%);
-  z-index: 1;
-  pointer-events: none;
-}
-.ok-cat-img-wrap--even .ok-cat-img-overlay {
-  background: linear-gradient(225deg, rgba(61,4,0,0.45) 0%, rgba(13,13,13,0) 55%);
-}
-
-.ok-cat-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 48px 6%;
-  background: var(--bg);
-  position: relative;
-}
-.ok-cat-text::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; bottom: 0;
-  width: 3px;
-  background: linear-gradient(180deg, transparent 0%, var(--accent) 50%, transparent 100%);
-  opacity: 0;
-  transition: opacity 350ms ease-out;
-}
-.ok-cat-row--even .ok-cat-text::before { left: auto; right: 0; }
-.ok-cat-row:hover .ok-cat-text::before { opacity: 1; }
-
-.ok-cat-badge {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  color: rgba(196,82,10,0.5);
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-  display: block;
-}
-.ok-cat-name {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(28px, 4vw, 58px);
-  font-weight: 700;
-  color: var(--text);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  line-height: 0.95;
-  margin-bottom: 20px;
-  transition: color 200ms ease-out;
-}
-.ok-cat-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  font-family: 'Oswald', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--accent);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  text-decoration: none;
-  margin-top: 8px;
-  transition: color 200ms ease-out, gap 200ms ease-out;
-}
-.ok-cat-link:hover { color: var(--accent2); gap: 20px; }
-.ok-cat-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
-.ok-cat-link svg { transition: transform 250ms ease-out; flex-shrink: 0; }
-.ok-cat-link:hover svg { transform: translateX(5px); }
-
-/* ─── BREATHING SECTION ─────────────────────────────────────── */
-#ok-breathing {
-  min-height: 100vh;
-  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(61,4,0,0.38) 0%, rgba(13,13,13,0) 70%), #0d0d0d;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
-#ok-breathing-lines {
-  position: absolute;
-  inset: -20%;
-  width: 140%; height: 140%;
-  z-index: 0;
-  background-image: repeating-linear-gradient(
-    45deg,
-    rgba(196,82,10,0.04) 0px,
-    rgba(196,82,10,0.04) 1px,
-    transparent 1px,
-    transparent 48px
-  );
-  pointer-events: none;
-}
-#ok-breathing-content {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 0 24px;
-}
-.ok-breathing-rule {
-  width: 100px; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  display: block;
-  flex-shrink: 0;
-}
-.ok-breathing-rule:first-child { margin-bottom: 44px; }
-.ok-breathing-rule:last-child  { margin-top: 44px; }
-.ok-breathing-line1 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(40px, 6.5vw, 88px);
-  font-weight: 700;
-  color: var(--text);
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  line-height: 1.0;
-}
-.ok-breathing-line2 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(40px, 6.5vw, 88px);
-  font-weight: 700;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  line-height: 1.0;
-  margin-bottom: 36px;
-}
-.ok-breathing-sub {
-  font-family: 'Oswald', sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  color: rgba(240,240,240,0.38);
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-}
-
-/* ─── FOOTER ────────────────────────────────────────────────── */
-#ok-footer {
-  background: var(--bg);
-  border-top: 1px solid rgba(196,82,10,0.22);
-  padding: 72px 6% 36px;
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
-.ok-footer-grid {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: 48px;
-  position: relative;
-  z-index: 1;
-}
-.ok-footer-col { display: flex; flex-direction: column; }
-.ok-footer-logo {
-  height: 44px;
-  width: auto;
-  filter: brightness(1.05);
-  margin-bottom: 20px;
-  display: block;
-  object-fit: contain;
-  object-position: left;
-}
-.ok-footer-copy {
-  font-family: 'Oswald', sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  color: rgba(240,240,240,0.38);
-  letter-spacing: 0.06em;
-  line-height: 1.75;
-  max-width: 260px;
-}
-.ok-footer-label {
-  font-family: 'Oswald', sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--accent);
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-}
-.ok-footer-links {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.ok-footer-link {
-  font-family: 'Oswald', sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  color: rgba(240,240,240,0.52);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  text-decoration: none;
-  position: relative;
-  display: inline-block;
-  padding-bottom: 2px;
-  transition: color 200ms ease-out;
-}
-.ok-footer-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0;
-  width: 100%; height: 1px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 200ms ease-out;
-}
-.ok-footer-link:hover { color: var(--text); }
-.ok-footer-link:hover::after { transform: scaleX(1); }
-.ok-footer-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
-
-.ok-social-row { display: flex; gap: 14px; margin-top: 20px; }
-.ok-social-icon {
-  width: 46px; height: 46px;
-  border: 1px solid rgba(255,255,255,0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(240,240,240,0.58);
-  text-decoration: none;
-  transition: border-color 250ms ease-out, color 250ms ease-out,
-              background 250ms ease-out, transform 200ms ease-out;
+  width: 28px;
+  height: 28px;
+  color: rgba(255,255,255,0.75);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color 200ms ease, transform 200ms ease;
 }
-.ok-social-icon:hover {
-  border-color: var(--accent);
-  color: var(--accent2);
-  background: rgba(196,82,10,0.1);
-  transform: scale(1.1);
-}
-.ok-social-icon:active { transform: scale(0.94); }
-.ok-social-icon:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
 
-.ok-footer-bottom {
-  margin-top: 56px;
-  padding-top: 24px;
-  border-top: 1px solid rgba(255,255,255,0.05);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  position: relative;
-  z-index: 1;
-}
-.ok-footer-copy-text {
-  font-family: 'Oswald', sans-serif;
-  font-size: 11px;
-  font-weight: 400;
-  color: rgba(240,240,240,0.28);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-.ok-footer-shopify {
-  font-family: 'Oswald', sans-serif;
-  font-size: 11px;
-  font-weight: 400;
-  color: rgba(240,240,240,0.22);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: color 200ms ease-out;
-}
-.ok-footer-shopify:hover { color: rgba(240,240,240,0.55); }
+.nav__cart-btn:hover { color: var(--ok-accent-bright); transform: scale(1.12); }
+.nav__cart-btn:active { transform: scale(0.94); }
 
-.ok-footer-watermark {
+.nav__cart-badge {
   position: absolute;
-  bottom: 16px; right: 4%;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 120px;
+  top: -6px;
+  right: -8px;
+  background: var(--ok-accent);
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 9px;
   font-weight: 700;
-  color: rgba(61,4,0,0.14);
-  letter-spacing: 0.06em;
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
 }
 
-/* ─── SCROLL REVEAL BASE ────────────────────────────────────── */
-.ok-reveal {
-  opacity: 0.3;
-  transform: translateY(40px);
+.nav__hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 28px;
+  cursor: pointer;
+  padding: 4px 0;
+  background: none;
+  border: none;
 }
 
-/* ─── RESPONSIVE ────────────────────────────────────────────── */
+.nav__hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: rgba(255,255,255,0.85);
+  transition: transform 300ms ease, opacity 300ms ease;
+}
+
+.nav__hamburger.is-open span:nth-child(1) { transform: rotate(45deg) translateY(7px); }
+.nav__hamburger.is-open span:nth-child(2) { opacity: 0; }
+.nav__hamburger.is-open span:nth-child(3) { transform: rotate(-45deg) translateY(-7px); }
+
+/* Mobile Drawer */
+.nav__drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(380px, 100vw);
+  height: 100vh;
+  background: rgba(13,13,13,0.98);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  z-index: 2000;
+  transform: translateX(100%);
+  transition: transform 400ms cubic-bezier(0.16,1,0.3,1);
+  padding: 80px 48px 48px;
+  border-left: 1px solid rgba(200,90,8,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.nav__drawer.is-open { transform: translateX(0); }
+
+.nav__drawer-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.5);
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 200ms ease;
+  line-height: 1;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav__drawer-close:hover { color: var(--ok-accent); }
+
+.nav__drawer-link {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 48px;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  display: block;
+  margin-bottom: 20px;
+  transition: color 200ms ease;
+  line-height: 1.1;
+}
+
+.nav__drawer-link:hover { color: var(--ok-accent); }
+
+.nav__drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(13,13,13,0.65);
+  z-index: 1999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms ease;
+}
+
+.nav__drawer-backdrop.is-active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HERO SECTION
+═══════════════════════════════════════════════════════════════ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 0 90px 80px;
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 92% 100%, 0 100%);
+}
+
+.hero__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 115%;
+  object-fit: cover;
+  object-position: center 30%;
+  z-index: 0;
+  will-change: transform;
+  transform-origin: center center;
+}
+
+.hero__gradient-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(165deg,
+    rgba(13,13,13,0.08) 0%,
+    rgba(13,13,13,0.25) 35%,
+    rgba(13,13,13,0.78) 70%,
+    rgba(13,13,13,0.94) 100%
+  );
+  pointer-events: none;
+}
+
+.hero__orange-accent {
+  position: absolute;
+  left: 56px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 100px;
+  background: linear-gradient(180deg, transparent 0%, var(--ok-accent) 40%, var(--ok-accent) 60%, transparent 100%);
+  z-index: 2;
+  opacity: 0.9;
+  will-change: transform;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  will-change: transform;
+}
+
+.hero__pre-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--ok-accent);
+  font-weight: 700;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hero__pre-label::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--ok-accent);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.hero__heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 9vw, 128px);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: #f0f0f0;
+  text-transform: uppercase;
+  line-height: 0.92;
+  margin-bottom: 28px;
+  perspective: 1200px;
+  text-wrap: balance;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+.hero__char {
+  display: inline-block;
+  will-change: transform;
+}
+
+.hero__sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.62);
+  max-width: 400px;
+  margin-bottom: 40px;
+  letter-spacing: 0.015em;
+  font-weight: 400;
+}
+
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--ok-accent);
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 18px 48px;
+  clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+  position: relative;
+  will-change: transform;
+  transition: background 200ms ease;
+}
+
+.hero__cta:hover { background: var(--ok-accent-bright); }
+.hero__cta:focus-visible { outline: 2px solid var(--ok-accent-bright); outline-offset: 6px; }
+
+.hero__cta-label { pointer-events: none; }
+
+.hero__cta-arrow {
+  font-size: 18px;
+  transition: transform 200ms ease;
+  pointer-events: none;
+}
+
+.hero__cta:hover .hero__cta-arrow { transform: translateX(5px); }
+
+.hero__scroll {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.hero__scroll-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.35em;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+}
+
+.hero__scroll-chevron {
+  width: 14px;
+  height: 14px;
+  border-right: 2px solid rgba(200,90,8,0.6);
+  border-bottom: 2px solid rgba(200,90,8,0.6);
+  transform: rotate(45deg);
+  will-change: transform;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RACE STRIPE DIVIDER
+═══════════════════════════════════════════════════════════════ */
+.race-stripe {
+  position: relative;
+  width: 100%;
+  height: 72px;
+  background: linear-gradient(90deg, var(--ok-accent) 0%, var(--ok-accent-bright) 60%, var(--ok-accent) 100%);
+  clip-path: polygon(0 0, 100% 35%, 100% 100%, 0 65%);
+  margin-top: -36px;
+  margin-bottom: -36px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.race-stripe__grain {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 1px, transparent 1px, transparent 12px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.race-stripe__text {
+  font-family: 'Inter', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  position: relative;
+  z-index: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COLLECTION SHOWCASE
+═══════════════════════════════════════════════════════════════ */
+.collection-showcase {
+  background: var(--ok-surface);
+  padding: 110px 80px 130px;
+  position: relative;
+  overflow: hidden;
+}
+
+.collection-showcase__bg-texture {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, transparent 1px, transparent 40px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.collection-showcase__header {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 56px;
+}
+
+.section-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.38em;
+  color: var(--ok-accent);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(200,90,8,0.25);
+}
+
+.title-mask { overflow: hidden; }
+
+.section-title-inner {
+  display: block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(44px, 5.5vw, 88px);
+  letter-spacing: 0.04em;
+  color: #f0f0f0;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Grid Row 1 — Asymmetric */
+.collection-grid--row1 {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 45% 30% 25%;
+  grid-template-rows: 260px 260px;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+/* Grid Row 2 — Equal */
+.collection-grid--row2 {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* Category Cards — Base */
+.category-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  cursor: pointer;
+  display: block;
+  border: 1px solid rgba(255,255,255,0.05);
+  text-decoration: none;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Grid placements for row 1 */
+.category-card--feature  { grid-column: 1 / 2; grid-row: 1 / 3; }
+.category-card--col2-top { grid-column: 2 / 3; grid-row: 1 / 2; }
+.category-card--col2-bot { grid-column: 2 / 3; grid-row: 2 / 3; }
+.category-card--carbon   { grid-column: 3 / 4; grid-row: 1 / 3; min-height: 536px; }
+
+/* Row 2 card heights */
+.collection-grid--row2 .category-card { min-height: 280px; }
+
+.category-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 700ms cubic-bezier(0.25,0.46,0.45,0.94);
+  will-change: transform;
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+
+.category-card:hover .category-card__img { transform: scale(1.06); }
+
+.category-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 30%, rgba(13,13,13,0.9) 100%);
+  z-index: 1;
+  transition: background 400ms ease;
+}
+
+.category-card:hover .category-card__overlay {
+  background: linear-gradient(180deg, rgba(13,13,13,0.05) 0%, rgba(13,13,13,0.95) 100%);
+}
+
+.category-card__info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 28px;
+  z-index: 2;
+}
+
+.category-card__title {
+  display: block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: transform 300ms ease;
+  line-height: 1.1;
+}
+
+.category-card--feature .category-card__title { font-size: 30px; }
+
+.category-card:hover .category-card__title { transform: translateY(-4px); }
+
+.category-card__meta {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+.category-card__arrow-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255,255,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.7);
+  transition: background 200ms ease, border-color 200ms ease, color 200ms ease;
+  z-index: 2;
+  font-size: 16px;
+}
+
+.category-card:hover .category-card__arrow-btn {
+  background: var(--ok-accent);
+  border-color: var(--ok-accent);
+  color: #ffffff;
+}
+
+.category-card:hover {
+  box-shadow: 0 16px 48px rgba(200,90,8,0.2);
+}
+
+.category-card:active { transform: scale(0.985); transition: transform 100ms ease; }
+
+/* ═══════════════════════════════════════════════════════════════
+   BREATHING SECTION
+═══════════════════════════════════════════════════════════════ */
+.breathing-section {
+  min-height: 100vh;
+  background: var(--ok-warm);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 160px 80px;
+  clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%);
+  overflow: hidden;
+  z-index: 2;
+}
+
+.breathing-glow {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,90,8,0.09) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.breathing-accent {
+  position: absolute;
+  width: 1px;
+  height: 180px;
+  background: linear-gradient(180deg, transparent, var(--ok-accent) 40%, var(--ok-accent) 60%, transparent);
+  opacity: 0.35;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.breathing-accent--left  { left: 12%; top: 18%; transform: rotate(20deg); }
+.breathing-accent--right { right: 12%; bottom: 18%; transform: rotate(-20deg); }
+
+.breathing-section__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 960px;
+}
+
+.breathing-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  color: var(--ok-accent);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.mission-quote {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(44px, 6.5vw, 104px);
+  letter-spacing: 0.04em;
+  color: #f0f0f0;
+  text-transform: uppercase;
+  line-height: 1.05;
+  max-width: 960px;
+}
+
+/* word-mask spans injected by JS */
+.word-mask {
+  display: inline-block;
+  overflow: hidden;
+  margin-right: 0.3em;
+  vertical-align: bottom;
+}
+
+.word-inner { display: inline-block; }
+
+.breathing-rule {
+  width: 64px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--ok-accent), var(--ok-accent-bright));
+  margin: 36px auto;
+}
+
+.breathing-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.5);
+  max-width: 480px;
+  margin: 0 auto 64px;
+  letter-spacing: 0.02em;
+}
+
+.stats-row {
+  display: flex;
+  gap: 80px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 80px;
+  color: var(--ok-accent);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.stat-counter { display: inline-block; }
+
+.stat-suffix {
+  font-size: 48px;
+  color: rgba(200,90,8,0.7);
+}
+
+.stat-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FEATURE ROWS
+═══════════════════════════════════════════════════════════════ */
+.feature-rows {
+  background: var(--ok-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-row {
+  display: grid;
+  min-height: 65vh;
+}
+
+.feature-row--left  { grid-template-columns: 55% 45%; }
+.feature-row--right { grid-template-columns: 45% 55%; }
+
+.feature-row__image-wrap {
+  overflow: hidden;
+  position: relative;
+}
+
+.feature-row__image {
+  width: 100%;
+  height: 110%;
+  object-fit: cover;
+  will-change: transform;
+  display: block;
+}
+
+.feature-row__text-block {
+  padding: 80px 80px 80px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--ok-surface);
+}
+
+.feature-row__text-block--surface { background: var(--ok-surface); }
+
+.feature-row--right .feature-row__text-block {
+  order: 1;
+  padding: 80px 60px 80px 80px;
+  background: var(--ok-base);
+}
+
+.feature-row--right .feature-row__image-wrap { order: 2; }
+
+.feature-row__label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.38em;
+  color: var(--ok-accent);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.feature-row__heading-wrap {
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.feature-row__heading {
+  display: block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(38px, 4.5vw, 72px);
+  letter-spacing: 0.04em;
+  color: #f0f0f0;
+  text-transform: uppercase;
+  line-height: 1.0;
+}
+
+.feature-row__body {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.78;
+  color: rgba(255,255,255,0.58);
+  max-width: 380px;
+  margin-bottom: 36px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.feature-row__cta {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ok-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  padding-bottom: 4px;
+  transition: gap 200ms ease, color 200ms ease;
+  width: fit-content;
+}
+
+.feature-row__cta::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--ok-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 200ms ease;
+}
+
+.feature-row__cta:hover::after { transform: scaleX(1); }
+.feature-row__cta:hover { gap: 16px; color: var(--ok-accent-bright); }
+.feature-row__cta:active { opacity: 0.7; }
+
+.feature-row__cta-arrow {
+  font-size: 16px;
+  transition: transform 200ms ease;
+}
+
+.feature-row__cta:hover .feature-row__cta-arrow { transform: translateX(6px); }
+
+.feature-row__separator {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200,90,8,0.2), transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════════════════ */
+.footer {
+  background: var(--ok-deep);
+  padding: 80px 80px 0;
+  position: relative;
+  overflow: hidden;
+  clip-path: polygon(0 6%, 100% 0, 100% 100%, 0 100%);
+  border-top: 1px solid rgba(200,90,8,0.1);
+}
+
+.footer__bg-texture {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 50%, rgba(200,90,8,0.04) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.footer__content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  padding-bottom: 64px;
+}
+
+.footer__logo-link {
+  display: inline-block;
+  margin-bottom: 24px;
+}
+
+.footer__logo {
+  height: 32px;
+  width: auto;
+  opacity: 0.65;
+  filter: brightness(1.1);
+  transition: opacity 200ms ease;
+}
+
+.footer__logo-link:hover .footer__logo { opacity: 1; }
+
+.footer__tagline {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 1.72;
+  color: rgba(255,255,255,0.38);
+  max-width: 260px;
+  margin-bottom: 40px;
+  letter-spacing: 0.01em;
+}
+
+.footer__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer__nav-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  transition: color 200ms ease, padding-left 200ms ease;
+  display: inline-block;
+}
+
+.footer__nav-link:hover { color: var(--ok-accent); padding-left: 8px; }
+.footer__nav-link:active { color: rgba(200,90,8,0.65); }
+
+.footer__social-heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  letter-spacing: 0.06em;
+  color: #f0f0f0;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  font-weight: 400;
+}
+
+.footer__social-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: rgba(255,255,255,0.38);
+  margin-bottom: 28px;
+  letter-spacing: 0.02em;
+}
+
+.footer__social-row { display: flex; gap: 12px; }
+
+.footer__social-icon {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255,255,255,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.45);
+  transition: border-color 200ms ease, color 200ms ease, background 200ms ease;
+  will-change: transform;
+  flex-shrink: 0;
+}
+
+.footer__social-icon:hover {
+  border-color: var(--ok-accent);
+  color: var(--ok-accent);
+  background: rgba(200,90,8,0.08);
+}
+
+.footer__social-icon:active { transform: scale(0.93); transition: transform 100ms ease; }
+
+.footer__divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+  margin: 0 0 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 0 32px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: rgba(255,255,255,0.22);
+  letter-spacing: 0.04em;
+  position: relative;
+  z-index: 1;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer__privacy-link {
+  color: rgba(255,255,255,0.3);
+  transition: color 200ms ease;
+}
+
+.footer__privacy-link:hover { color: var(--ok-accent); }
+
+.footer__shopify-link {
+  color: rgba(255,255,255,0.2);
+  transition: color 200ms ease;
+}
+
+.footer__shopify-link:hover { color: rgba(255,255,255,0.45); }
+
+.footer__accent-strip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--ok-accent) 0%, var(--ok-accent-bright) 50%, transparent 100%);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FILM GRAIN
+═══════════════════════════════════════════════════════════════ */
+#ok-film-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.045;
+  width: 100%;
+  height: 100%;
+  animation: ok-grain-shift 0.5s steps(1) infinite;
+  mix-blend-mode: overlay;
+}
+
+@keyframes ok-grain-shift {
+  0%,  100% { transform: translate(0,     0);    }
+  10%       { transform: translate(-2%,  -3%);   }
+  20%       { transform: translate(3%,    1%);   }
+  30%       { transform: translate(-1%,   3%);   }
+  40%       { transform: translate(2%,   -2%);   }
+  50%       { transform: translate(-3%,   2%);   }
+  60%       { transform: translate(1%,   -1%);   }
+  70%       { transform: translate(3%,    2%);   }
+  80%       { transform: translate(-2%,   3%);   }
+  90%       { transform: translate(1%,   -2%);   }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════════════════════════════════════ */
+.ok-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid rgba(255,255,255,0.85);
+  border-radius: 50%;
+  z-index: 10001;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  will-change: transform;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    width 300ms cubic-bezier(0.16,1,0.3,1),
+    height 300ms cubic-bezier(0.16,1,0.3,1),
+    border-color 300ms ease;
+}
+
+.ok-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: var(--ok-accent);
+  border-radius: 50%;
+  z-index: 10002;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.ok-cursor-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #ffffff;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  pointer-events: none;
+  position: absolute;
+}
+
+body.custom-cursor-active,
+body.custom-cursor-active * {
+  cursor: none !important;
+}
+
+@media (pointer: coarse) {
+  .ok-cursor, .ok-cursor-dot { display: none !important; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — TABLET (≤ 990px)
+═══════════════════════════════════════════════════════════════ */
 @media (max-width: 990px) {
-  .ok-nav-links { display: none; }
-  .ok-hamburger { display: flex; }
+  .nav__links-desktop { display: none; }
+  .nav__hamburger { display: flex; }
   #ok-nav { padding: 16px 24px; }
-}
-@media (max-width: 768px) {
-  .ok-cat-row--odd,
-  .ok-cat-row--even {
-    grid-template-columns: 1fr;
+
+  .hero {
+    padding: 0 0 90px 32px;
+    clip-path: polygon(0 0, 100% 0, 100% 93%, 88% 100%, 0 100%);
   }
-  .ok-cat-row--odd  { grid-template-rows: 240px auto; }
-  .ok-cat-row--even { grid-template-rows: 240px auto; }
-  .ok-cat-row--even .ok-cat-text     { order: 2; }
-  .ok-cat-row--even .ok-cat-img-wrap { order: 1; }
-  .ok-cat-img-wrap--odd,
-  .ok-cat-img-wrap--even { clip-path: none; }
-  .ok-footer-grid { grid-template-columns: 1fr 1fr; }
-  #ok-hero-content { left: 5%; bottom: 10%; }
-}
-@media (max-width: 600px) {
-  .ok-footer-grid { grid-template-columns: 1fr; gap: 36px; }
-  .ok-footer-watermark { font-size: 72px; }
+  .hero__orange-accent { left: 16px; }
+  .hero__sub { max-width: 340px; }
+
+  .collection-showcase { padding: 90px 32px 100px; }
+
+  .collection-grid--row1 {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 12px;
+  }
+  .category-card--feature  { grid-column: 1 / 3; grid-row: 1; min-height: 300px; }
+  .category-card--col2-top { grid-column: 1 / 2; grid-row: 2; min-height: 220px; }
+  .category-card--col2-bot { grid-column: 2 / 3; grid-row: 2; min-height: 220px; }
+  .category-card--carbon   { grid-column: 1 / 3; grid-row: 3; min-height: 280px; }
+
+  .collection-grid--row2 { grid-template-columns: 1fr 1fr; }
+  .collection-grid--row2 .category-card:last-child { grid-column: 1 / 3; }
+  .collection-grid--row2 .category-card { min-height: 240px; }
+
+  .breathing-section {
+    padding: 140px 32px;
+    clip-path: polygon(0 3%, 100% 0, 100% 97%, 0 100%);
+  }
+  .stats-row { gap: 48px; }
+
+  .feature-row--left,
+  .feature-row--right { grid-template-columns: 1fr; }
+
+  .feature-row--right .feature-row__text-block,
+  .feature-row--left  .feature-row__text-block {
+    order: 2;
+    padding: 64px 32px;
+    background: var(--ok-surface);
+  }
+
+  .feature-row--right .feature-row__image-wrap,
+  .feature-row--left  .feature-row__image-wrap { order: 1; min-height: 320px; }
+
+  .footer { padding: 80px 32px 0; clip-path: polygon(0 3%, 100% 0, 100% 100%, 0 100%); }
+  .footer__content { grid-template-columns: 1fr; gap: 48px; }
+  .footer__bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
 }
 
-/* ─── REDUCED MOTION ────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — MOBILE (≤ 600px)
+═══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .hero { padding: 0 0 90px 20px; }
+  .hero__sub { max-width: 280px; font-size: 14px; }
+  .hero__cta { padding: 16px 32px; }
+
+  .collection-showcase { padding: 80px 20px 90px; }
+  .collection-grid--row1 { grid-template-columns: 1fr; }
+  .category-card--feature  { grid-column: 1; grid-row: auto; min-height: 260px; }
+  .category-card--col2-top { grid-column: 1; grid-row: auto; min-height: 220px; }
+  .category-card--col2-bot { grid-column: 1; grid-row: auto; min-height: 220px; }
+  .category-card--carbon   { grid-column: 1; grid-row: auto; min-height: 260px; }
+
+  .collection-grid--row2 { grid-template-columns: 1fr; }
+  .collection-grid--row2 .category-card { grid-column: 1; min-height: 220px; }
+  .collection-grid--row2 .category-card:last-child { grid-column: 1; }
+
+  .breathing-section { padding: 120px 20px; }
+  .stats-row { gap: 32px; }
+  .stat-number { font-size: 60px; }
+
+  .footer { padding: 80px 20px 0; }
+  .preloader__wordmark { font-size: 38px; letter-spacing: 0.12em; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   REDUCED MOTION
+═══════════════════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  #ok-film-grain svg { animation: none !important; }
-  .ok-reveal { opacity: 1 !important; transform: none !important; }
-  #ok-scroll-progress { display: none; }
-  #ok-cursor-ring, #ok-cursor-dot { display: none !important; }
+  .ok-cursor, .ok-cursor-dot { display: none !important; }
+  #ok-film-grain { animation: none !important; }
+  .hero__image, .hero__content { transform: none !important; }
+  .breathing-glow { animation: none !important; }
 }
-
-  </style>
+</style>
 </head>
 <body>
 
-  <!-- Skip to content -->
-  <a href="#ok-main" class="ok-skip">Skip to content</a>
+  <a class="ok-skip-link" href="#main-content">Skip to content</a>
 
-  <!-- Scroll Progress -->
   <div id="ok-scroll-progress"></div>
 
-  <!-- Preloader -->
-  <div id="overkill-preloader" style="clip-path: inset(0 0 0% 0)">
-    <div class="ok-pre-name">BRITAIN RACING</div>
-    <div class="ok-pre-sub">LLC.</div>
-    <div id="ok-loader-track">
-      <div id="ok-loader-fill"></div>
+  <div id="overkill-preloader">
+    <div class="preloader__wordmark">BRITAIN RACING</div>
+    <div class="preloader__sublabel">Precision Engineered &middot; Track Proven</div>
+    <div class="preloader__bar-container">
+      <div class="preloader__bar-fill"></div>
     </div>
-    <div id="ok-loader-pct">0%</div>
+    <div class="preloader__count">0%</div>
   </div>
 
-  <!-- Custom Cursor -->
-  <div id="ok-cursor-ring" aria-hidden="true"></div>
-  <div id="ok-cursor-dot" aria-hidden="true"></div>
-
-  <!-- Film Grain -->
-  <div id="ok-film-grain" aria-hidden="true">
-    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-      <filter id="ok-grain-filter">
-        <feTurbulence id="ok-grain-turb" type="fractalNoise" baseFrequency="0.68" numOctaves="3" stitchTiles="stitch"/>
-        <feColorMatrix type="saturate" values="0"/>
-      </filter>
-      <rect width="100%" height="100%" filter="url(#ok-grain-filter)"/>
-    </svg>
-  </div>
-
-  <!-- Navigation -->
-  <nav id="ok-nav" aria-label="Main navigation">
-    <a href="/" class="ok-nav-logo-link" aria-label="Britain Racing — Home">
+  <nav id="ok-nav" role="navigation" aria-label="Main navigation">
+    <a href="https://britainracing.com/" class="nav__logo-wrap" data-cursor="HOME" aria-label="Britain Racing — Home">
       <img
-        class="ok-nav-logo"
+        class="nav__logo"
         src="https://britainracing.com/cdn/shop/files/BritainRacing_-_Large_0bbd4388-4a07-4574-8f9e-9fddcae6e659.jpg?v=1743437605&width=300"
         alt="Britain Racing LLC."
-        height="38"
-        loading="eager"
-      >
+        width="160"
+        height="40"
+      />
     </a>
-    <div class="ok-nav-links">
-      <a href="https://britainracing.com/" class="ok-nav-link">Home</a>
-      <a href="https://britainracing.com/collections" class="ok-nav-link">Catalog</a>
-      <a href="https://britainracing.com/pages/contact" class="ok-nav-link">Contact</a>
-    </div>
-    <div class="ok-nav-right">
-      <a href="https://britainracing.com/cart" class="ok-nav-cart" data-cursor="VIEW" aria-label="View cart">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+    <ul class="nav__links-desktop" role="list">
+      <li><a href="https://britainracing.com/" class="nav__link" data-cursor="VIEW">Home</a></li>
+      <li><a href="https://britainracing.com/collections" class="nav__link" data-cursor="VIEW">Catalog</a></li>
+      <li><a href="https://britainracing.com/pages/contact" class="nav__link" data-cursor="VIEW">Contact</a></li>
+    </ul>
+    <div class="nav__right-cluster">
+      <a href="https://britainracing.com/cart" class="nav__cart-btn" aria-label="Cart" data-cursor="CART">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
           <line x1="3" y1="6" x2="21" y2="6"/>
-          <path d="M16 10a4 4 0 0 1-8 0"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
         </svg>
+        <span class="nav__cart-badge" aria-hidden="true">0</span>
       </a>
-      <button class="ok-hamburger" id="ok-hamburger" aria-label="Open navigation menu" aria-expanded="false" data-cursor="OPEN">
+      <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">
         <span></span>
         <span></span>
         <span></span>
@@ -914,672 +1450,1083 @@ body.ok-grain-intense { --grain-opacity: 0.07; }
     </div>
   </nav>
 
-  <!-- Mobile Drawer -->
-  <div class="ok-drawer-overlay" id="ok-drawer-overlay" aria-hidden="true"></div>
-  <nav class="ok-drawer" id="ok-drawer" aria-label="Mobile navigation" aria-hidden="true">
-    <a href="https://britainracing.com/" class="ok-drawer-link">Home</a>
-    <a href="https://britainracing.com/collections" class="ok-drawer-link">Catalog</a>
-    <a href="https://britainracing.com/pages/contact" class="ok-drawer-link">Contact</a>
-  </nav>
+  <div class="nav__drawer" id="nav-drawer" aria-hidden="true" role="dialog" aria-label="Navigation menu">
+    <button class="nav__drawer-close" aria-label="Close menu">&times;</button>
+    <nav aria-label="Mobile navigation">
+      <a href="https://britainracing.com/" class="nav__drawer-link">Home</a>
+      <a href="https://britainracing.com/collections" class="nav__drawer-link">Catalog</a>
+      <a href="https://britainracing.com/pages/contact" class="nav__drawer-link">Contact</a>
+    </nav>
+  </div>
+  <div class="nav__drawer-backdrop" id="nav-backdrop" aria-hidden="true"></div>
 
-  <main id="ok-main">
+  <main id="main-content">
 
-    <!-- Hero -->
-    <section id="ok-hero" aria-label="Hero banner">
+    <!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+    <section class="hero" aria-labelledby="hero-heading">
       <img
-        id="ok-hero-img"
+        class="hero__image"
         src="https://britainracing.com/cdn/shop/files/received_1560715844870613.jpg?v=1766099602&width=3840"
         alt=""
-        aria-hidden="true"
-        loading="eager"
-      >
-      <div class="ok-hero-grad-primary" aria-hidden="true"></div>
-      <div class="ok-hero-grad-side" aria-hidden="true"></div>
+        role="presentation"
+        fetchpriority="high"
+      />
+      <div class="hero__gradient-overlay" aria-hidden="true"></div>
+      <div class="hero__orange-accent" aria-hidden="true"></div>
 
-      <div id="ok-hero-content">
-        <div id="ok-hero-eyebrow">PERFORMANCE PARTS</div>
-        <h1 class="ok-heading" aria-label="Don't Compromise... Customize">DON'T COMPROMISE... CUSTOMIZE</h1>
-        <a
-          href="https://britainracing.com/collections/all"
-          id="ok-hero-cta"
-          class="ok-magnetic"
-          data-cursor="SHOP"
-          data-strength="12"
-          data-glow="rgba(196,82,10,0.5)"
-          data-bg="#c4520a"
-        >
-          SHOP NOW
-          <svg class="ok-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="5" y1="12" x2="19" y2="12"/>
-            <polyline points="12 5 19 12 12 19"/>
-          </svg>
+      <div class="hero__content">
+        <p class="hero__pre-label" aria-hidden="true">Race Engineered Components</p>
+        <h1 class="hero__heading" id="hero-heading">DON&rsquo;T COMPROMISE... CUSTOMIZE</h1>
+        <p class="hero__sub">Britain Racing supplies precision-engineered motorsport parts to drivers who demand more from their machines. Built to survive race day and every lap before it.</p>
+        <a href="https://britainracing.com/collections/all" class="hero__cta" data-cursor="SHOP" aria-label="Shop all racing parts">
+          <span class="hero__cta-label">Shop Now</span>
+          <span class="hero__cta-arrow" aria-hidden="true">&rarr;</span>
         </a>
       </div>
 
-      <div id="ok-scroll-ind" aria-hidden="true">
-        <span class="ok-scroll-label">SCROLL</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(196,82,10,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
+      <div class="hero__scroll" aria-hidden="true">
+        <span class="hero__scroll-label">Scroll</span>
+        <div class="hero__scroll-chevron"></div>
       </div>
     </section>
 
-    <!-- Category Showcase -->
-    <section id="ok-categories" aria-label="Shop by category">
-      <div id="ok-cat-header">
-        <div class="ok-cat-header-inner ok-reveal">
-          <span class="ok-cat-rule-line" aria-hidden="true"></span>
-          <h2 id="ok-cat-title">SHOP BY CATEGORY</h2>
+    <!-- ═══════════════════════════ RACE STRIPE ═══════════════════════════ -->
+    <div class="race-stripe" aria-hidden="true">
+      <div class="race-stripe__grain"></div>
+      <span class="race-stripe__text">PRECISION ENGINEERED &mdash; TRACK PROVEN</span>
+    </div>
+
+    <!-- ═══════════════════════ COLLECTION SHOWCASE ═══════════════════════ -->
+    <section class="collection-showcase" aria-labelledby="collection-title">
+      <div class="collection-showcase__bg-texture" aria-hidden="true"></div>
+
+      <header class="collection-showcase__header">
+        <p class="section-label" aria-hidden="true">SHOP BY CATEGORY</p>
+        <div class="title-mask" role="presentation">
+          <h2 class="section-title-inner" id="collection-title">Our Categories</h2>
         </div>
+      </header>
+
+      <div class="collection-grid collection-grid--row1" role="list" aria-label="Product categories">
+
+        <a href="https://britainracing.com/collections/luckydog-trophies"
+           class="category-card category-card--feature"
+           data-cursor="EXPLORE"
+           role="listitem"
+           aria-label="LuckyDog Racing Trophies">
+          <img src="https://britainracing.com/cdn/shop/collections/20250330_114148_e771bfe8-70e2-435b-a413-f0929311c10b.jpg?v=1766089427" alt="LuckyDog Racing Trophies" class="category-card__img" />
+          <div class="category-card__overlay" aria-hidden="true"></div>
+          <div class="category-card__info">
+            <span class="category-card__title">LuckyDog Racing Trophies</span>
+            <span class="category-card__meta">Race Series Awards</span>
+          </div>
+          <div class="category-card__arrow-btn" aria-hidden="true">&rarr;</div>
+        </a>
+
+        <a href="https://britainracing.com/collections/brake-ducts"
+           class="category-card category-card--col2-top"
+           data-cursor="EXPLORE"
+           role="listitem"
+           aria-label="Brake Ducts">
+          <img src="https://britainracing.com/cdn/shop/files/20251220_210652.jpg?v=1766351519" alt="Brake Ducts" class="category-card__img" />
+          <div class="category-card__overlay" aria-hidden="true"></div>
+          <div class="category-card__info">
+            <span class="category-card__title">Brake Ducts</span>
+            <span class="category-card__meta">Cooling Systems</span>
+          </div>
+          <div class="category-card__arrow-btn" aria-hidden="true">&rarr;</div>
+        </a>
+
+        <a href="https://britainracing.com/collections/frontpage"
+           class="category-card category-card--col2-bot"
+           data-cursor="EXPLORE"
+           role="listitem"
+           aria-label="Fueling Products">
+          <img src="https://britainracing.com/cdn/shop/collections/20220822_213152.jpg?v=1745990244" alt="Fueling Products" class="category-card__img" />
+          <div class="category-card__overlay" aria-hidden="true"></div>
+          <div class="category-card__info">
+            <span class="category-card__title">Fueling Products</span>
+            <span class="category-card__meta">Race-Grade Fuel Systems</span>
+          </div>
+          <div class="category-card__arrow-btn" aria-hidden="true">&rarr;</div>
+        </a>
+
+        <a href="https://britainracing.com/collections/carbon-fiber-parts"
+           class="category-card category-card--carbon"
+           data-cursor="EXPLORE"
+           role="listitem"
+           aria-label="Carbon Fiber Parts">
+          <img src="https://britainracing.com/cdn/shop/collections/486552782_1256153009503247_2987420766831371503_n.jpg?v=1745990264" alt="Carbon Fiber Parts" class="category-card__img" />
+          <div class="category-card__overlay" aria-hidden="true"></div>
+          <div class="category-card__info">
+            <span class="category-card__title">Carbon Fiber Parts</span>
+            <span class="category-card__meta">Lightweight Composites</span>
+          </div>
+          <div class="category-card__arrow-btn" aria-hidden="true">&rarr;</div>
+        </a>
+
       </div>
 
-      <!-- Row 1: Trophies (image-left) -->
-      <article class="ok-cat-row ok-cat-row--odd ok-reveal">
-        <div class="ok-cat-img-wrap ok-cat-img-wrap--odd" data-cursor="VIEW">
-          <img src="https://britainracing.com/cdn/shop/collections/20250330_114148_e771bfe8-70e2-435b-a413-f0929311c10b.jpg?v=1766089427" alt="LuckyDog Racing Trophies" loading="lazy">
-          <div class="ok-cat-img-overlay" aria-hidden="true"></div>
-        </div>
-        <div class="ok-cat-text">
-          <span class="ok-cat-badge">01 / TROPHIES</span>
-          <h3 class="ok-cat-name">LuckyDog Racing<br>Trophies</h3>
-          <a href="https://britainracing.com/collections/luckydog-trophies" class="ok-cat-link" data-cursor="EXPLORE">
-            SHOP NOW
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </a>
-        </div>
-      </article>
+      <div class="collection-grid collection-grid--row2" role="list" aria-label="More product categories">
 
-      <!-- Row 2: Brake Ducts (image-right) -->
-      <article class="ok-cat-row ok-cat-row--even ok-reveal">
-        <div class="ok-cat-text">
-          <span class="ok-cat-badge">02 / BRAKE DUCTS</span>
-          <h3 class="ok-cat-name">Brake<br>Ducts</h3>
-          <a href="https://britainracing.com/collections/brake-ducts" class="ok-cat-link" data-cursor="EXPLORE">
-            SHOP NOW
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </a>
-        </div>
-        <div class="ok-cat-img-wrap ok-cat-img-wrap--even" data-cursor="VIEW">
-          <img src="https://britainracing.com/cdn/shop/files/20251220_210652.jpg?v=1766351519" alt="Brake Ducts" loading="lazy">
-          <div class="ok-cat-img-overlay" aria-hidden="true"></div>
-        </div>
-      </article>
+        <a href="https://britainracing.com/collections/hood-vents"
+           class="category-card"
+           data-cursor="EXPLORE"
+           role="listitem"
+           aria-label="Hood Vents">
+          <img src="https://britainracing.com/cdn/shop/collections/191613587_10219163884914540_5061107731261156786_n_135f0956-9cc8-454e-a180-5b9c95a6d659.jpg?v=1745990208" alt="Hood Vents" class="category-card__img" />
+          <div class="category-card__overlay" aria-hidden="true"></div>
+          <div class="category-card__info">
+            <span class="category-card__title">Hood Vents</span>
+            <span class="category-card__meta">Heat Extraction</span>
+          </div>
+          <div class="category-card__arrow-btn" aria-hidden="true">&rarr;</div>
+        </a>
 
-      <!-- Row 3: Fueling Products (image-left) -->
-      <article class="ok-cat-row ok-cat-row--odd ok-reveal">
-        <div class="ok-cat-img-wrap ok-cat-img-wrap--odd" data-cursor="VIEW">
-          <img src="https://britainracing.com/cdn/shop/collections/20220822_213152.jpg?v=1745990244" alt="Fueling Products" loading="lazy">
-          <div class="ok-cat-img-overlay" aria-hidden="true"></div>
-        </div>
-        <div class="ok-cat-text">
-          <span class="ok-cat-badge">03 / FUELING</span>
-          <h3 class="ok-cat-name">Fueling<br>Products</h3>
-          <a href="https://britainracing.com/collections/frontpage" class="ok-cat-link" data-cursor="EXPLORE">
-            SHOP NOW
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </a>
-        </div>
-      </article>
+        <a href="https://britainracing.com/collections/exhaust-flanges"
+           class="category-card"
+           data-cursor="EXPLORE"
+           role="listitem"
+           aria-label="Exhaust Flanges">
+          <img src="https://britainracing.com/cdn/shop/collections/20210107_213129_4f7fb588-c941-4214-991a-d1c81097493f.jpg?v=1745990887" alt="Exhaust Flanges" class="category-card__img" />
+          <div class="category-card__overlay" aria-hidden="true"></div>
+          <div class="category-card__info">
+            <span class="category-card__title">Exhaust Flanges</span>
+            <span class="category-card__meta">Performance Exhaust</span>
+          </div>
+          <div class="category-card__arrow-btn" aria-hidden="true">&rarr;</div>
+        </a>
 
-      <!-- Row 4: Carbon Fiber (image-right) -->
-      <article class="ok-cat-row ok-cat-row--even ok-reveal">
-        <div class="ok-cat-text">
-          <span class="ok-cat-badge">04 / CARBON FIBER</span>
-          <h3 class="ok-cat-name">Carbon Fiber<br>Parts</h3>
-          <a href="https://britainracing.com/collections/carbon-fiber-parts" class="ok-cat-link" data-cursor="EXPLORE">
-            SHOP NOW
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </a>
-        </div>
-        <div class="ok-cat-img-wrap ok-cat-img-wrap--even" data-cursor="VIEW">
-          <img src="https://britainracing.com/cdn/shop/collections/486552782_1256153009503247_2987420766831371503_n.jpg?v=1745990264" alt="Carbon Fiber Parts" loading="lazy">
-          <div class="ok-cat-img-overlay" aria-hidden="true"></div>
-        </div>
-      </article>
+        <a href="https://britainracing.com/collections/wing-uprights"
+           class="category-card"
+           data-cursor="EXPLORE"
+           role="listitem"
+           aria-label="Wing Uprights">
+          <img src="https://britainracing.com/cdn/shop/collections/122660246_10217819728151461_4579971352753520728_n.jpg?v=1745993135" alt="Wing Uprights" class="category-card__img" />
+          <div class="category-card__overlay" aria-hidden="true"></div>
+          <div class="category-card__info">
+            <span class="category-card__title">Wing Uprights</span>
+            <span class="category-card__meta">Aerodynamic Supports</span>
+          </div>
+          <div class="category-card__arrow-btn" aria-hidden="true">&rarr;</div>
+        </a>
 
-      <!-- Row 5: Hood Vents (image-left) -->
-      <article class="ok-cat-row ok-cat-row--odd ok-reveal">
-        <div class="ok-cat-img-wrap ok-cat-img-wrap--odd" data-cursor="VIEW">
-          <img src="https://britainracing.com/cdn/shop/collections/191613587_10219163884914540_5061107731261156786_n_135f0956-9cc8-454e-a180-5b9c95a6d659.jpg?v=1745990208" alt="Hood Vents" loading="lazy">
-          <div class="ok-cat-img-overlay" aria-hidden="true"></div>
-        </div>
-        <div class="ok-cat-text">
-          <span class="ok-cat-badge">05 / HOOD VENTS</span>
-          <h3 class="ok-cat-name">Hood<br>Vents</h3>
-          <a href="https://britainracing.com/collections/hood-vents" class="ok-cat-link" data-cursor="EXPLORE">
-            SHOP NOW
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </a>
-        </div>
-      </article>
-
-      <!-- Row 6: Exhaust Flanges (image-right) -->
-      <article class="ok-cat-row ok-cat-row--even ok-reveal">
-        <div class="ok-cat-text">
-          <span class="ok-cat-badge">06 / EXHAUST</span>
-          <h3 class="ok-cat-name">Exhaust<br>Flanges</h3>
-          <a href="https://britainracing.com/collections/exhaust-flanges" class="ok-cat-link" data-cursor="EXPLORE">
-            SHOP NOW
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </a>
-        </div>
-        <div class="ok-cat-img-wrap ok-cat-img-wrap--even" data-cursor="VIEW">
-          <img src="https://britainracing.com/cdn/shop/collections/20210107_213129_4f7fb588-c941-4214-991a-d1c81097493f.jpg?v=1745990887" alt="Exhaust Flanges" loading="lazy">
-          <div class="ok-cat-img-overlay" aria-hidden="true"></div>
-        </div>
-      </article>
-
-      <!-- Row 7: Wing Uprights (image-left) -->
-      <article class="ok-cat-row ok-cat-row--odd ok-reveal">
-        <div class="ok-cat-img-wrap ok-cat-img-wrap--odd" data-cursor="VIEW">
-          <img src="https://britainracing.com/cdn/shop/collections/122660246_10217819728151461_4579971352753520728_n.jpg?v=1745993135" alt="Wing Uprights" loading="lazy">
-          <div class="ok-cat-img-overlay" aria-hidden="true"></div>
-        </div>
-        <div class="ok-cat-text">
-          <span class="ok-cat-badge">07 / WING UPRIGHTS</span>
-          <h3 class="ok-cat-name">Wing<br>Uprights</h3>
-          <a href="https://britainracing.com/collections/wing-uprights" class="ok-cat-link" data-cursor="EXPLORE">
-            SHOP NOW
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </a>
-        </div>
-      </article>
+      </div>
     </section>
 
-    <!-- Breathing Section -->
-    <section id="ok-breathing" data-cursor-dim="true" aria-label="Brand statement">
-      <div id="ok-breathing-lines" aria-hidden="true"></div>
-      <div id="ok-breathing-content">
-        <div class="ok-breathing-rule" aria-hidden="true"></div>
-        <p class="ok-breathing-line1">BUILT FOR THE TRACK.</p>
-        <p class="ok-breathing-line2">BUILT TO WIN.</p>
-        <p class="ok-breathing-sub">BRITAIN RACING LLC — PERFORMANCE PARTS FOR SERIOUS RACERS</p>
-        <div class="ok-breathing-rule" aria-hidden="true"></div>
+    <!-- ═══════════════════════ BREATHING SECTION ═══════════════════════ -->
+    <section class="breathing-section" aria-labelledby="philosophy-heading">
+      <div class="breathing-glow" aria-hidden="true"></div>
+      <div class="breathing-accent breathing-accent--left" aria-hidden="true"></div>
+      <div class="breathing-accent breathing-accent--right" aria-hidden="true"></div>
+
+      <div class="breathing-section__inner">
+        <p class="breathing-label" aria-hidden="true">Our Philosophy</p>
+        <h2 class="mission-quote" id="philosophy-heading">BUILT FOR THOSE WHO REFUSE TO SETTLE FOR STOCK</h2>
+        <div class="breathing-rule" aria-hidden="true"></div>
+        <p class="breathing-sub">Britain Racing supplies precision-engineered motorsport parts to drivers who demand more from their machines. Every component is chosen to survive race day.</p>
+        <div class="stats-row" aria-label="Key statistics">
+          <div class="stat-item">
+            <div class="stat-number" aria-label="7 Product Categories">
+              <span class="stat-counter" data-target="7">0</span>
+            </div>
+            <div class="stat-label">Product Categories</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" aria-label="100+ Racing Parts">
+              <span class="stat-counter" data-target="100">0</span><span class="stat-suffix">+</span>
+            </div>
+            <div class="stat-label">Racing Parts</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" aria-label="1 Goal: Win">
+              <span class="stat-counter" data-target="1">0</span>
+            </div>
+            <div class="stat-label">Goal &mdash; Win</div>
+          </div>
+        </div>
       </div>
+    </section>
+
+    <!-- ═══════════════════════ FEATURE ROWS ═══════════════════════════ -->
+    <section class="feature-rows">
+
+      <div class="feature-row feature-row--left">
+        <div class="feature-row__image-wrap">
+          <img
+            src="https://britainracing.com/cdn/shop/collections/486552782_1256153009503247_2987420766831371503_n.jpg?v=1745990264"
+            alt="Carbon Fiber Parts — lightweight race-grade composite components"
+            class="feature-row__image"
+            loading="lazy"
+          />
+        </div>
+        <div class="feature-row__text-block feature-row__text-block--surface">
+          <p class="feature-row__label">&mdash; Lightweight Performance</p>
+          <div class="feature-row__heading-wrap">
+            <h3 class="feature-row__heading">Carbon Fiber Parts</h3>
+          </div>
+          <p class="feature-row__body">Precision-laid carbon fiber components engineered for maximum strength at minimum weight. Each piece bolts directly into your race car with zero compromise on fit or finish.</p>
+          <a href="https://britainracing.com/collections/carbon-fiber-parts" class="feature-row__cta" data-cursor="VIEW" aria-label="Shop Carbon Fiber Parts">
+            Shop Carbon Fiber <span class="feature-row__cta-arrow" aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="feature-row__separator" aria-hidden="true"></div>
+
+      <div class="feature-row feature-row--right">
+        <div class="feature-row__text-block">
+          <p class="feature-row__label">&mdash; Aerodynamic Excellence</p>
+          <div class="feature-row__heading-wrap">
+            <h3 class="feature-row__heading">Wing Uprights</h3>
+          </div>
+          <p class="feature-row__body">Machined-from-billet wing uprights that hold your aerodynamic package exactly where it needs to be. Zero flex. Zero failure. Built for the rigors of endurance racing.</p>
+          <a href="https://britainracing.com/collections/wing-uprights" class="feature-row__cta" data-cursor="VIEW" aria-label="Shop Wing Uprights">
+            Shop Wing Uprights <span class="feature-row__cta-arrow" aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+        <div class="feature-row__image-wrap">
+          <img
+            src="https://britainracing.com/cdn/shop/collections/122660246_10217819728151461_4579971352753520728_n.jpg?v=1745993135"
+            alt="Wing Uprights — precision-machined aerodynamic support components"
+            class="feature-row__image"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
     </section>
 
   </main>
 
-  <!-- Footer -->
-  <footer id="ok-footer" aria-label="Site footer">
-    <div class="ok-footer-grid">
-      <div class="ok-footer-col">
-        <a href="https://britainracing.com/" aria-label="Britain Racing — Home">
+  <!-- ═══════════════════════════ FOOTER ════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__bg-texture" aria-hidden="true"></div>
+
+    <div class="footer__content">
+      <div class="footer__col-left">
+        <a href="https://britainracing.com/" class="footer__logo-link" data-cursor="HOME" aria-label="Britain Racing — Home">
           <img
             src="https://britainracing.com/cdn/shop/files/BritainRacing_-_Large_0bbd4388-4a07-4574-8f9e-9fddcae6e659.jpg?v=1743437605&width=300"
             alt="Britain Racing LLC."
-            class="ok-footer-logo"
-            loading="lazy"
-          >
+            class="footer__logo"
+            width="140"
+            height="36"
+          />
         </a>
-        <p class="ok-footer-copy">Performance parts for serious racers. No shortcuts.</p>
-      </div>
-      <div class="ok-footer-col">
-        <div class="ok-footer-label">NAVIGATE</div>
-        <nav class="ok-footer-links" aria-label="Footer navigation">
-          <a href="https://britainracing.com/" class="ok-footer-link">Home</a>
-          <a href="https://britainracing.com/collections" class="ok-footer-link">Catalog</a>
-          <a href="https://britainracing.com/pages/contact" class="ok-footer-link">Contact</a>
-          <a href="https://britainracing.com/policies/privacy-policy" class="ok-footer-link">Privacy Policy</a>
+        <p class="footer__tagline">Precision-engineered motorsport parts for drivers who refuse stock solutions. Built for race day.</p>
+        <nav class="footer__nav" aria-label="Footer navigation">
+          <a href="https://britainracing.com/" class="footer__nav-link">Home</a>
+          <a href="https://britainracing.com/collections" class="footer__nav-link">Catalog</a>
+          <a href="https://britainracing.com/pages/contact" class="footer__nav-link">Contact</a>
+          <a href="https://britainracing.com/policies/privacy-policy" class="footer__nav-link">Privacy Policy</a>
         </nav>
       </div>
-      <div class="ok-footer-col">
-        <div class="ok-footer-label">FOLLOW THE BUILD</div>
-        <div class="ok-social-row">
-          <a href="http://instagram.com/shopify" class="ok-social-icon" aria-label="Instagram" data-cursor="VIEW">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+      <div class="footer__col-right">
+        <h4 class="footer__social-heading">Keep In Touch</h4>
+        <p class="footer__social-sub">Follow for race day updates and new parts drops.</p>
+        <div class="footer__social-row" role="list" aria-label="Social media links">
+          <a href="http://instagram.com/shopify" class="footer__social-icon" aria-label="Follow on Instagram" data-cursor="FOLLOW" role="listitem">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
               <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
             </svg>
           </a>
-          <a href="https://tiktok.com/@shopify" class="ok-social-icon" aria-label="TikTok" data-cursor="VIEW">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+          <a href="https://tiktok.com/@shopify" class="footer__social-icon" aria-label="Follow on TikTok" data-cursor="FOLLOW" role="listitem">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 12a4 4 0 104 4V4a5 5 0 005 5"/>
             </svg>
           </a>
         </div>
       </div>
     </div>
-    <div class="ok-footer-bottom">
-      <span class="ok-footer-copy-text">© 2025 BRITAIN RACING LLC. ALL RIGHTS RESERVED.</span>
-      <a href="https://www.shopify.com/?utm_campaign=poweredby&utm_medium=shopify&utm_source=onlinestore" class="ok-footer-shopify">POWERED BY SHOPIFY</a>
+
+    <div class="footer__divider" aria-hidden="true"></div>
+
+    <div class="footer__bottom">
+      <span class="footer__copyright">&copy; 2026 Britain Racing LLC. All rights reserved.</span>
+      <a href="https://britainracing.com/policies/privacy-policy" class="footer__privacy-link">Privacy Policy</a>
+      <a href="https://www.shopify.com/?utm_campaign=poweredby&utm_medium=shopify&utm_source=onlinestore" class="footer__shopify-link" rel="noopener noreferrer">Powered by Shopify</a>
     </div>
-    <div class="ok-footer-watermark" aria-hidden="true">BR</div>
+
+    <div class="footer__accent-strip" aria-hidden="true"></div>
   </footer>
 
-  <script id="overkill-scripts">
-  (function () {
-    'use strict';
+  <!-- Film Grain -->
+  <div id="ok-film-grain" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+      <filter id="ok-noise-filter">
+        <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+        <feColorMatrix type="saturate" values="0"/>
+      </filter>
+      <rect width="100%" height="100%" filter="url(#ok-noise-filter)"/>
+    </svg>
+  </div>
 
-    /* ─── GSAP REGISTRATION ─────────────────────────────────── */
-    gsap.registerPlugin(ScrollTrigger);
+  <!-- Custom Cursor -->
+  <div class="ok-cursor" aria-hidden="true">
+    <span class="ok-cursor-label"></span>
+  </div>
+  <div class="ok-cursor-dot" aria-hidden="true"></div>
 
-    /* ─── REDUCED MOTION CHECK ──────────────────────────────── */
-    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+<script id="overkill-scripts">
+(function () {
+  'use strict';
 
-    /* ─── LENIS SMOOTH SCROLL ───────────────────────────────── */
-    var lenis = null;
-    if (!prefersReduced && typeof Lenis !== 'undefined') {
-      lenis = new Lenis({ lerp: 0.1, duration: 1.2, smoothWheel: true });
-      lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
-      gsap.ticker.lagSmoothing(0);
-    }
+  /* ────────────────────────────────────────────────────────────
+     0. SETUP
+  ──────────────────────────────────────────────────────────── */
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    /* ─── SCROLL PROGRESS BAR ───────────────────────────────── */
-    var progressBar = document.getElementById('ok-scroll-progress');
-    if (progressBar && !prefersReduced) {
-      (function tickProgress() {
-        var st = window.scrollY || document.documentElement.scrollTop;
-        var sh = document.documentElement.scrollHeight - window.innerHeight;
-        progressBar.style.width = (sh > 0 ? Math.min(100, (st / sh) * 100) : 0) + '%';
-        requestAnimationFrame(tickProgress);
-      })();
-    }
+  gsap.registerPlugin(ScrollTrigger);
 
-    /* ─── CUSTOM CURSOR ─────────────────────────────────────── */
-    (function initCursor() {
-      if (!window.matchMedia('(pointer: fine)').matches) return;
-      var ring = document.getElementById('ok-cursor-ring');
-      var dot  = document.getElementById('ok-cursor-dot');
-      if (!ring || !dot) return;
+  /* ────────────────────────────────────────────────────────────
+     1. LENIS SMOOTH SCROLL
+  ──────────────────────────────────────────────────────────── */
+  var lenis = new Lenis({
+    lerp: 0.1,
+    duration: 1.2,
+    smoothWheel: true
+  });
 
-      document.body.classList.add('ok-cursor-active');
+  lenis.on('scroll', ScrollTrigger.update);
 
-      var xR = gsap.quickTo(ring, 'x', { duration: 0.35, ease: 'power3.out' });
-      var yR = gsap.quickTo(ring, 'y', { duration: 0.35, ease: 'power3.out' });
-      var xD = gsap.quickTo(dot,  'x', { duration: 0.14, ease: 'power3.out' });
-      var yD = gsap.quickTo(dot,  'y', { duration: 0.14, ease: 'power3.out' });
+  gsap.ticker.add(function (time) {
+    lenis.raf(time * 1000);
+  });
 
-      window.addEventListener('mousemove', function (e) {
-        xR(e.clientX - 20); yR(e.clientY - 20);
-        xD(e.clientX - 3);  yD(e.clientY - 3);
-      }, { passive: true });
+  gsap.ticker.lagSmoothing(0);
 
-      document.querySelectorAll('[data-cursor]').forEach(function (el) {
-        el.addEventListener('mouseenter', function () {
-          var label = el.dataset.cursor || '';
-          ring.style.width  = '72px';
-          ring.style.height = '72px';
-          ring.style.borderColor = '#c4520a';
-          ring.innerHTML = label
-            ? '<span style="font-family:Oswald,sans-serif;font-size:10px;font-weight:600;letter-spacing:0.18em;color:#c4520a;mix-blend-mode:normal;position:absolute;">' + label + '</span>'
-            : '';
-        });
-        el.addEventListener('mouseleave', function () {
-          ring.style.width  = '40px';
-          ring.style.height = '40px';
-          ring.style.borderColor = 'rgba(240,240,240,0.85)';
-          ring.innerHTML = '';
-        });
-      });
+  /* ────────────────────────────────────────────────────────────
+     2. PRELOADER
+  ──────────────────────────────────────────────────────────── */
+  var preloader = document.getElementById('overkill-preloader');
+  var barFill   = document.querySelector('.preloader__bar-fill');
+  var countEl   = document.querySelector('.preloader__count');
 
-      document.addEventListener('mousedown', function () {
-        dot.style.transform = 'translate(-50%,-50%) scale(2.2)';
-      });
-      document.addEventListener('mouseup', function () {
-        dot.style.transform = 'translate(-50%,-50%) scale(1)';
-      });
+  function fireHeroEnter() {
+    window.dispatchEvent(new Event('overkill:hero-enter'));
+  }
 
-      /* Dim cursor on breathing section */
-      var breathEl = document.getElementById('ok-breathing');
-      if (breathEl && 'IntersectionObserver' in window) {
-        new IntersectionObserver(function (entries) {
-          entries.forEach(function (e) {
-            ring.style.opacity = e.intersectionRatio > 0.5 ? '0.4' : '1';
-          });
-        }, { threshold: [0, 0.5] }).observe(breathEl);
-      }
-    })();
+  if (!preloader) {
+    fireHeroEnter();
+  } else if (reducedMotion) {
+    preloader.style.display = 'none';
+    fireHeroEnter();
+  } else {
+    // Percentage counter — random increments, caps at 99 until bar completes
+    var pct = 0;
+    var countInterval = setInterval(function () {
+      pct += Math.floor(Math.random() * 5) + 1;
+      if (pct > 99) pct = 99;
+      if (countEl) countEl.textContent = pct + '%';
+    }, 55);
 
-    /* ─── FILM GRAIN INTENSITY ──────────────────────────────── */
-    (function initGrainIntensity() {
-      var breathEl = document.getElementById('ok-breathing');
-      if (!breathEl || !('IntersectionObserver' in window)) return;
-      new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          document.body.classList.toggle('ok-grain-intense', e.intersectionRatio > 0.5);
-        });
-      }, { threshold: [0, 0.5] }).observe(breathEl);
-    })();
+    gsap.to(barFill, {
+      width: '100%',
+      duration: 1.8,
+      ease: 'power2.inOut',
+      onComplete: function () {
+        clearInterval(countInterval);
+        if (countEl) countEl.textContent = '100%';
 
-    /* ─── SPLIT TEXT ────────────────────────────────────────── */
-    (function splitHeroText() {
-      var heading = document.querySelector('#ok-hero .ok-heading');
-      if (!heading) return;
-      var text = heading.textContent;
-      heading.setAttribute('aria-label', text);
-      heading.innerHTML = text.split('').map(function (ch) {
-        if (ch === ' ') {
-          return '<span class="ok-char ok-space" aria-hidden="true" style="display:inline-block;width:0.28em;"></span>';
-        }
-        return '<span class="ok-char" aria-hidden="true" style="display:inline-block;will-change:transform,opacity;">' + ch + '</span>';
-      }).join('');
-    })();
-
-    /* ─── HERO ENTRANCE (fires after preloader) ─────────────── */
-    function initHeroEntrance() {
-      if (prefersReduced) {
-        var h = document.querySelector('.ok-heading');
-        if (h) gsap.from(h, { opacity: 0, duration: 0.6, ease: 'power2.out' });
-        return;
-      }
-      document.fonts.ready.then(function () {
         setTimeout(function () {
-          gsap.from('.ok-char:not(.ok-space)', {
-            opacity: 0,
-            y: 66,
-            rotateX: -90,
-            stagger: { each: 0.024, from: 'start' },
-            ease: 'back.out(1.7)',
-            duration: 0.74,
-            transformOrigin: '50% 100% -28px',
-            clearProps: 'all'
+          gsap.to(preloader, {
+            clipPath: 'inset(0 0 100% 0)',
+            duration: 0.7,
+            ease: 'power4.inOut',
+            onComplete: function () {
+              preloader.style.display = 'none';
+              fireHeroEnter();
+            }
           });
-        }, 200);
-      });
-
-      var eyebrow = document.getElementById('ok-hero-eyebrow');
-      if (eyebrow) gsap.from(eyebrow, { opacity: 0, x: -24, duration: 0.6, ease: 'power3.out', delay: 0.15 });
-
-      var cta = document.getElementById('ok-hero-cta');
-      if (cta) gsap.from(cta, { opacity: 0, y: 20, scale: 0.94, duration: 0.55, ease: 'back.out(2)', delay: 1.05 });
-
-      var scrollInd = document.getElementById('ok-scroll-ind');
-      if (scrollInd) {
-        gsap.to(scrollInd, { y: 9, repeat: -1, yoyo: true, duration: 0.85, ease: 'sine.inOut' });
-        window.addEventListener('scroll', function () {
-          scrollInd.style.opacity = window.scrollY > 100 ? '0' : '1';
-        }, { passive: true });
+        }, 220);
       }
-    }
+    });
+  }
 
-    /* ─── PRELOADER ─────────────────────────────────────────── */
-    (function runPreloader() {
-      var pre  = document.getElementById('overkill-preloader');
-      var fill = document.getElementById('ok-loader-fill');
-      var pct  = document.getElementById('ok-loader-pct');
+  /* ────────────────────────────────────────────────────────────
+     3. HERO ENTRANCE (triggered after preloader exits)
+  ──────────────────────────────────────────────────────────── */
+  window.addEventListener('overkill:hero-enter', function () {
+    setTimeout(function () {
+      if (!reducedMotion) {
+        // Split H1 into per-character spans
+        splitHeroHeading();
 
-      function exitPreloader() {
-        if (!pre) { initHeroEntrance(); return; }
-        gsap.to(pre, {
-          clipPath: 'inset(0 0 100% 0)',
+        gsap.from('.hero__image', {
+          scale: 1.08,
+          duration: 2.0,
+          ease: 'power2.out'
+        });
+
+        gsap.from('.hero__orange-accent', {
+          scaleY: 0,
+          transformOrigin: 'top center',
+          duration: 1.0,
+          ease: 'power3.out',
+          delay: 0.15
+        });
+
+        gsap.from('.hero__pre-label', {
+          opacity: 0,
+          y: 20,
           duration: 0.6,
-          ease: 'power4.inOut',
+          ease: 'power3.out',
+          delay: 0.1
+        });
+
+        // Characters animate after preloader gap
+        // (handled inside splitHeroHeading)
+
+        gsap.from('.hero__sub', {
+          opacity: 0,
+          y: 30,
+          duration: 0.8,
+          ease: 'power3.out',
+          delay: 0.88
+        });
+
+        gsap.from('.hero__cta', {
+          opacity: 0,
+          y: 24,
+          duration: 0.7,
+          ease: 'power3.out',
+          delay: 1.08
+        });
+
+        gsap.from('.hero__scroll', {
+          opacity: 0,
+          duration: 0.6,
+          delay: 1.45
+        });
+      }
+    }, 100);
+  });
+
+  /* ────────────────────────────────────────────────────────────
+     4. SPLIT TEXT — Hero H1 (character-level)
+  ──────────────────────────────────────────────────────────── */
+  function splitHeroHeading() {
+    var heading = document.querySelector('.hero__heading');
+    if (!heading) return;
+
+    var text = heading.textContent;
+    heading.innerHTML = '';
+
+    text.split('').forEach(function (char) {
+      var span = document.createElement('span');
+      span.className = 'hero__char';
+      span.style.cssText = 'display:inline-block;will-change:transform;';
+      span.textContent = char === ' ' ? '\u00A0' : char;
+      heading.appendChild(span);
+    });
+
+    gsap.from('.hero__char', {
+      opacity: 0,
+      y: 60,
+      rotateX: -90,
+      transformPerspective: 1200,
+      transformOrigin: '50% 50% -20px',
+      duration: 0.9,
+      stagger: 0.025,
+      ease: 'back.out(1.7)',
+      delay: 0.22
+    });
+  }
+
+  /* ────────────────────────────────────────────────────────────
+     5. HERO PARALLAX & SCROLL INDICATORS
+  ──────────────────────────────────────────────────────────── */
+  if (!reducedMotion) {
+    gsap.to('.hero__image', {
+      y: '-15vw',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1.2
+      }
+    });
+
+    gsap.to('.hero__content', {
+      y: '-4vw',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.6
+      }
+    });
+
+    // Scroll chevron bounce
+    gsap.to('.hero__scroll-chevron', {
+      y: 8,
+      repeat: -1,
+      yoyo: true,
+      duration: 0.9,
+      ease: 'power1.inOut'
+    });
+
+    // Fade scroll indicator on scroll-start
+    gsap.to('.hero__scroll', {
+      opacity: 0,
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: '15% top',
+        scrub: 1
+      }
+    });
+  }
+
+  /* ────────────────────────────────────────────────────────────
+     6. GLASS NAV — SCROLL BEHAVIOR
+  ──────────────────────────────────────────────────────────── */
+  var isMobile = window.innerWidth <= 990;
+
+  ScrollTrigger.create({
+    start: 60,
+    onEnter: function () {
+      gsap.to('#ok-nav', {
+        padding: isMobile ? '10px 24px' : '10px 48px',
+        backgroundColor: 'rgba(13,13,13,0.97)',
+        duration: 0.3,
+        ease: 'power2.out',
+        overwrite: true
+      });
+    },
+    onLeaveBack: function () {
+      gsap.to('#ok-nav', {
+        padding: isMobile ? '16px 24px' : '20px 48px',
+        backgroundColor: 'rgba(13,13,13,0.82)',
+        duration: 0.3,
+        ease: 'power2.out',
+        overwrite: true
+      });
+    }
+  });
+
+  /* ────────────────────────────────────────────────────────────
+     7. MOBILE DRAWER
+  ──────────────────────────────────────────────────────────── */
+  var hamburger   = document.querySelector('.nav__hamburger');
+  var drawer      = document.getElementById('nav-drawer');
+  var backdrop    = document.getElementById('nav-backdrop');
+  var drawerClose = document.querySelector('.nav__drawer-close');
+
+  function openDrawer() {
+    if (!hamburger || !drawer || !backdrop) return;
+    hamburger.classList.add('is-open');
+    hamburger.setAttribute('aria-expanded', 'true');
+    drawer.classList.add('is-open');
+    drawer.setAttribute('aria-hidden', 'false');
+    backdrop.classList.add('is-active');
+    document.body.style.overflow = 'hidden';
+
+    if (!reducedMotion) {
+      gsap.from('.nav__drawer-link', {
+        x: 40,
+        opacity: 0,
+        duration: 0.4,
+        ease: 'power3.out',
+        stagger: 0.06
+      });
+    }
+  }
+
+  function closeDrawer() {
+    if (!hamburger || !drawer || !backdrop) return;
+    hamburger.classList.remove('is-open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    drawer.classList.remove('is-open');
+    drawer.setAttribute('aria-hidden', 'true');
+    backdrop.classList.remove('is-active');
+    document.body.style.overflow = '';
+  }
+
+  if (hamburger)   hamburger.addEventListener('click', openDrawer);
+  if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+  if (backdrop)    backdrop.addEventListener('click', closeDrawer);
+
+  // Close on Escape key
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && drawer && drawer.classList.contains('is-open')) {
+      closeDrawer();
+    }
+  });
+
+  /* ────────────────────────────────────────────────────────────
+     8. RACE STRIPE ANIMATION
+  ──────────────────────────────────────────────────────────── */
+  if (!reducedMotion) {
+    gsap.from('.race-stripe', {
+      scaleX: 0,
+      transformOrigin: 'left center',
+      duration: 0.9,
+      ease: 'power4.out',
+      scrollTrigger: {
+        trigger: '.race-stripe',
+        start: 'top 92%',
+        toggleActions: 'play none none none'
+      }
+    });
+
+    gsap.from('.race-stripe__text', {
+      opacity: 0,
+      letterSpacing: '0.8em',
+      duration: 0.6,
+      ease: 'power2.out',
+      delay: 0.45,
+      scrollTrigger: {
+        trigger: '.race-stripe',
+        start: 'top 92%',
+        toggleActions: 'play none none none'
+      }
+    });
+  }
+
+  /* ────────────────────────────────────────────────────────────
+     9. COLLECTION SHOWCASE ANIMATIONS
+  ──────────────────────────────────────────────────────────── */
+  if (!reducedMotion) {
+    // Section header reveal
+    gsap.from('.section-label', {
+      opacity: 0,
+      y: 20,
+      duration: 0.6,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.collection-showcase',
+        start: 'top 78%'
+      }
+    });
+
+    gsap.from('.section-title-inner', {
+      y: '105%',
+      duration: 0.9,
+      ease: 'power4.out',
+      scrollTrigger: {
+        trigger: '.collection-showcase',
+        start: 'top 78%'
+      }
+    });
+
+    // Row 1 cards entrance
+    gsap.from('.collection-grid--row1 .category-card', {
+      y: 70,
+      opacity: 0,
+      duration: 0.85,
+      ease: 'power3.out',
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: '.collection-grid--row1',
+        start: 'top 72%'
+      }
+    });
+
+    // Row 2 cards entrance
+    gsap.from('.collection-grid--row2 .category-card', {
+      y: 70,
+      opacity: 0,
+      duration: 0.85,
+      ease: 'power3.out',
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: '.collection-grid--row2',
+        start: 'top 72%'
+      }
+    });
+
+    // Image clip-path reveal per card
+    document.querySelectorAll('.category-card__img').forEach(function (img) {
+      gsap.fromTo(img,
+        { clipPath: 'inset(0 100% 0 0)' },
+        {
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: img,
+            start: 'top 88%'
+          }
+        }
+      );
+    });
+  }
+
+  /* ────────────────────────────────────────────────────────────
+     10. CATEGORY CARD PERSPECTIVE TILT
+  ──────────────────────────────────────────────────────────── */
+  document.querySelectorAll('.category-card').forEach(function (card) {
+    card.addEventListener('mousemove', function (e) {
+      if (reducedMotion) return;
+      var rect = card.getBoundingClientRect();
+      var dx = e.clientX - rect.left - rect.width  / 2;
+      var dy = e.clientY - rect.top  - rect.height / 2;
+      gsap.to(card, {
+        rotateX: dy * 0.03,
+        rotateY: dx * -0.03,
+        transformPerspective: 1000,
+        duration: 0.4,
+        ease: 'power2.out'
+      });
+    });
+
+    card.addEventListener('mouseleave', function () {
+      if (reducedMotion) return;
+      gsap.to(card, {
+        rotateX: 0,
+        rotateY: 0,
+        duration: 0.6,
+        ease: 'power2.out'
+      });
+    });
+  });
+
+  /* ────────────────────────────────────────────────────────────
+     11. BREATHING SECTION — WORD SPLIT + STATS COUNTERS
+  ──────────────────────────────────────────────────────────── */
+  var missionQuote = document.querySelector('.mission-quote');
+  if (missionQuote && !reducedMotion) {
+    var quoteWords = missionQuote.textContent.trim().split(/\s+/);
+    missionQuote.innerHTML = quoteWords.map(function (word) {
+      return '<span class="word-mask"><span class="word-inner">' + word + '</span></span>';
+    }).join(' ');
+
+    gsap.from('.mission-quote .word-inner', {
+      y: '110%',
+      duration: 0.8,
+      ease: 'power4.out',
+      stagger: 0.07,
+      scrollTrigger: {
+        trigger: '.breathing-section',
+        start: 'top 65%'
+      }
+    });
+  }
+
+  // Breathing glow pulse (runs even with reduced-motion off — it's very subtle)
+  if (!reducedMotion) {
+    gsap.to('.breathing-glow', {
+      scale: 1.15,
+      opacity: 0.12,
+      repeat: -1,
+      yoyo: true,
+      duration: 3.5,
+      ease: 'power1.inOut'
+    });
+  }
+
+  if (!reducedMotion) {
+    gsap.from('.breathing-label', {
+      opacity: 0,
+      y: 20,
+      duration: 0.7,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: '.breathing-section', start: 'top 65%' }
+    });
+
+    gsap.from(['.breathing-rule', '.breathing-sub'], {
+      opacity: 0,
+      y: 20,
+      duration: 0.8,
+      ease: 'power3.out',
+      stagger: 0.15,
+      scrollTrigger: { trigger: '.breathing-section', start: 'top 60%' }
+    });
+
+    gsap.from('.stats-row', {
+      opacity: 0,
+      y: 30,
+      duration: 0.8,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: '.stats-row', start: 'top 78%' }
+    });
+  }
+
+  // Stats counter animation
+  document.querySelectorAll('.stat-counter').forEach(function (counter) {
+    var target = parseInt(counter.getAttribute('data-target'), 10) || 0;
+    var obj = { val: 0 };
+
+    ScrollTrigger.create({
+      trigger: '.breathing-section',
+      start: 'top 60%',
+      once: true,
+      onEnter: function () {
+        gsap.to(obj, {
+          val: target,
+          duration: 2.2,
+          ease: 'power2.out',
+          onUpdate: function () {
+            counter.textContent = Math.round(obj.val);
+          },
           onComplete: function () {
-            pre.style.display = 'none';
-            initHeroEntrance();
+            counter.textContent = target;
           }
         });
       }
+    });
+  });
 
-      if (!fill) { exitPreloader(); return; }
+  /* ────────────────────────────────────────────────────────────
+     12. FEATURE ROWS
+  ──────────────────────────────────────────────────────────── */
+  document.querySelectorAll('.feature-row').forEach(function (row) {
+    var imgWrap   = row.querySelector('.feature-row__image-wrap');
+    var img       = row.querySelector('.feature-row__image');
+    var textBlock = row.querySelector('.feature-row__text-block');
+    var isRight   = row.classList.contains('feature-row--right');
 
-      gsap.to(fill, {
-        width: '240px',
-        duration: 1.8,
-        ease: 'power2.inOut',
-        onUpdate: function () {
-          var w = parseFloat(fill.style.width) || 0;
-          if (pct) pct.textContent = Math.round((w / 240) * 100) + '%';
-        },
-        onComplete: exitPreloader
-      });
-    })();
-
-    /* ─── NAV SCROLL BEHAVIOR ───────────────────────────────── */
-    (function initNav() {
-      var nav = document.getElementById('ok-nav');
-      if (!nav) return;
-
-      ScrollTrigger.create({
-        trigger: 'body',
-        start: '60px top',
-        onEnter: function () {
-          gsap.to(nav, { padding: '10px 40px', background: 'rgba(13,13,13,0.96)', duration: 0.3, ease: 'power2.out' });
-        },
-        onLeaveBack: function () {
-          gsap.to(nav, { padding: '20px 40px', background: 'rgba(13,13,13,0.82)', duration: 0.3, ease: 'power2.out' });
+    if (!reducedMotion && imgWrap) {
+      gsap.fromTo(imgWrap,
+        { clipPath: 'inset(0 100% 0 0)' },
+        {
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 1.0,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: row, start: 'top 68%' }
         }
-      });
+      );
+    }
 
-      /* Desktop nav link magnetic */
-      document.querySelectorAll('.ok-nav-link').forEach(function (link) {
-        link.addEventListener('mousemove', function (e) {
-          var r = link.getBoundingClientRect();
-          var dx = Math.max(-6, Math.min(6, (e.clientX - r.left - r.width  / 2) * 0.3));
-          var dy = Math.max(-6, Math.min(6, (e.clientY - r.top  - r.height / 2) * 0.3));
-          gsap.to(link, { x: dx, y: dy, duration: 0.3, ease: 'power2.out' });
+    if (img) {
+      // Blur-up on lazy load
+      if (!img.complete) {
+        gsap.set(img, { filter: 'blur(24px)', opacity: 0 });
+        img.addEventListener('load', function () {
+          gsap.to(img, { filter: 'blur(0px)', opacity: 1, duration: 0.5, ease: 'power2.out' });
         });
-        link.addEventListener('mouseleave', function () {
-          gsap.to(link, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1,0.4)' });
-        });
-      });
-    })();
-
-    /* ─── MOBILE HAMBURGER ──────────────────────────────────── */
-    (function initHamburger() {
-      var btn     = document.getElementById('ok-hamburger');
-      var drawer  = document.getElementById('ok-drawer');
-      var overlay = document.getElementById('ok-drawer-overlay');
-      if (!btn || !drawer || !overlay) return;
-      var isOpen = false;
-
-      function open() {
-        isOpen = true;
-        btn.classList.add('is-open');
-        btn.setAttribute('aria-expanded', 'true');
-        drawer.classList.add('is-open');
-        drawer.setAttribute('aria-hidden', 'false');
-        overlay.classList.add('is-open');
-        overlay.setAttribute('aria-hidden', 'false');
-        gsap.from('.ok-drawer-link', { x: 40, opacity: 0, stagger: 0.06, duration: 0.45, ease: 'power3.out' });
-      }
-      function close() {
-        isOpen = false;
-        btn.classList.remove('is-open');
-        btn.setAttribute('aria-expanded', 'false');
-        drawer.classList.remove('is-open');
-        drawer.setAttribute('aria-hidden', 'true');
-        overlay.classList.remove('is-open');
-        overlay.setAttribute('aria-hidden', 'true');
       }
 
-      btn.addEventListener('click', function () { isOpen ? close() : open(); });
-      overlay.addEventListener('click', close);
-      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && isOpen) close(); });
-    })();
-
-    /* ─── HERO PARALLAX ─────────────────────────────────────── */
-    (function initHeroParallax() {
-      if (prefersReduced) return;
-      var heroImg     = document.getElementById('ok-hero-img');
-      var heroContent = document.getElementById('ok-hero-content');
-      if (!heroImg) return;
-
-      gsap.to(heroImg, {
-        yPercent: -15,
-        ease: 'none',
-        scrollTrigger: { trigger: '#ok-hero', start: 'top top', end: 'bottom top', scrub: 1.2 }
-      });
-      if (heroContent) {
-        gsap.to(heroContent, {
-          yPercent: -8,
+      if (!reducedMotion) {
+        gsap.to(img, {
+          y: '-8%',
           ease: 'none',
-          scrollTrigger: { trigger: '#ok-hero', start: 'top top', end: 'bottom top', scrub: 1.2 }
+          scrollTrigger: {
+            trigger: row,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1.5
+          }
         });
       }
-    })();
+    }
 
-    /* ─── SCROLL REVEALS ────────────────────────────────────── */
-    (function initReveals() {
-      if (prefersReduced) {
-        document.querySelectorAll('.ok-reveal').forEach(function (el) {
-          el.style.opacity = '1';
-          el.style.transform = 'none';
-        });
-        return;
-      }
-      gsap.utils.toArray('.ok-reveal').forEach(function (el) {
-        gsap.to(el, {
-          y: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
-          scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
-        });
+    if (!reducedMotion && textBlock) {
+      gsap.from(textBlock, {
+        x: isRight ? 60 : -60,
+        opacity: 0,
+        duration: 0.85,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: row, start: 'top 65%' }
       });
-    })();
 
-    /* ─── CATEGORY ROW ANIMATIONS ───────────────────────────── */
-    (function initCatAnimations() {
-      if (prefersReduced) return;
-      document.querySelectorAll('.ok-cat-row').forEach(function (row) {
-        /* Entrance */
-        gsap.from(row, {
-          y: 32, opacity: 0, duration: 0.7, ease: 'power3.out',
-          scrollTrigger: { trigger: row, start: 'top 85%', once: true }
+      var rowChildren = textBlock.querySelectorAll(
+        '.feature-row__label, .feature-row__heading-wrap, .feature-row__body, .feature-row__cta'
+      );
+
+      if (rowChildren.length) {
+        gsap.from(rowChildren, {
+          y: 20,
+          opacity: 0,
+          duration: 0.6,
+          ease: 'power3.out',
+          stagger: 0.1,
+          scrollTrigger: { trigger: row, start: 'top 63%' }
         });
+      }
+    }
+  });
 
-        /* Image fade-in */
-        var img = row.querySelector('.ok-cat-img-wrap img');
-        if (img) {
-          gsap.from(img, {
-            opacity: 0, scale: 1.1, duration: 1.1, ease: 'power3.out',
-            scrollTrigger: { trigger: row, start: 'top 82%', once: true }
-          });
+  /* ────────────────────────────────────────────────────────────
+     13. FOOTER ANIMATIONS
+  ──────────────────────────────────────────────────────────── */
+  if (!reducedMotion) {
+    gsap.from('.footer__content', {
+      y: 60,
+      opacity: 0,
+      duration: 1.1,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: 'footer', start: 'top 88%' }
+    });
+
+    gsap.from('.footer__social-icon', {
+      y: 20,
+      opacity: 0,
+      duration: 0.5,
+      stagger: 0.08,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: '.footer__social-row', start: 'top 90%' }
+    });
+  }
+
+  // Footer social icon magnetic
+  document.querySelectorAll('.footer__social-icon').forEach(function (icon) {
+    icon.addEventListener('mousemove', function (e) {
+      if (reducedMotion) return;
+      var rect = icon.getBoundingClientRect();
+      gsap.to(icon, {
+        x: (e.clientX - rect.left - rect.width  / 2) * 0.4,
+        y: (e.clientY - rect.top  - rect.height / 2) * 0.4,
+        duration: 0.3,
+        ease: 'power2.out'
+      });
+    });
+
+    icon.addEventListener('mouseleave', function () {
+      if (reducedMotion) return;
+      gsap.to(icon, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.3)' });
+    });
+  });
+
+  /* ────────────────────────────────────────────────────────────
+     14. NAV LINK MAGNETIC
+  ──────────────────────────────────────────────────────────── */
+  document.querySelectorAll('.nav__link').forEach(function (link) {
+    var xTo = gsap.quickTo(link, 'x', { duration: 0.5, ease: 'elastic.out(1, 0.3)' });
+    var yTo = gsap.quickTo(link, 'y', { duration: 0.5, ease: 'elastic.out(1, 0.3)' });
+
+    link.addEventListener('mousemove', function (e) {
+      if (reducedMotion) return;
+      var rect = link.getBoundingClientRect();
+      xTo((e.clientX - rect.left - rect.width  / 2) / (rect.width  / 2) * 6);
+      yTo((e.clientY - rect.top  - rect.height / 2) / (rect.height / 2) * 6);
+    });
+
+    link.addEventListener('mouseleave', function () {
+      xTo(0);
+      yTo(0);
+    });
+  });
+
+  /* ────────────────────────────────────────────────────────────
+     15. HERO CTA MAGNETIC + SPRING
+  ──────────────────────────────────────────────────────────── */
+  var heroCta = document.querySelector('.hero__cta');
+  if (heroCta && !reducedMotion) {
+    var ctaX  = gsap.quickTo(heroCta, 'x',     { duration: 0.3,  ease: 'power2.out' });
+    var ctaY  = gsap.quickTo(heroCta, 'y',     { duration: 0.3,  ease: 'power2.out' });
+    var ctaSc = gsap.quickTo(heroCta, 'scale', { duration: 0.45, ease: 'elastic.out(1, 0.3)' });
+
+    heroCta.addEventListener('mousemove', function (e) {
+      var rect = heroCta.getBoundingClientRect();
+      ctaX((e.clientX - rect.left - rect.width  / 2) * 0.35);
+      ctaY((e.clientY - rect.top  - rect.height / 2) * 0.35);
+    });
+
+    heroCta.addEventListener('mouseenter', function () { ctaSc(1.05); });
+
+    heroCta.addEventListener('mouseleave', function () {
+      ctaX(0);
+      ctaY(0);
+      ctaSc(1);
+    });
+
+    heroCta.addEventListener('mousedown',  function () { ctaSc(0.96); });
+    heroCta.addEventListener('mouseup',    function () { ctaSc(1.05); });
+  }
+
+  /* ────────────────────────────────────────────────────────────
+     16. CUSTOM CURSOR (pointer:fine devices only)
+  ──────────────────────────────────────────────────────────── */
+  if (window.matchMedia('(pointer:fine)').matches && !reducedMotion) {
+    document.body.classList.add('custom-cursor-active');
+
+    var cursorRing  = document.querySelector('.ok-cursor');
+    var cursorDot   = document.querySelector('.ok-cursor-dot');
+    var cursorLabel = document.querySelector('.ok-cursor-label');
+
+    if (cursorRing && cursorDot) {
+      // Start hidden — appear on first mousemove
+      gsap.set([cursorRing, cursorDot], { opacity: 0 });
+      var cursorVisible = false;
+
+      var xRing = gsap.quickTo(cursorRing, 'x', { duration: 0.35, ease: 'power3' });
+      var yRing = gsap.quickTo(cursorRing, 'y', { duration: 0.35, ease: 'power3' });
+      var xDot  = gsap.quickTo(cursorDot,  'x', { duration: 0.12, ease: 'power3' });
+      var yDot  = gsap.quickTo(cursorDot,  'y', { duration: 0.12, ease: 'power3' });
+
+      window.addEventListener('mousemove', function (e) {
+        if (!cursorVisible) {
+          gsap.to([cursorRing, cursorDot], { opacity: 1, duration: 0.4 });
+          cursorVisible = true;
         }
-      });
-    })();
-
-    /* ─── CATEGORY TILT ─────────────────────────────────────── */
-    (function initCatTilt() {
-      if (prefersReduced || window.matchMedia('(max-width: 768px)').matches) return;
-      document.querySelectorAll('.ok-cat-row').forEach(function (row) {
-        gsap.set(row, { transformPerspective: 1200 });
-        row.addEventListener('mousemove', function (e) {
-          var rect = row.getBoundingClientRect();
-          var dx = (e.clientX - rect.left - rect.width  / 2) / (rect.width  / 2);
-          var dy = (e.clientY - rect.top  - rect.height / 2) / (rect.height / 2);
-          gsap.to(row, { rotateX: -dy * 3, rotateY: dx * 5, duration: 0.3, ease: 'power2.out' });
-        });
-        row.addEventListener('mouseleave', function () {
-          gsap.to(row, { rotateX: 0, rotateY: 0, duration: 0.7, ease: 'elastic.out(1,0.3)' });
-        });
-      });
-    })();
-
-    /* ─── BREATHING SECTION ─────────────────────────────────── */
-    (function initBreathing() {
-      var el = document.getElementById('ok-breathing');
-      if (!el) return;
-
-      if (!prefersReduced) {
-        /* Pin */
-        ScrollTrigger.create({
-          trigger: el,
-          pin: true,
-          pinSpacing: true,
-          start: 'top top',
-          end: '+=500',
-          anticipatePin: 1
-        });
-
-        /* Content entrance */
-        gsap.from('#ok-breathing-content', {
-          opacity: 0, y: 44, duration: 1.1, ease: 'power3.out',
-          scrollTrigger: { trigger: el, start: 'top 65%', once: true }
-        });
-
-        /* Rules */
-        gsap.from('.ok-breathing-rule', {
-          scaleX: 0, transformOrigin: 'center center', duration: 1.0,
-          ease: 'power3.out', stagger: 0.25,
-          scrollTrigger: { trigger: el, start: 'top 65%', once: true }
-        });
-
-        /* Lines parallax */
-        gsap.to('#ok-breathing-lines', {
-          yPercent: -8, ease: 'none',
-          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 1.5 }
-        });
-      }
-    })();
-
-    /* ─── FOOTER ANIMATIONS ─────────────────────────────────── */
-    (function initFooter() {
-      var footer = document.getElementById('ok-footer');
-      if (!footer || prefersReduced) return;
-
-      gsap.from(footer, {
-        y: 60, opacity: 0, duration: 0.95, ease: 'power3.out',
-        scrollTrigger: { trigger: footer, start: 'top 92%', once: true }
-      });
-      gsap.from('.ok-footer-col', {
-        y: 30, opacity: 0, stagger: 0.1, duration: 0.7, ease: 'power3.out',
-        scrollTrigger: { trigger: footer, start: 'top 88%', once: true }
-      });
-      gsap.from('.ok-social-icon', {
-        scale: 0.8, opacity: 0, stagger: 0.08, ease: 'back.out(2)', duration: 0.45,
-        scrollTrigger: { trigger: footer, start: 'top 85%', once: true }
+        xRing(e.clientX - 20);
+        yRing(e.clientY - 20);
+        xDot(e.clientX - 3);
+        yDot(e.clientY - 3);
       });
 
-      /* Magnetic social icons */
-      document.querySelectorAll('.ok-social-icon').forEach(function (icon) {
-        icon.addEventListener('mousemove', function (e) {
-          var r = icon.getBoundingClientRect();
-          gsap.to(icon, {
-            x: ((e.clientX - r.left - r.width  / 2) / (r.width  / 2)) * 8,
-            y: ((e.clientY - r.top  - r.height / 2) / (r.height / 2)) * 8,
-            duration: 0.3, ease: 'power2.out'
+      var cursorSizes = { SHOP: 62, EXPLORE: 56, VIEW: 48, FOLLOW: 52, CART: 50, HOME: 48 };
+
+      document.querySelectorAll('[data-cursor]').forEach(function (el) {
+        el.addEventListener('mouseenter', function () {
+          var type = el.getAttribute('data-cursor');
+          var size = cursorSizes[type] || 62;
+
+          gsap.to(cursorRing, {
+            width: size,
+            height: size,
+            borderColor: '#C85A08',
+            duration: 0.3,
+            ease: 'power2.out'
           });
+
+          if (cursorLabel && type) {
+            cursorLabel.textContent = type;
+            gsap.to(cursorLabel, { opacity: 1, duration: 0.2 });
+          }
         });
-        icon.addEventListener('mouseleave', function () {
-          gsap.to(icon, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1,0.4)' });
+
+        el.addEventListener('mouseleave', function () {
+          gsap.to(cursorRing, {
+            width: 40,
+            height: 40,
+            borderColor: 'rgba(255,255,255,0.85)',
+            duration: 0.4,
+            ease: 'power2.out'
+          });
+
+          if (cursorLabel) {
+            gsap.to(cursorLabel, { opacity: 0, duration: 0.15, onComplete: function () {
+              cursorLabel.textContent = '';
+            }});
+          }
         });
       });
-    })();
+    }
+  }
 
-    /* ─── MAGNETIC BUTTONS ──────────────────────────────────── */
-    (function initMagnetic() {
-      document.querySelectorAll('.ok-magnetic').forEach(function (btn) {
-        var strength   = parseInt(btn.dataset.strength || '12');
-        var glowColor  = btn.dataset.glow || 'rgba(196,82,10,0.4)';
-        var baseBg     = btn.dataset.bg   || '#c4520a';
+  /* ────────────────────────────────────────────────────────────
+     17. SCROLL PROGRESS BAR (rAF loop)
+  ──────────────────────────────────────────────────────────── */
+  var progressBar = document.getElementById('ok-scroll-progress');
+  if (progressBar) {
+    function updateProgress() {
+      var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (maxScroll > 0
+        ? Math.min(100, (window.scrollY / maxScroll) * 100)
+        : 0) + '%';
+      requestAnimationFrame(updateProgress);
+    }
+    requestAnimationFrame(updateProgress);
+  }
 
-        btn.addEventListener('mousemove', function (e) {
-          var r  = btn.getBoundingClientRect();
-          var dx = (e.clientX - r.left - r.width  / 2) / (r.width  / 2);
-          var dy = (e.clientY - r.top  - r.height / 2) / (r.height / 2);
-          var gx = ((e.clientX - r.left) / r.width  * 100).toFixed(1);
-          var gy = ((e.clientY - r.top)  / r.height * 100).toFixed(1);
-          btn.style.transform  = 'translate(' + (dx * strength) + 'px,' + (dy * strength) + 'px) scale(1.03)';
-          btn.style.boxShadow  = '0 0 30px ' + glowColor;
-          btn.style.background = 'radial-gradient(circle at ' + gx + '% ' + gy + '%, rgba(255,255,255,0.15) 0%, transparent 60%), ' + baseBg;
-        });
-        btn.addEventListener('mouseleave', function () {
-          btn.style.transform  = 'translate(0,0) scale(1)';
-          btn.style.boxShadow  = '';
-          btn.style.background = baseBg;
-        });
-        btn.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s';
-      });
-    })();
+  /* ────────────────────────────────────────────────────────────
+     18. RESIZE HANDLER — keep isMobile in sync
+  ──────────────────────────────────────────────────────────── */
+  window.addEventListener('resize', function () {
+    isMobile = window.innerWidth <= 990;
+    ScrollTrigger.refresh();
+  });
 
-  })();
-  </script>
-
+})();
+</script>
 </body>
 </html>

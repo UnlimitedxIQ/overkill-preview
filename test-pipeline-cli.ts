@@ -53,9 +53,10 @@ function runClaude(model: string, systemPrompt: string, userPrompt: string, outF
   const result = spawnSync("claude", [
     "--print", "--model", model, "--output-format", "text",
     "--system-prompt", systemPrompt,
+    "--no-session-persistence",
   ], {
     input: userPrompt,
-    timeout: 1_800_000, // 30 min — executor generates 30K+ tokens
+    timeout: 1_800_000,
     encoding: "utf8",
     maxBuffer: 20 * 1024 * 1024,
     env: { ...process.env, CLAUDE_CODE_MAX_OUTPUT_TOKENS: "128000" },
@@ -256,6 +257,7 @@ ${executorUser}`;
       "--print", "--model", "sonnet", "--output-format", "text",
       "--system-prompt", executorSystem,
       "--allowedTools", "Read",
+      "--no-session-persistence",
     ], {
       input: mockupPrompt,
       timeout: 1_800_000,
