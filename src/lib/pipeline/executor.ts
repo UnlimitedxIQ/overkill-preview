@@ -1,4 +1,5 @@
 import type Anthropic from "@anthropic-ai/sdk";
+import * as fs from "node:fs";
 
 import { parseTransformResponse } from "@/lib/transform";
 
@@ -67,27 +68,44 @@ export async function runExecutor(
   const siteMapText = formatSiteMap(spec.siteMap);
   const buildSpec = formatBuildSpec(spec);
 
-  const userPrompt = `Build the transformed website following this design specification EXACTLY.
+  const textPrompt = `Build the transformed website following this design specification EXACTLY.
+
+${spec.mockupImagePath ? "## DESIGN MOCKUP\nThe attached image shows the EXACT design to build. Match its layout, typography scale, spacing, grid structure, and color usage. The image is the spec — build what you see." : ""}
 
 ${buildSpec}
 
 ${siteMapText}
 
-## Original HTML:
-${input.html.length > 60_000 ? input.html.slice(0, 60_000) + "\n<!-- ... truncated ... -->" : input.html}
-
-## Original CSS:
-${input.css.length > 30_000 ? input.css.slice(0, 30_000) + "\n/* ... truncated ... */" : input.css || "(No external CSS)"}
+## Original HTML (for text content only — use SITE MAP for links/images):
+${input.html.length > 15_000 ? input.html.slice(0, 15_000) + "\n<!-- ... truncated ... -->" : input.html}
 
 ## Selected Features: ${input.features.join(", ")}
 
 Build the complete transformed page. Preserve ALL image URLs and link hrefs from the site map. Return ONLY the three marked sections.`;
 
+  // Build content blocks — include mockup image if available
+  const contentBlocks: Anthropic.MessageCreateParams["messages"][0]["content"] = [];
+
+  if (spec.mockupImagePath && fs.existsSync(spec.mockupImagePath)) {
+    const imageData = fs.readFileSync(spec.mockupImagePath);
+    const base64 = imageData.toString("base64");
+    const ext = spec.mockupImagePath.toLowerCase().endsWith(".jpg") || spec.mockupImagePath.toLowerCase().endsWith(".jpeg")
+      ? "image/jpeg" as const
+      : "image/png" as const;
+    contentBlocks.push({
+      type: "image",
+      source: { type: "base64", media_type: ext, data: base64 },
+    });
+    console.log(`[executor] Including mockup image (${(imageData.length / 1024 / 1024).toFixed(1)}MB)`);
+  }
+
+  contentBlocks.push({ type: "text", text: textPrompt });
+
   const message = await client.messages.create({
     model: "claude-sonnet-4-20250514",
     max_tokens: 32_000,
     system: buildExecutorSystemPrompt(),
-    messages: [{ role: "user", content: userPrompt }],
+    messages: [{ role: "user", content: contentBlocks }],
   });
 
   const responseText = message.content

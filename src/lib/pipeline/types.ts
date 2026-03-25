@@ -10,6 +10,7 @@ export interface PipelineInput {
   features: string[];
   themeDirection?: string;
   heroVideoUrl?: string;
+  mockupImagePath?: string;
 }
 
 export interface SiteAnalysis {
@@ -57,6 +58,7 @@ export interface DesignSpec {
   buildSteps: BuildStep[];
   features: FeatureSpec[];
   videoAsset?: VideoAsset;
+  mockupImagePath?: string;
 }
 
 export interface BuildOutput {

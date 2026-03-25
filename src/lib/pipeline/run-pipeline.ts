@@ -92,11 +92,17 @@ export async function runPipeline(
 
   callbacks.onProgress(28);
 
+  // ── Stage 1.75: Mockup Image ────────────────────────────────────────────
+  if (input.mockupImagePath) {
+    spec.mockupImagePath = input.mockupImagePath;
+    console.log(`[pipeline] Mockup image: ${input.mockupImagePath}`);
+  }
+
   // ── Stage 2: Building ──────────────────────────────────────────────────
   callbacks.onStageChange("building", "Building transformed site from spec...");
   callbacks.onProgress(30);
 
-  console.log("[pipeline] Stage 2: Building");
+  console.log("[pipeline] Stage 2: Building" + (spec.mockupImagePath ? " (with mockup reference)" : ""));
   let output: BuildOutput = await runExecutor(client, input, spec);
   callbacks.onProgress(60);
 
